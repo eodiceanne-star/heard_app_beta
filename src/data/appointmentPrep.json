@@ -1,55 +1,50 @@
 {
   "defaultQuestions": [
-    "What are my main symptoms and when did they start?",
-    "How do these symptoms affect my daily life?",
-    "What makes my symptoms better or worse?",
-    "Have I noticed any patterns with my symptoms?",
-    "What medications am I currently taking?",
-    "What tests have I already had done?",
-    "What treatments have I tried and what were the results?",
-    "What are my main concerns about my health?",
-    "What questions do I have for the doctor?",
-    "What are my goals for this appointment?",
-    "Do I have any family history of similar conditions?",
-    "What lifestyle factors might be affecting my health?",
-    "How is my sleep quality?",
-    "How is my stress level?",
-    "What is my current diet like?",
-    "How much physical activity do I get?",
-    "Have I experienced any recent life changes?",
-    "What are my biggest fears about my health?",
-    "What would success look like for me?",
-    "What support do I need from my healthcare team?"
+    "Can you explain why you think this diagnosis fits my symptoms?",
+    "What other possibilities could explain what I'm experiencing?",
+    "What tests can we do to rule out other conditions?",
+    "How can I best track and present my symptoms to you?",
+    "If my symptoms worsen, when should I seek urgent care?",
+    "Can we create a follow-up plan to revisit this if my symptoms persist?",
+    "What would you do if this were your daughter/sister/mother experiencing these symptoms?",
+    "Are there any specialists you think I should see?",
+    "What lifestyle changes might help, and which ones have you seen work for similar patients?",
+    "How long should I expect to see improvement, and what should I do if I don't?",
+    "Can you explain the risks and benefits of the treatment you're suggesting?",
+    "What are the signs that this treatment is working vs. not working?",
+    "If this doesn't work, what's our next step?",
+    "Can you help me understand why previous treatments haven't worked?",
+    "What would you consider a red flag that we need to investigate further?"
   ],
   "categories": [
     {
-      "name": "Symptoms & History",
+      "name": "Diagnosis & Understanding",
       "questions": [
-        "What are my main symptoms and when did they start?",
-        "How do these symptoms affect my daily life?",
-        "What makes my symptoms better or worse?",
-        "Have I noticed any patterns with my symptoms?",
-        "What tests have I already had done?"
+        "Can you explain why you think this diagnosis fits my symptoms?",
+        "What other possibilities could explain what I'm experiencing?",
+        "What tests can we do to rule out other conditions?",
+        "Can you help me understand why previous treatments haven't worked?",
+        "What would you consider a red flag that we need to investigate further?"
       ]
     },
     {
-      "name": "Current Health",
+      "name": "Treatment & Management",
       "questions": [
-        "What medications am I currently taking?",
-        "What treatments have I tried and what were the results?",
-        "How is my sleep quality?",
-        "How is my stress level?",
-        "What is my current diet like?"
+        "What would you do if this were your daughter/sister/mother experiencing these symptoms?",
+        "Can you explain the risks and benefits of the treatment you're suggesting?",
+        "What are the signs that this treatment is working vs. not working?",
+        "If this doesn't work, what's our next step?",
+        "What lifestyle changes might help, and which ones have you seen work for similar patients?"
       ]
     },
     {
-      "name": "Goals & Concerns",
+      "name": "Monitoring & Follow-up",
       "questions": [
-        "What are my main concerns about my health?",
-        "What questions do I have for the doctor?",
-        "What are my goals for this appointment?",
-        "What are my biggest fears about my health?",
-        "What would success look like for me?"
+        "How can I best track and present my symptoms to you?",
+        "If my symptoms worsen, when should I seek urgent care?",
+        "Can we create a follow-up plan to revisit this if my symptoms persist?",
+        "How long should I expect to see improvement, and what should I do if I don't?",
+        "Are there any specialists you think I should see?"
       ]
     }
   ]

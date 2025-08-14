@@ -9,7 +9,6 @@ interface MusicTrack {
   title: string
   artist: string
   url: string
-  isCustom: boolean
 }
 
 export default function MusicPage() {
@@ -21,56 +20,52 @@ export default function MusicPage() {
       id: '1',
       title: 'Weightless',
       artist: 'Marconi Union',
-      url: 'https://open.spotify.com/track/2I237KhVzhQ5v4g38k8WBp',
-      isCustom: false
+      url: 'https://www.youtube.com/watch?v=UfcAVejslrU'
     },
     {
       id: '2',
       title: 'Claire de Lune',
       artist: 'Debussy',
-      url: 'https://open.spotify.com/track/2J6P4QsUKDTcBnuamM7I0O',
-      isCustom: false
+      url: 'https://www.youtube.com/watch?v=CvFH_6DNRCY'
     },
     {
       id: '3',
       title: 'River Flows in You',
       artist: 'Yiruma',
-      url: 'https://open.spotify.com/track/7ySqfzTt108k8bgjwFc8iT',
-      isCustom: false
+      url: 'https://www.youtube.com/watch?v=7maJOI3QMu0'
     },
     {
       id: '4',
-      title: 'Gymnopédie No.1',
+      title: 'Gymnopédie No. 1',
       artist: 'Erik Satie',
-      url: 'https://open.spotify.com/track/6i0anC2i4t7aE9OaxWjpLZ',
-      isCustom: false
+      url: 'https://www.youtube.com/watch?v=S-Xm7s9eGxU'
     }
   ]
 
-  // Load custom tracks from localStorage
   useEffect(() => {
-    const savedTracks = localStorage.getItem('customMusicTracks')
-    if (savedTracks) {
-      setCustomTracks(JSON.parse(savedTracks))
+    const saved = localStorage.getItem('heardCustomMusic')
+    if (saved) {
+      setCustomTracks(JSON.parse(saved))
     }
   }, [])
 
-  // Save custom tracks to localStorage
   useEffect(() => {
-    localStorage.setItem('customMusicTracks', JSON.stringify(customTracks))
+    localStorage.setItem('heardCustomMusic', JSON.stringify(customTracks))
   }, [customTracks])
 
   const handleAddTrack = (e: React.FormEvent) => {
     e.preventDefault()
-    if (newTrack.title && newTrack.artist && newTrack.url) {
-      const track: MusicTrack = {
-        id: Date.now().toString(),
-        ...newTrack,
-        isCustom: true
-      }
-      setCustomTracks([...customTracks, track])
-      setNewTrack({ title: '', artist: '', url: '' })
+    if (!newTrack.title.trim() || !newTrack.artist.trim() || !newTrack.url.trim()) return
+
+    const track: MusicTrack = {
+      id: Date.now().toString(),
+      title: newTrack.title,
+      artist: newTrack.artist,
+      url: newTrack.url
     }
+
+    setCustomTracks([track, ...customTracks])
+    setNewTrack({ title: '', artist: '', url: '' })
   }
 
   const handleRemoveTrack = (id: string) => {
@@ -80,102 +75,102 @@ export default function MusicPage() {
   const allTracks = [...samplePlaylist, ...customTracks]
 
   return (
-    <div className="page-container">
-      <div className="content-container">
-        {/* Illustration */}
-        <div className="mb-8">
-          <Illustration type="headphones" />
+    <div className="page-container relative">
+      {/* Background decorative elements */}
+      <Illustration type="wave-pattern" className="pointer-events-none" />
+      <Illustration type="dot-pattern" className="pointer-events-none" />
+      
+      <div className="content-container relative z-10">
+        <div className="mb-12">
+          <Illustration type="music-listening" size="large" className="mb-6" />
         </div>
-
-        {/* Heading */}
-        <h1 className="text-4xl font-playfair font-semibold text-charcoal text-center mb-6">
-          Calming Music
-        </h1>
-
-        {/* Add Custom Track */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm mb-6">
-          <h2 className="text-2xl font-playfair font-medium text-charcoal mb-4">
-            Add Your Own Track
-          </h2>
-          <form onSubmit={handleAddTrack} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-charcoal mb-2">
-                Song Title
-              </label>
-              <input
-                type="text"
-                value={newTrack.title}
-                onChange={(e) => setNewTrack({ ...newTrack, title: e.target.value })}
-                placeholder="Enter song title"
-                className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dusty-pink focus:border-transparent"
-              />
+        
+        <h1 className="text-5xl font-playfair font-semibold text-charcoal text-center mb-3">Calming Music</h1>
+        <p className="text-xl text-lato text-charcoal text-center mb-12 leading-relaxed">
+          Relaxing playlists to help you find peace and reduce stress
+        </p>
+        
+        <div className="mobile-card mb-8 relative overflow-hidden">
+          {/* Card background pattern */}
+          <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-dusty-pink to-transparent opacity-10 rounded-full -mr-8 -mt-8"></div>
+          
+          <h2 className="text-3xl font-playfair font-medium text-charcoal mb-6 relative z-10">Add Your Own Track</h2>
+          <form onSubmit={handleAddTrack} className="space-y-6 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-lg font-medium text-charcoal mb-3">Title</label>
+                <input
+                  type="text"
+                  value={newTrack.title}
+                  onChange={(e) => setNewTrack(prev => ({ ...prev, title: e.target.value }))}
+                  className="w-full p-4 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-dusty-pink focus:border-transparent text-base"
+                  placeholder="Song title"
+                />
+              </div>
+              <div>
+                <label className="block text-lg font-medium text-charcoal mb-3">Artist</label>
+                <input
+                  type="text"
+                  value={newTrack.artist}
+                  onChange={(e) => setNewTrack(prev => ({ ...prev, artist: e.target.value }))}
+                  className="w-full p-4 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-dusty-pink focus:border-transparent text-base"
+                  placeholder="Artist name"
+                />
+              </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-charcoal mb-2">
-                Artist
-              </label>
-              <input
-                type="text"
-                value={newTrack.artist}
-                onChange={(e) => setNewTrack({ ...newTrack, artist: e.target.value })}
-                placeholder="Enter artist name"
-                className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dusty-pink focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-charcoal mb-2">
-                Music Link
-              </label>
+              <label className="block text-lg font-medium text-charcoal mb-3">URL</label>
               <input
                 type="url"
                 value={newTrack.url}
-                onChange={(e) => setNewTrack({ ...newTrack, url: e.target.value })}
-                placeholder="Spotify, YouTube, or other music link"
-                className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dusty-pink focus:border-transparent"
+                onChange={(e) => setNewTrack(prev => ({ ...prev, url: e.target.value }))}
+                className="w-full p-4 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-dusty-pink focus:border-transparent text-base"
+                placeholder="YouTube, Spotify, or other music link"
               />
             </div>
-            <button
-              type="submit"
-              className="w-full bg-dusty-pink text-white py-3 rounded-xl font-medium hover:bg-opacity-90 transition-colors duration-200"
-            >
+            <button type="submit" className="mobile-button w-full text-lg py-4">
               Add Track
             </button>
           </form>
         </div>
-
-        {/* Playlist */}
-        <div className="space-y-4">
-          <h2 className="text-2xl font-playfair font-medium text-charcoal">
-            Calming Playlist
-          </h2>
-          
-          {allTracks.map((track) => (
-            <div key={track.id} className="bg-white rounded-2xl p-4 shadow-sm">
-              <div className="flex justify-between items-start">
-                <div className="flex-1">
-                  <h3 className="font-medium text-charcoal">{track.title}</h3>
-                  <p className="text-sm text-gray-600">{track.artist}</p>
-                  {track.isCustom && (
-                    <span className="inline-block bg-sage bg-opacity-20 text-sage text-xs px-2 py-1 rounded-full mt-1">
-                      Your Track
-                    </span>
-                  )}
+        
+        <div className="space-y-6">
+          {allTracks.map((track, index) => (
+            <div key={track.id} className="mobile-card relative overflow-hidden hover:shadow-xl transition-all duration-300">
+              {/* Card background pattern */}
+              <div className="absolute top-0 left-0 w-12 h-12 bg-gradient-to-br from-sage to-transparent opacity-10 rounded-full -ml-6 -mt-6"></div>
+              
+              <div className="flex items-center justify-between relative z-10">
+                <div className="flex items-center space-x-4 flex-1">
+                  <div className="w-16 h-16 bg-gradient-to-br from-dusty-pink to-sage rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg">
+                    🎵
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-playfair font-medium text-charcoal mb-1">{track.title}</h3>
+                    <p className="text-lg text-sage font-medium">{track.artist}</p>
+                    {index < samplePlaylist.length && (
+                      <span className="inline-block mt-2 px-3 py-1 bg-sage bg-opacity-20 text-sage text-sm rounded-full font-medium">
+                        Recommended
+                      </span>
+                    )}
+                  </div>
                 </div>
-                <div className="flex items-center space-x-2">
+                
+                <div className="flex items-center space-x-3">
                   <a
                     href={track.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-dusty-pink text-white px-3 py-2 rounded-lg text-sm hover:bg-opacity-90 transition-colors duration-200"
+                    className="px-6 py-3 bg-dusty-pink text-white rounded-2xl font-medium hover:bg-opacity-90 transition-colors shadow-md"
                   >
-                    🎵 Listen
+                    Listen
                   </a>
-                  {track.isCustom && (
+                  {index >= samplePlaylist.length && (
                     <button
                       onClick={() => handleRemoveTrack(track.id)}
-                      className="text-red-500 hover:text-red-700 transition-colors duration-200"
+                      className="px-4 py-3 text-gray-500 hover:text-red-500 transition-colors"
                     >
-                      🗑️
+                      ✕
                     </button>
                   )}
                 </div>
@@ -183,21 +178,34 @@ export default function MusicPage() {
             </div>
           ))}
         </div>
-
-        {/* Relaxation Tips */}
-        <div className="mt-8 p-6 bg-sage bg-opacity-10 rounded-2xl">
-          <h3 className="text-lg font-playfair font-medium text-charcoal mb-3">
-            💡 Relaxation Tips
-          </h3>
-          <ul className="text-sm text-charcoal space-y-2">
-            <li>• Find a quiet space and close your eyes</li>
-            <li>• Take slow, deep breaths while listening</li>
-            <li>• Let your mind wander without judgment</li>
-            <li>• Try listening for 10-15 minutes daily</li>
-          </ul>
+        
+        <div className="mt-12 p-8 bg-gradient-to-br from-sage to-dusty-pink bg-opacity-10 rounded-3xl relative overflow-hidden">
+          {/* Background decorative elements */}
+          <div className="absolute top-4 right-4">
+            <Illustration type="plant-decorative" size="small" />
+          </div>
+          
+          <h3 className="text-2xl font-playfair font-medium text-charcoal mb-4 relative z-10">Relaxation Tips</h3>
+          <div className="space-y-3 text-base text-charcoal leading-relaxed relative z-10">
+            <div className="flex items-start space-x-3">
+              <div className="w-2 h-2 bg-sage rounded-full mt-2 flex-shrink-0"></div>
+              <p>Find a quiet space and close your eyes while listening</p>
+            </div>
+            <div className="flex items-start space-x-3">
+              <div className="w-2 h-2 bg-sage rounded-full mt-2 flex-shrink-0"></div>
+              <p>Practice deep breathing - inhale for 4 counts, exhale for 6</p>
+            </div>
+            <div className="flex items-start space-x-3">
+              <div className="w-2 h-2 bg-sage rounded-full mt-2 flex-shrink-0"></div>
+              <p>Let your mind wander without judgment</p>
+            </div>
+            <div className="flex items-start space-x-3">
+              <div className="w-2 h-2 bg-sage rounded-full mt-2 flex-shrink-0"></div>
+              <p>Try listening for at least 10-15 minutes for best results</p>
+            </div>
+          </div>
         </div>
       </div>
-      
       <Navigation />
     </div>
   )

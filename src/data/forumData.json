@@ -1,0 +1,121 @@
+{
+  "threads": [
+    {
+      "id": "1",
+      "title": "How to handle feeling dismissed in a doctor's appointment",
+      "content": "I had my third appointment today where my symptoms were brushed off as 'stress' or 'anxiety.' I know my body and these symptoms are real. How do you all handle this feeling of being dismissed? I want to advocate for myself but also maintain a good relationship with my healthcare team.",
+      "author": {
+        "id": "user1",
+        "displayName": "Sarah",
+        "avatar": "👩",
+        "isAnonymous": false
+      },
+      "tags": ["Chronic Illness", "Mental Health", "Advocacy"],
+      "comments": [
+        {
+          "id": "c1",
+          "content": "I've been there too. I started bringing a symptom journal with dates and specific examples. It's harder to dismiss when you have concrete evidence.",
+          "author": {
+            "id": "user2",
+            "displayName": "Maria",
+            "avatar": "👩‍🦰",
+            "isAnonymous": false
+          },
+          "timestamp": "2024-01-15T10:30:00Z"
+        },
+        {
+          "id": "c2",
+          "content": "I found that asking specific questions like 'What tests can we do to rule out other conditions?' helps. It shows you're informed and serious about your health.",
+          "author": {
+            "id": "user3",
+            "displayName": "Anonymous",
+            "avatar": "👤",
+            "isAnonymous": true
+          },
+          "timestamp": "2024-01-15T11:15:00Z"
+        }
+      ],
+      "commentCount": 2,
+      "timestamp": "2024-01-15T09:00:00Z"
+    },
+    {
+      "id": "2",
+      "title": "Tips for tracking symptoms your doctor will take seriously",
+      "content": "After years of being told my symptoms were 'all in my head,' I've learned that how you present your symptoms matters. Here are some strategies that have worked for me: 1) Track frequency and duration, 2) Note triggers, 3) Document impact on daily life. What other tracking methods have helped you?",
+      "author": {
+        "id": "user4",
+        "displayName": "Emma",
+        "avatar": "👩‍🦱",
+        "isAnonymous": false
+      },
+      "tags": ["Symptom Tracking", "Chronic Illness", "Tips"],
+      "comments": [
+        {
+          "id": "c3",
+          "content": "I use a pain scale 1-10 and describe what I can/can't do at each level. 'I can't drive when pain is above 7' is more concrete than 'it really hurts.'",
+          "author": {
+            "id": "user5",
+            "displayName": "Jasmine",
+            "avatar": "👩‍🦳",
+            "isAnonymous": false
+          },
+          "timestamp": "2024-01-14T16:45:00Z"
+        }
+      ],
+      "commentCount": 1,
+      "timestamp": "2024-01-14T15:30:00Z"
+    },
+    {
+      "id": "3",
+      "title": "Finding supportive healthcare professionals",
+      "content": "I'm looking for a new primary care doctor who actually listens and takes women's health concerns seriously. How do you find doctors who are supportive and don't dismiss symptoms? Any red flags to watch out for?",
+      "author": {
+        "id": "user6",
+        "displayName": "Anonymous",
+        "avatar": "👤",
+        "isAnonymous": true
+      },
+      "tags": ["Healthcare", "Finding Doctors", "Support"],
+      "comments": [
+        {
+          "id": "c4",
+          "content": "I ask during the first appointment: 'How do you approach patients with chronic symptoms that don't have clear causes?' Their answer tells you a lot about their approach.",
+          "author": {
+            "id": "user7",
+            "displayName": "Lisa",
+            "avatar": "👩",
+            "isAnonymous": false
+          },
+          "timestamp": "2024-01-13T14:20:00Z"
+        },
+        {
+          "id": "c5",
+          "content": "Red flags: rushing through appointments, interrupting when you describe symptoms, immediately suggesting antidepressants without exploring other options.",
+          "author": {
+            "id": "user8",
+            "displayName": "Anonymous",
+            "avatar": "👤",
+            "isAnonymous": true
+          },
+          "timestamp": "2024-01-13T15:10:00Z"
+        }
+      ],
+      "commentCount": 2,
+      "timestamp": "2024-01-13T12:00:00Z"
+    }
+  ],
+  "tags": [
+    "Chronic Illness",
+    "Mental Health",
+    "Hormone Health",
+    "Advocacy",
+    "Symptom Tracking",
+    "Tips",
+    "Healthcare",
+    "Finding Doctors",
+    "Support",
+    "Pain Management",
+    "Fatigue",
+    "Digestive Health"
+  ]
+}
