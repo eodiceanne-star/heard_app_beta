@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Lato', sans-serif;
+  }
+  
+  body {
+    background-color: #FAF8F5;
+    color: #333333;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer components {
+  .nav-item {
+    @apply flex flex-col items-center justify-center p-3 text-charcoal transition-colors duration-200;
+  }
+  
+  .nav-item:hover {
+    @apply text-dusty-pink;
+  }
+  
+  .nav-item.active {
+    @apply text-dusty-pink;
+  }
+  
+  .page-container {
+    @apply min-h-screen bg-cream pb-20;
+  }
+  
+  .content-container {
+    @apply max-w-md mx-auto px-6 py-8;
+  }
+}

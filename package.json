@@ -1,0 +1,33 @@
+{
+  "name": "heardapp",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.1.12",
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "autoprefixer": "^10.4.20",
+    "next": "^15.4.6",
+    "postcss": "^8.4.38",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.2"
+  },
+  "keywords": [
+    "healthcare",
+    "women",
+    "support",
+    "community"
+  ],
+  "author": "",
+  "license": "ISC",
+  "description": "A women's healthcare support platform for those navigating chronic illness and medical gaslighting"
+}

@@ -1,0 +1,56 @@
+{
+  "defaultQuestions": [
+    "What are my main symptoms and when did they start?",
+    "How do these symptoms affect my daily life?",
+    "What makes my symptoms better or worse?",
+    "Have I noticed any patterns with my symptoms?",
+    "What medications am I currently taking?",
+    "What tests have I already had done?",
+    "What treatments have I tried and what were the results?",
+    "What are my main concerns about my health?",
+    "What questions do I have for the doctor?",
+    "What are my goals for this appointment?",
+    "Do I have any family history of similar conditions?",
+    "What lifestyle factors might be affecting my health?",
+    "How is my sleep quality?",
+    "How is my stress level?",
+    "What is my current diet like?",
+    "How much physical activity do I get?",
+    "Have I experienced any recent life changes?",
+    "What are my biggest fears about my health?",
+    "What would success look like for me?",
+    "What support do I need from my healthcare team?"
+  ],
+  "categories": [
+    {
+      "name": "Symptoms & History",
+      "questions": [
+        "What are my main symptoms and when did they start?",
+        "How do these symptoms affect my daily life?",
+        "What makes my symptoms better or worse?",
+        "Have I noticed any patterns with my symptoms?",
+        "What tests have I already had done?"
+      ]
+    },
+    {
+      "name": "Current Health",
+      "questions": [
+        "What medications am I currently taking?",
+        "What treatments have I tried and what were the results?",
+        "How is my sleep quality?",
+        "How is my stress level?",
+        "What is my current diet like?"
+      ]
+    },
+    {
+      "name": "Goals & Concerns",
+      "questions": [
+        "What are my main concerns about my health?",
+        "What questions do I have for the doctor?",
+        "What are my goals for this appointment?",
+        "What are my biggest fears about my health?",
+        "What would success look like for me?"
+      ]
+    }
+  ]
+}

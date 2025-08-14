@@ -1,0 +1,128 @@
+[
+  {
+    "id": 1,
+    "name": "Dr. Sarah Chen",
+    "specialty": "Endocrinology",
+    "location": "New York, NY",
+    "zipCode": "10001",
+    "rating": 4.8,
+    "reviews": [
+      {
+        "rating": 5,
+        "text": "Dr. Chen really listened to my concerns about my thyroid symptoms. She didn't dismiss my fatigue as 'just stress' like other doctors had.",
+        "qualifiers": ["Felt listened to", "Did not feel rushed", "Thorough examination"]
+      },
+      {
+        "rating": 4,
+        "text": "Very knowledgeable about women's health issues. Takes time to explain everything clearly.",
+        "qualifiers": ["Felt listened to", "Clear explanations"]
+      }
+    ],
+    "acceptingPatients": true
+  },
+  {
+    "id": 2,
+    "name": "Dr. Maria Rodriguez",
+    "specialty": "Rheumatology",
+    "location": "Los Angeles, CA",
+    "zipCode": "90210",
+    "rating": 4.9,
+    "reviews": [
+      {
+        "rating": 5,
+        "text": "Finally found a doctor who takes my chronic pain seriously. Dr. Rodriguez is compassionate and thorough.",
+        "qualifiers": ["Felt listened to", "Did not feel rushed", "Compassionate care"]
+      },
+      {
+        "rating": 5,
+        "text": "She actually believes me when I describe my symptoms. Such a relief to find someone who understands.",
+        "qualifiers": ["Felt listened to", "Believes symptoms", "Understanding"]
+      }
+    ],
+    "acceptingPatients": true
+  },
+  {
+    "id": 3,
+    "name": "Dr. Jennifer Kim",
+    "specialty": "Cardiology",
+    "location": "Chicago, IL",
+    "zipCode": "60601",
+    "rating": 4.6,
+    "reviews": [
+      {
+        "rating": 4,
+        "text": "Very thorough in her examination. Takes women's heart health seriously.",
+        "qualifiers": ["Thorough examination", "Takes symptoms seriously"]
+      },
+      {
+        "rating": 5,
+        "text": "Dr. Kim didn't dismiss my chest pain as anxiety. She ordered the right tests and found the issue.",
+        "qualifiers": ["Felt listened to", "Proper testing", "Did not dismiss symptoms"]
+      }
+    ],
+    "acceptingPatients": false
+  },
+  {
+    "id": 4,
+    "name": "Dr. Amanda Thompson",
+    "specialty": "Neurology",
+    "location": "Austin, TX",
+    "zipCode": "73301",
+    "rating": 4.7,
+    "reviews": [
+      {
+        "rating": 5,
+        "text": "Dr. Thompson is amazing with chronic migraine patients. She understands the impact on daily life.",
+        "qualifiers": ["Felt listened to", "Understands impact", "Compassionate care"]
+      },
+      {
+        "rating": 4,
+        "text": "Very knowledgeable about women's neurological issues. Takes time to explain treatment options.",
+        "qualifiers": ["Clear explanations", "Knowledgeable", "Takes time"]
+      }
+    ],
+    "acceptingPatients": true
+  },
+  {
+    "id": 5,
+    "name": "Dr. Lisa Patel",
+    "specialty": "Gastroenterology",
+    "location": "Seattle, WA",
+    "zipCode": "98101",
+    "rating": 4.5,
+    "reviews": [
+      {
+        "rating": 4,
+        "text": "Dr. Patel is very thorough with digestive health issues. She doesn't rush through appointments.",
+        "qualifiers": ["Thorough examination", "Did not feel rushed"]
+      },
+      {
+        "rating": 5,
+        "text": "Finally found someone who takes my IBS symptoms seriously. She's very understanding.",
+        "qualifiers": ["Felt listened to", "Understanding", "Takes symptoms seriously"]
+      }
+    ],
+    "acceptingPatients": true
+  },
+  {
+    "id": 6,
+    "name": "Dr. Rachel Green",
+    "specialty": "Dermatology",
+    "location": "Miami, FL",
+    "zipCode": "33101",
+    "rating": 4.4,
+    "reviews": [
+      {
+        "rating": 4,
+        "text": "Very knowledgeable about skin conditions that affect women. Takes time to explain treatment options.",
+        "qualifiers": ["Knowledgeable", "Clear explanations", "Takes time"]
+      },
+      {
+        "rating": 4,
+        "text": "Dr. Green is thorough and doesn't dismiss concerns about skin changes.",
+        "qualifiers": ["Thorough examination", "Does not dismiss concerns"]
+      }
+    ],
+    "acceptingPatients": true
+  }
+]
