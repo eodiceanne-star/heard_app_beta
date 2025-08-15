@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useAuth } from '@/components/AuthContext'
 import Navigation from '@/components/Navigation'
 import Illustration from '@/components/Illustration'
+import DecorativeIllustrations from '@/components/DecorativeIllustrations'
 
 export default function SettingsPage() {
   const { user, logout } = useAuth()
@@ -58,6 +59,7 @@ export default function SettingsPage() {
       {/* Background decorative elements */}
       <Illustration type="wave-pattern" className="pointer-events-none" />
       <Illustration type="dot-pattern" className="pointer-events-none" />
+      <DecorativeIllustrations pageType="settings" />
 
       <div className="content-container relative z-10">
         <div className="mb-12">

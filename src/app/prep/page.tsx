@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import Navigation from '@/components/Navigation'
 import Illustration from '@/components/Illustration'
+import DecorativeIllustrations from '@/components/DecorativeIllustrations'
 import prepData from '@/data/appointmentPrep.json'
 
 interface Question {
@@ -91,6 +92,7 @@ export default function PrepPage() {
       {/* Background decorative elements */}
       <Illustration type="wave-pattern" className="pointer-events-none" />
       <Illustration type="dot-pattern" className="pointer-events-none" />
+      <DecorativeIllustrations pageType="prep" />
 
       <div className="content-container relative z-10">
         <div className="mb-12">

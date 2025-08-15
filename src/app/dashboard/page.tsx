@@ -72,7 +72,7 @@ export default function DashboardPage() {
       {/* Background decorative elements */}
       <Illustration type="wave-pattern" className="pointer-events-none" />
       <Illustration type="dot-pattern" className="pointer-events-none" />
-      <DecorativeIllustrations />
+      <DecorativeIllustrations pageType="dashboard" />
       
       <div className="content-container relative z-10">
         <div className="flex justify-between items-start mb-8">

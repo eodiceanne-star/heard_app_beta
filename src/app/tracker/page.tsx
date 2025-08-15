@@ -85,7 +85,7 @@ Notes: ${entry.notes}
 
   return (
     <div className="page-container relative">
-      <DecorativeIllustrations />
+      <DecorativeIllustrations pageType="tracker" />
       <div className="content-container relative z-10">
         {/* Illustration */}
         <div className="mb-8">

@@ -132,7 +132,7 @@ export default function ForumPage() {
       {/* Background decorative elements */}
       <Illustration type="wave-pattern" className="pointer-events-none" />
       <Illustration type="dot-pattern" className="pointer-events-none" />
-      <DecorativeIllustrations />
+      <DecorativeIllustrations pageType="forum" />
       
       <div className="content-container relative z-10">
         <div className="mb-12">

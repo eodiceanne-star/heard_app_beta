@@ -74,8 +74,8 @@ export default function CalendarPage() {
       {/* Background decorative elements */}
       <Illustration type="wave-pattern" className="pointer-events-none" />
       <Illustration type="dot-pattern" className="pointer-events-none" />
-      <DecorativeIllustrations />
-
+      <DecorativeIllustrations pageType="calendar" />
+      
       <div className="content-container relative z-10">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left side - Calendar content */}
