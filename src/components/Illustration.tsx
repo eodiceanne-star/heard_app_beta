@@ -72,6 +72,15 @@ export default function Illustration({ type, className = '', size = 'medium' }: 
           height={sizePixels[size]}
           className="w-full h-full object-cover rounded-full"
           priority={size === 'large'}
+          onError={(e) => {
+            // Fallback to emoji if image fails to load
+            const target = e.target as HTMLImageElement
+            target.style.display = 'none'
+            const parent = target.parentElement
+            if (parent) {
+              parent.innerHTML = '<div class="w-full h-full flex items-center justify-center text-white text-2xl">🌱</div>'
+            }
+          }}
         />
       </div>
     </div>
