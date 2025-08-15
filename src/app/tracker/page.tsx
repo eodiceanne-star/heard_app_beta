@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Navigation from '@/components/Navigation'
 import Illustration from '@/components/Illustration'
+import DecorativeIllustrations from '@/components/DecorativeIllustrations'
 
 interface SymptomEntry {
   id: string
@@ -83,8 +84,9 @@ Notes: ${entry.notes}
   const moodOptions = ['Great', 'Good', 'Okay', 'Not great', 'Terrible']
 
   return (
-    <div className="page-container">
-      <div className="content-container">
+    <div className="page-container relative">
+      <DecorativeIllustrations />
+      <div className="content-container relative z-10">
         {/* Illustration */}
         <div className="mb-8">
           <Illustration type="symptom-notebook" size="large" />

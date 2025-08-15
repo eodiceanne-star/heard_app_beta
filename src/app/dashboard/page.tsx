@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useAuth } from '@/components/AuthContext'
 import Navigation from '@/components/Navigation'
 import Illustration from '@/components/Illustration'
+import DecorativeIllustrations from '@/components/DecorativeIllustrations'
 
 export default function DashboardPage() {
   const { user, logout } = useAuth()
@@ -71,6 +72,7 @@ export default function DashboardPage() {
       {/* Background decorative elements */}
       <Illustration type="wave-pattern" className="pointer-events-none" />
       <Illustration type="dot-pattern" className="pointer-events-none" />
+      <DecorativeIllustrations />
       
       <div className="content-container relative z-10">
         <div className="flex justify-between items-start mb-8">

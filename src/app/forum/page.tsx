@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import Navigation from '@/components/Navigation'
 import Illustration from '@/components/Illustration'
+import DecorativeIllustrations from '@/components/DecorativeIllustrations'
 import forumData from '@/data/forumData.json'
 
 interface Thread {
@@ -131,6 +132,7 @@ export default function ForumPage() {
       {/* Background decorative elements */}
       <Illustration type="wave-pattern" className="pointer-events-none" />
       <Illustration type="dot-pattern" className="pointer-events-none" />
+      <DecorativeIllustrations />
       
       <div className="content-container relative z-10">
         <div className="mb-12">
@@ -229,10 +231,10 @@ export default function ForumPage() {
               {/* Card background pattern */}
               <div className="absolute top-0 left-0 w-12 h-12 bg-gradient-to-br from-sage to-transparent opacity-10 rounded-full -ml-6 -mt-6"></div>
               
-              <div className="flex items-start space-x-4 mb-4 relative z-10">
-                <div className="w-12 h-12 bg-gradient-to-br from-sage to-dusty-pink rounded-full flex items-center justify-center text-white text-xl flex-shrink-0 shadow-md">
-                  {thread.author.avatar}
-                </div>
+                             <div className="flex items-start space-x-4 mb-4 relative z-10">
+                 <div className="w-12 h-12 bg-gradient-to-br from-cream to-dusty-pink rounded-full flex items-center justify-center text-charcoal text-xl flex-shrink-0 shadow-md p-1">
+                   {thread.author.avatar}
+                 </div>
                 <div className="flex-1">
                   <div className="flex items-center space-x-3 mb-2">
                     <span className="font-semibold text-lg text-charcoal">{thread.author.displayName}</span>
@@ -268,10 +270,10 @@ export default function ForumPage() {
                     <div className="mt-6 pt-6 border-t border-gray-100">
                       <div className="space-y-4 mb-6">
                         {thread.comments.map(comment => (
-                          <div key={comment.id} className="flex space-x-4">
-                            <div className="w-10 h-10 bg-gradient-to-br from-dusty-pink to-sage rounded-full flex items-center justify-center text-white text-lg flex-shrink-0 shadow-md">
-                              {comment.author.avatar}
-                            </div>
+                                                     <div key={comment.id} className="flex space-x-4">
+                             <div className="w-10 h-10 bg-gradient-to-br from-cream to-dusty-pink rounded-full flex items-center justify-center text-charcoal text-lg flex-shrink-0 shadow-md p-1">
+                               {comment.author.avatar}
+                             </div>
                             <div className="flex-1">
                               <div className="flex items-center space-x-3 mb-2">
                                 <span className="font-semibold text-base text-charcoal">{comment.author.displayName}</span>

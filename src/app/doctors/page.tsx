@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Navigation from '@/components/Navigation'
 import Illustration from '@/components/Illustration'
+import DecorativeIllustrations from '@/components/DecorativeIllustrations'
 import doctorsData from '@/data/doctors.json'
 
 interface Doctor {
@@ -70,6 +71,7 @@ export default function DoctorsPage() {
       {/* Background decorative elements */}
       <Illustration type="wave-pattern" className="pointer-events-none" />
       <Illustration type="dot-pattern" className="pointer-events-none" />
+      <DecorativeIllustrations />
       
       <div className="content-container relative z-10">
         <div className="mb-12">
@@ -166,11 +168,11 @@ export default function DoctorsPage() {
                     )}
                   </div>
                   
-                  <div className="ml-6 flex-shrink-0">
-                    <div className="w-16 h-16 bg-gradient-to-br from-sage to-dusty-pink rounded-full flex items-center justify-center text-white text-2xl shadow-lg">
-                      👩‍⚕️
-                    </div>
-                  </div>
+                                     <div className="ml-6 flex-shrink-0">
+                     <div className="w-16 h-16 bg-gradient-to-br from-cream to-dusty-pink rounded-full flex items-center justify-center text-charcoal text-2xl shadow-lg p-2">
+                       👩‍⚕️
+                     </div>
+                   </div>
                 </div>
                 
                 <div className="flex items-center justify-between">

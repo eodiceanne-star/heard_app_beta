@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import Navigation from '@/components/Navigation'
 import Illustration from '@/components/Illustration'
+import DecorativeIllustrations from '@/components/DecorativeIllustrations'
 
 interface Appointment {
   id: string
@@ -73,6 +74,7 @@ export default function CalendarPage() {
       {/* Background decorative elements */}
       <Illustration type="wave-pattern" className="pointer-events-none" />
       <Illustration type="dot-pattern" className="pointer-events-none" />
+      <DecorativeIllustrations />
 
       <div className="content-container relative z-10">
         <div className="flex flex-col lg:flex-row gap-8">

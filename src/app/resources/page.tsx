@@ -2,6 +2,7 @@
 import React from 'react'
 import Navigation from '@/components/Navigation'
 import Illustration from '@/components/Illustration'
+import DecorativeIllustrations from '@/components/DecorativeIllustrations'
 
 interface Resource {
   id: string
@@ -71,6 +72,7 @@ export default function ResourcesPage() {
       {/* Background decorative elements */}
       <Illustration type="wave-pattern" className="pointer-events-none" />
       <Illustration type="dot-pattern" className="pointer-events-none" />
+      <DecorativeIllustrations />
       
       <div className="content-container relative z-10">
         <div className="mb-12">
