@@ -1,6 +1,5 @@
 'use client'
-
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Navigation from '@/components/Navigation'
 import Illustration from '@/components/Illustration'
 
@@ -9,281 +8,293 @@ interface Appointment {
   title: string
   date: string
   time: string
+  doctor: string
+  location: string
   notes: string
-  reminders: boolean
 }
 
 export default function CalendarPage() {
   const [appointments, setAppointments] = useState<Appointment[]>([])
-  const [newAppointment, setNewAppointment] = useState({
+  const [showAddForm, setShowAddForm] = useState(false)
+  const [formData, setFormData] = useState({
     title: '',
     date: '',
     time: '',
-    notes: '',
-    reminders: true
+    doctor: '',
+    location: '',
+    notes: ''
   })
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth())
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear())
 
   // Load appointments from localStorage
-  useEffect(() => {
-    const savedAppointments = localStorage.getItem('appointments')
+  React.useEffect(() => {
+    const savedAppointments = localStorage.getItem('calendarAppointments')
     if (savedAppointments) {
       setAppointments(JSON.parse(savedAppointments))
     }
   }, [])
 
   // Save appointments to localStorage
-  useEffect(() => {
-    localStorage.setItem('appointments', JSON.stringify(appointments))
+  React.useEffect(() => {
+    localStorage.setItem('calendarAppointments', JSON.stringify(appointments))
   }, [appointments])
 
-  const handleAddAppointment = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (newAppointment.title && newAppointment.date) {
-      const appointment: Appointment = {
-        id: Date.now().toString(),
-        ...newAppointment
-      }
-      setAppointments([...appointments, appointment])
-      setNewAppointment({
-        title: '',
-        date: '',
-        time: '',
-        notes: '',
-        reminders: true
-      })
+    const newAppointment: Appointment = {
+      id: Date.now().toString(),
+      ...formData
     }
+    setAppointments([...appointments, newAppointment])
+    setFormData({
+      title: '',
+      date: '',
+      time: '',
+      doctor: '',
+      location: '',
+      notes: ''
+    })
+    setShowAddForm(false)
   }
 
-  const handleRemoveAppointment = (id: string) => {
-    setAppointments(appointments.filter(app => app.id !== id))
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }))
   }
 
-  const getDaysInMonth = (month: number, year: number) => {
-    return new Date(year, month + 1, 0).getDate()
+  const deleteAppointment = (id: string) => {
+    setAppointments(appointments.filter(appointment => appointment.id !== id))
   }
 
-  const getFirstDayOfMonth = (month: number, year: number) => {
-    return new Date(year, month, 1).getDay()
-  }
-
-  const getAppointmentsForDate = (date: number) => {
-    const dateString = `${selectedYear}-${String(selectedMonth + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`
-    return appointments.filter(app => app.date === dateString)
-  }
-
-  const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ]
-
-  const daysInMonth = getDaysInMonth(selectedMonth, selectedYear)
-  const firstDay = getFirstDayOfMonth(selectedMonth, selectedYear)
-
-  const renderCalendar = () => {
-    const days = []
-    
-    // Add empty cells for days before the first day of the month
-    for (let i = 0; i < firstDay; i++) {
-      days.push(<div key={`empty-${i}`} className="h-20 bg-gray-50"></div>)
-    }
-    
-    // Add cells for each day of the month
-    for (let day = 1; day <= daysInMonth; day++) {
-      const dayAppointments = getAppointmentsForDate(day)
-      days.push(
-        <div key={day} className="h-20 border border-gray-200 p-1">
-          <div className="text-sm font-medium text-charcoal mb-1">{day}</div>
-          {dayAppointments.map(app => (
-            <div key={app.id} className="text-xs bg-dusty-pink text-white p-1 rounded mb-1 truncate">
-              {app.title}
-            </div>
-          ))}
-        </div>
-      )
-    }
-    
-    return days
-  }
-
-  const upcomingAppointments = appointments
-    .filter(app => new Date(app.date) >= new Date())
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-    .slice(0, 5)
+  const sortedAppointments = [...appointments].sort((a, b) => 
+    new Date(a.date + ' ' + a.time).getTime() - new Date(b.date + ' ' + b.time).getTime()
+  )
 
   return (
-    <div className="page-container">
-      <div className="content-container">
-        {/* Illustration */}
-        <div className="mb-8">
-          <Illustration type="calendar" />
-        </div>
+    <div className="page-container relative">
+      {/* Background decorative elements */}
+      <Illustration type="wave-pattern" className="pointer-events-none" />
+      <Illustration type="dot-pattern" className="pointer-events-none" />
 
-        {/* Heading */}
-        <h1 className="text-4xl font-playfair font-semibold text-charcoal text-center mb-6">
-          Appointments Calendar
-        </h1>
+      <div className="content-container relative z-10">
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Left side - Calendar content */}
+          <div className="flex-1">
+            <h1 className="text-5xl font-playfair font-semibold text-charcoal text-center mb-3">
+              Calendar
+            </h1>
+            <p className="text-xl text-lato text-charcoal text-center mb-12 leading-relaxed">
+              Keep track of your appointments and healthcare visits
+            </p>
 
-        {/* Add Appointment Form */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm mb-6">
-          <h2 className="text-2xl font-playfair font-medium text-charcoal mb-4">
-            Add Appointment
-          </h2>
-          <form onSubmit={handleAddAppointment} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-charcoal mb-2">
-                Title
-              </label>
-              <input
-                type="text"
-                value={newAppointment.title}
-                onChange={(e) => setNewAppointment({ ...newAppointment, title: e.target.value })}
-                placeholder="Doctor's name or appointment type"
-                className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dusty-pink focus:border-transparent"
-              />
+            {/* Add Appointment Button */}
+            <div className="mb-8">
+              <button
+                onClick={() => setShowAddForm(true)}
+                className="w-full mobile-button"
+              >
+                + Add New Appointment
+              </button>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-charcoal mb-2">
-                  Date
-                </label>
-                <input
-                  type="date"
-                  value={newAppointment.date}
-                  onChange={(e) => setNewAppointment({ ...newAppointment, date: e.target.value })}
-                  className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dusty-pink focus:border-transparent"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-charcoal mb-2">
-                  Time
-                </label>
-                <input
-                  type="time"
-                  value={newAppointment.time}
-                  onChange={(e) => setNewAppointment({ ...newAppointment, time: e.target.value })}
-                  className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dusty-pink focus:border-transparent"
-                />
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-charcoal mb-2">
-                Notes
-              </label>
-              <textarea
-                value={newAppointment.notes}
-                onChange={(e) => setNewAppointment({ ...newAppointment, notes: e.target.value })}
-                placeholder="Any notes or reminders"
-                className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-dusty-pink focus:border-transparent resize-none"
-                rows={3}
-              />
-            </div>
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                id="reminders"
-                checked={newAppointment.reminders}
-                onChange={(e) => setNewAppointment({ ...newAppointment, reminders: e.target.checked })}
-                className="mr-2"
-              />
-              <label htmlFor="reminders" className="text-sm text-charcoal">
-                Enable reminders
-              </label>
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-dusty-pink text-white py-3 rounded-xl font-medium hover:bg-opacity-90 transition-colors duration-200"
-            >
-              Add Appointment
-            </button>
-          </form>
-        </div>
 
-        {/* Month Navigation */}
-        <div className="flex justify-between items-center mb-4">
-          <button
-            onClick={() => {
-              if (selectedMonth === 0) {
-                setSelectedMonth(11)
-                setSelectedYear(selectedYear - 1)
-              } else {
-                setSelectedMonth(selectedMonth - 1)
-              }
-            }}
-            className="text-dusty-pink hover:text-opacity-80 transition-colors duration-200"
-          >
-            ← Previous
-          </button>
-          <h3 className="text-xl font-playfair font-medium text-charcoal">
-            {monthNames[selectedMonth]} {selectedYear}
-          </h3>
-          <button
-            onClick={() => {
-              if (selectedMonth === 11) {
-                setSelectedMonth(0)
-                setSelectedYear(selectedYear + 1)
-              } else {
-                setSelectedMonth(selectedMonth + 1)
-              }
-            }}
-            className="text-dusty-pink hover:text-opacity-80 transition-colors duration-200"
-          >
-            Next →
-          </button>
-        </div>
+            {/* Appointments List */}
+            <div className="space-y-4">
+              {sortedAppointments.length === 0 ? (
+                <div className="mobile-card text-center py-12">
+                  <p className="text-gray-600 mb-4">No appointments scheduled yet</p>
+                  <p className="text-sm text-gray-500">Add your first appointment to get started</p>
+                </div>
+              ) : (
+                sortedAppointments.map((appointment) => (
+                  <div key={appointment.id} className="mobile-card relative overflow-hidden">
+                    {/* Card background pattern */}
+                    <div className="absolute top-0 right-0 w-12 h-12 bg-gradient-to-br from-sage to-transparent opacity-10 rounded-full -mr-6 -mt-6"></div>
 
-        {/* Calendar Grid */}
-        <div className="bg-white rounded-2xl p-4 shadow-sm mb-6">
-          <div className="grid grid-cols-7 gap-1 mb-2">
-            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-              <div key={day} className="text-center text-sm font-medium text-gray-600 p-2">
-                {day}
-              </div>
-            ))}
-          </div>
-          <div className="grid grid-cols-7 gap-1">
-            {renderCalendar()}
-          </div>
-        </div>
-
-        {/* Upcoming Appointments */}
-        {upcomingAppointments.length > 0 && (
-          <div className="space-y-4">
-            <h2 className="text-2xl font-playfair font-medium text-charcoal">
-              Upcoming Appointments
-            </h2>
-            {upcomingAppointments.map((appointment) => (
-              <div key={appointment.id} className="bg-white rounded-2xl p-4 shadow-sm">
-                <div className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <h3 className="font-medium text-charcoal">{appointment.title}</h3>
-                    <p className="text-sm text-gray-600">
-                      {new Date(appointment.date).toLocaleDateString()}
-                      {appointment.time && ` at ${appointment.time}`}
-                    </p>
-                    {appointment.notes && (
-                      <p className="text-sm text-charcoal mt-2">{appointment.notes}</p>
-                    )}
-                    {appointment.reminders && (
-                      <span className="inline-block bg-sage bg-opacity-20 text-sage text-xs px-2 py-1 rounded-full mt-2">
-                        🔔 Reminders On
-                      </span>
-                    )}
+                    <div className="relative z-10">
+                      <div className="flex justify-between items-start mb-3">
+                        <h3 className="text-xl font-playfair font-medium text-charcoal">
+                          {appointment.title}
+                        </h3>
+                        <button
+                          onClick={() => deleteAppointment(appointment.id)}
+                          className="text-red-500 hover:text-red-700 text-sm"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                          <span className="font-medium text-gray-600">Date:</span>
+                          <p className="text-charcoal">{appointment.date}</p>
+                        </div>
+                        <div>
+                          <span className="font-medium text-gray-600">Time:</span>
+                          <p className="text-charcoal">{appointment.time}</p>
+                        </div>
+                        <div>
+                          <span className="font-medium text-gray-600">Doctor:</span>
+                          <p className="text-charcoal">{appointment.doctor}</p>
+                        </div>
+                        <div>
+                          <span className="font-medium text-gray-600">Location:</span>
+                          <p className="text-charcoal">{appointment.location}</p>
+                        </div>
+                      </div>
+                      
+                      {appointment.notes && (
+                        <div className="mt-3">
+                          <span className="font-medium text-gray-600 text-sm">Notes:</span>
+                          <p className="text-charcoal text-sm mt-1">{appointment.notes}</p>
+                        </div>
+                      )}
+                    </div>
                   </div>
+                ))
+              )}
+            </div>
+          </div>
+
+          {/* Right side - Calendar illustration */}
+          <div className="lg:w-80 flex-shrink-0">
+            <div className="sticky top-8">
+              <Illustration type="calendar" size="large" className="mb-6" />
+              
+              <div className="mobile-card relative overflow-hidden">
+                {/* Card background pattern */}
+                <div className="absolute top-0 left-0 w-12 h-12 bg-gradient-to-br from-dusty-pink to-transparent opacity-10 rounded-full -ml-6 -mt-6"></div>
+
+                <h3 className="text-xl font-playfair font-medium text-charcoal mb-4 relative z-10">
+                  Planning Tips
+                </h3>
+                <ul className="space-y-2 text-sm text-charcoal relative z-10">
+                  <li className="flex items-start space-x-2">
+                    <div className="w-1.5 h-1.5 bg-sage rounded-full mt-2 flex-shrink-0"></div>
+                    <span>Write down your questions before appointments</span>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <div className="w-1.5 h-1.5 bg-sage rounded-full mt-2 flex-shrink-0"></div>
+                    <span>Bring a list of current medications</span>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <div className="w-1.5 h-1.5 bg-sage rounded-full mt-2 flex-shrink-0"></div>
+                    <span>Note any new symptoms or changes</span>
+                  </li>
+                  <li className="flex items-start space-x-2">
+                    <div className="w-1.5 h-1.5 bg-sage rounded-full mt-2 flex-shrink-0"></div>
+                    <span>Plan to arrive 10-15 minutes early</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Add Appointment Modal */}
+        {showAddForm && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-6 z-50">
+            <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl">
+              <h3 className="text-2xl font-playfair font-medium text-charcoal mb-6">
+                Add New Appointment
+              </h3>
+              
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Appointment Title
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.title}
+                    onChange={(e) => handleInputChange('title', e.target.value)}
+                    className="w-full p-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-sage focus:border-transparent"
+                    required
+                  />
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Date
+                    </label>
+                    <input
+                      type="date"
+                      value={formData.date}
+                      onChange={(e) => handleInputChange('date', e.target.value)}
+                      className="w-full p-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-sage focus:border-transparent"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Time
+                    </label>
+                    <input
+                      type="time"
+                      value={formData.time}
+                      onChange={(e) => handleInputChange('time', e.target.value)}
+                      className="w-full p-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-sage focus:border-transparent"
+                      required
+                    />
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Doctor/Provider
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.doctor}
+                    onChange={(e) => handleInputChange('doctor', e.target.value)}
+                    className="w-full p-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-sage focus:border-transparent"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Location
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.location}
+                    onChange={(e) => handleInputChange('location', e.target.value)}
+                    className="w-full p-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-sage focus:border-transparent"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Notes (Optional)
+                  </label>
+                  <textarea
+                    value={formData.notes}
+                    onChange={(e) => handleInputChange('notes', e.target.value)}
+                    className="w-full p-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-sage focus:border-transparent"
+                    rows={3}
+                  />
+                </div>
+                
+                <div className="flex space-x-4 pt-4">
                   <button
-                    onClick={() => handleRemoveAppointment(appointment.id)}
-                    className="text-red-500 hover:text-red-700 transition-colors duration-200 ml-2"
+                    type="button"
+                    onClick={() => setShowAddForm(false)}
+                    className="flex-1 px-6 py-3 border-2 border-gray-300 text-charcoal rounded-2xl font-medium hover:bg-gray-50 transition-colors"
                   >
-                    🗑️
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-1 px-6 py-3 bg-sage text-white rounded-2xl font-medium hover:bg-opacity-90 transition-colors"
+                  >
+                    Add Appointment
                   </button>
                 </div>
-              </div>
-            ))}
+              </form>
+            </div>
           </div>
         )}
       </div>
-      
       <Navigation />
     </div>
   )

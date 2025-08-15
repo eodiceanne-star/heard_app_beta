@@ -76,7 +76,7 @@ export default function DashboardPage() {
         <div className="flex justify-between items-start mb-8">
           <div className="flex-1">
             <div className="mb-8">
-              <Illustration type="group-support" size="large" className="mb-6" />
+              <Illustration type="home-plant" size="large" className="mb-6" />
             </div>
             
             <h1 className="text-5xl font-playfair font-semibold text-charcoal text-center mb-3">

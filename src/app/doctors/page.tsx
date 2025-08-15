@@ -73,7 +73,7 @@ export default function DoctorsPage() {
       
       <div className="content-container relative z-10">
         <div className="mb-12">
-          <Illustration type="doctor-helpful" size="large" className="mb-6" />
+          <Illustration type="doctor-wheels" size="large" className="mb-6" />
         </div>
         
         <h1 className="text-5xl font-playfair font-semibold text-charcoal text-center mb-3">Find a Doctor</h1>

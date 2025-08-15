@@ -1,7 +1,9 @@
 'use client'
 import React, { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
 import Navigation from '@/components/Navigation'
 import Illustration from '@/components/Illustration'
+import { avatarOptions, getAvatarById } from '@/assets/images/openpeeps'
 
 interface Profile {
   displayName: string
@@ -73,7 +75,7 @@ export default function ProfilePage() {
     setTempProfile(prev => ({ ...prev, profileImage: null }))
   }
 
-  const avatars = ['👩', '👩‍🦰', '👩‍🦱', '👩‍🦳', '👩‍🦲', '👤']
+  // Avatar selection is now handled by Open Peeps images
 
   return (
     <div className="page-container relative">
@@ -105,8 +107,14 @@ export default function ProfilePage() {
                     className="w-32 h-32 rounded-full object-cover border-4 border-sage shadow-lg"
                   />
                 ) : (
-                  <div className="w-32 h-32 bg-gradient-to-br from-sage to-dusty-pink rounded-full flex items-center justify-center text-white text-6xl shadow-lg">
-                    {tempProfile.avatar}
+                  <div className="w-32 h-32 bg-gradient-to-br from-sage to-dusty-pink rounded-full flex items-center justify-center shadow-lg overflow-hidden">
+                    <Image
+                      src={getAvatarById(tempProfile.avatar)}
+                      alt="Profile avatar"
+                      width={128}
+                      height={128}
+                      className="w-full h-full object-cover rounded-full"
+                    />
                   </div>
                 )
               ) : (
@@ -117,8 +125,14 @@ export default function ProfilePage() {
                     className="w-32 h-32 rounded-full object-cover border-4 border-sage shadow-lg"
                   />
                 ) : (
-                  <div className="w-32 h-32 bg-gradient-to-br from-sage to-dusty-pink rounded-full flex items-center justify-center text-white text-6xl shadow-lg">
-                    {profile.avatar}
+                  <div className="w-32 h-32 bg-gradient-to-br from-sage to-dusty-pink rounded-full flex items-center justify-center shadow-lg overflow-hidden">
+                    <Image
+                      src={getAvatarById(profile.avatar)}
+                      alt="Profile avatar"
+                      width={128}
+                      height={128}
+                      className="w-full h-full object-cover rounded-full"
+                    />
                   </div>
                 )
               )}
@@ -157,19 +171,25 @@ export default function ProfilePage() {
                   className="hidden"
                 />
                 
-                <label className="block text-lg font-medium text-charcoal mb-4">Or Choose Avatar</label>
-                <div className="flex justify-center space-x-3">
-                  {avatars.map(avatar => (
+                <label className="block text-lg font-medium text-charcoal mb-4">Or Choose Open Peeps Avatar</label>
+                <div className="grid grid-cols-5 gap-3 max-w-md mx-auto">
+                  {avatarOptions.map(avatar => (
                     <button
-                      key={avatar}
-                      onClick={() => handleAvatarChange(avatar)}
-                      className={`w-16 h-16 rounded-full flex items-center justify-center text-3xl transition-all duration-200 ${
-                        tempProfile.avatar === avatar
-                          ? 'bg-dusty-pink text-white shadow-lg scale-110'
-                          : 'bg-gray-100 text-charcoal hover:bg-gray-200 hover:scale-105'
+                      key={avatar.id}
+                      onClick={() => handleAvatarChange(avatar.id)}
+                      className={`w-16 h-16 rounded-full flex items-center justify-center transition-all duration-200 overflow-hidden ${
+                        tempProfile.avatar === avatar.id
+                          ? 'ring-4 ring-dusty-pink shadow-lg scale-110'
+                          : 'ring-2 ring-gray-200 hover:ring-dusty-pink hover:scale-105'
                       }`}
                     >
-                      {avatar}
+                      <Image
+                        src={avatar.src}
+                        alt={avatar.name}
+                        width={64}
+                        height={64}
+                        className="w-full h-full object-cover rounded-full"
+                      />
                     </button>
                   ))}
                 </div>

@@ -87,7 +87,7 @@ Notes: ${entry.notes}
       <div className="content-container">
         {/* Illustration */}
         <div className="mb-8">
-          <Illustration type="clipboard" />
+          <Illustration type="symptom-notebook" size="large" />
         </div>
 
         {/* Heading */}
