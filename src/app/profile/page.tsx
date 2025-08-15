@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Navigation from '@/components/Navigation'
 import Illustration from '@/components/Illustration'
-import DecorativeIllustrations from '@/components/DecorativeIllustrations'
 import { avatarOptions, getAvatarById } from '@/assets/images/openpeeps'
 
 interface Profile {
@@ -81,7 +80,8 @@ export default function ProfilePage() {
   return (
     <div className="page-container relative">
       {/* Background decorative elements */}
-      <DecorativeIllustrations pageType="profile" />
+      <Illustration type="wave-pattern" className="pointer-events-none" />
+      <Illustration type="dot-pattern" className="pointer-events-none" />
       
       <div className="content-container relative z-10">
         <div className="mb-12">

@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react'
 import Navigation from '@/components/Navigation'
 import Illustration from '@/components/Illustration'
-import DecorativeIllustrations from '@/components/DecorativeIllustrations'
 
 interface MusicTrack {
   id: string
@@ -80,7 +79,6 @@ export default function MusicPage() {
       {/* Background decorative elements */}
       <Illustration type="wave-pattern" className="pointer-events-none" />
       <Illustration type="dot-pattern" className="pointer-events-none" />
-      <DecorativeIllustrations pageType="music" />
       
       <div className="content-container relative z-10">
         <div className="mb-12">

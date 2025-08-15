@@ -11,13 +11,11 @@ export const coolKidsImages = {
   notebook: '/assets/images/openpeeps/patterns/cool-kids-notebook.png',
   handsContact: '/assets/images/openpeeps/patterns/hands-contact.png',
   
-  // Additional characters for avatar selection and decorative use
+  // Additional characters for avatar selection
   sitting: '/assets/images/openpeeps/coolkids/cool-kids-sitting.png',
   standing: '/assets/images/openpeeps/coolkids/cool-kids-standing.png',
   stayingHome: '/assets/images/openpeeps/coolkids/cool-kids-staying-home.png',
   feedback: '/assets/images/openpeeps/coolkids/cool-kids-feedback.png',
-  onlineConcert: '/assets/images/openpeeps/coolkids/cool-kids-online-concert.png',
-  performing: '/assets/images/openpeeps/coolkids/cool-kids-performing.png',
   ridingAround: '/assets/images/openpeeps/patterns/cool-kids-riding-around.png',
   coffeeMug: '/assets/images/openpeeps/patterns/cool-kids-coffee-mug.png',
   notes: '/assets/images/openpeeps/patterns/cool-kids-notes.png',
@@ -52,8 +50,6 @@ export const avatarOptions = [
   { id: 'standing', src: coolKidsImages.standing, name: 'Standing' },
   { id: 'stayingHome', src: coolKidsImages.stayingHome, name: 'Staying Home' },
   { id: 'feedback', src: coolKidsImages.feedback, name: 'Feedback' },
-  { id: 'onlineConcert', src: coolKidsImages.onlineConcert, name: 'Online Concert' },
-  { id: 'performing', src: coolKidsImages.performing, name: 'Performing' },
   { id: 'ridingAround', src: coolKidsImages.ridingAround, name: 'Riding Around' },
   { id: 'coffeeMug', src: coolKidsImages.coffeeMug, name: 'Coffee Mug' },
   { id: 'notes', src: coolKidsImages.notes, name: 'Notes' },
