@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import Navigation from '@/components/Navigation'
 import Illustration from '@/components/Illustration'
 import DecorativeIllustrations from '@/components/DecorativeIllustrations'
+import Image from 'next/image'
 import forumData from '@/data/forumData.json'
 
 interface Thread {
@@ -133,6 +134,17 @@ export default function ForumPage() {
       <Illustration type="wave-pattern" className="pointer-events-none" />
       <Illustration type="dot-pattern" className="pointer-events-none" />
       <DecorativeIllustrations />
+      
+      {/* Cool Kids Online Concert illustration */}
+      <div className="fixed top-1/4 right-8 w-28 h-28 opacity-50 pointer-events-none z-0">
+        <Image
+          src="/assets/images/openpeeps/coolkids/cool-kids-online-concert.png"
+          alt="Cool kids online concert"
+          width={112}
+          height={112}
+          className="w-full h-full object-contain"
+        />
+      </div>
       
       <div className="content-container relative z-10">
         <div className="mb-12">

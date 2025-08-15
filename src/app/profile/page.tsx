@@ -107,13 +107,13 @@ export default function ProfilePage() {
                     className="w-32 h-32 rounded-full object-cover border-4 border-sage shadow-lg"
                   />
                 ) : (
-                  <div className="w-32 h-32 bg-gradient-to-br from-cream to-dusty-pink rounded-full flex items-center justify-center shadow-lg overflow-hidden p-3">
+                  <div className="w-32 h-32 bg-gradient-to-br from-cream to-dusty-pink rounded-full flex items-center justify-center shadow-lg overflow-hidden">
                     <Image
                       src={getAvatarById(tempProfile.avatar)}
                       alt="Profile avatar"
                       width={128}
                       height={128}
-                      className="w-full h-full object-contain"
+                      className="w-full h-full object-contain object-center"
                     />
                   </div>
                 )
@@ -125,13 +125,13 @@ export default function ProfilePage() {
                     className="w-32 h-32 rounded-full object-cover border-4 border-sage shadow-lg"
                   />
                 ) : (
-                  <div className="w-32 h-32 bg-gradient-to-br from-cream to-dusty-pink rounded-full flex items-center justify-center shadow-lg overflow-hidden p-3">
+                  <div className="w-32 h-32 bg-gradient-to-br from-cream to-dusty-pink rounded-full flex items-center justify-center shadow-lg overflow-hidden">
                     <Image
                       src={getAvatarById(profile.avatar)}
                       alt="Profile avatar"
                       width={128}
                       height={128}
-                      className="w-full h-full object-contain"
+                      className="w-full h-full object-contain object-center"
                     />
                   </div>
                 )
@@ -188,7 +188,7 @@ export default function ProfilePage() {
                         alt={avatar.name}
                         width={64}
                         height={64}
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-contain object-center"
                       />
                     </button>
                   ))}

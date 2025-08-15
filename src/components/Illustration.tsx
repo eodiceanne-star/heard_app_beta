@@ -64,13 +64,13 @@ export default function Illustration({ type, className = '', size = 'medium' }: 
   // For actual images, use Next.js Image component
   return (
     <div className={`text-center ${className}`}>
-      <div className={`${sizeClasses[size]} mx-auto bg-gradient-to-br from-cream to-dusty-pink rounded-full flex items-center justify-center shadow-lg overflow-hidden p-2`}>
+      <div className={`${sizeClasses[size]} mx-auto bg-gradient-to-br from-cream to-dusty-pink rounded-full flex items-center justify-center shadow-lg overflow-hidden`}>
         <Image
           src={imagePath}
           alt={`${type} illustration`}
           width={sizePixels[size]}
           height={sizePixels[size]}
-          className="w-full h-full object-contain"
+          className="w-full h-full object-contain object-center"
           priority={size === 'large'}
           onError={(e) => {
             // Fallback to emoji if image fails to load

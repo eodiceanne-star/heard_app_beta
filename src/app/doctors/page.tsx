@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Navigation from '@/components/Navigation'
 import Illustration from '@/components/Illustration'
 import DecorativeIllustrations from '@/components/DecorativeIllustrations'
+import Image from 'next/image'
 import doctorsData from '@/data/doctors.json'
 
 interface Doctor {
@@ -21,12 +22,26 @@ interface Doctor {
   acceptingPatients: boolean
 }
 
+interface NewDoctor {
+  name: string
+  specialty: string
+  location: string
+  zipCode: string
+}
+
 export default function DoctorsPage() {
   const [doctors, setDoctors] = useState<Doctor[]>(doctorsData)
   const [filteredDoctors, setFilteredDoctors] = useState<Doctor[]>(doctorsData)
   const [searchZip, setSearchZip] = useState('')
   const [selectedSpecialty, setSelectedSpecialty] = useState('')
   const [minRating, setMinRating] = useState(0)
+  const [showAddDoctorForm, setShowAddDoctorForm] = useState(false)
+  const [newDoctor, setNewDoctor] = useState<NewDoctor>({
+    name: '',
+    specialty: '',
+    location: '',
+    zipCode: ''
+  })
 
   useEffect(() => {
     let filtered = doctors
@@ -52,6 +67,35 @@ export default function DoctorsPage() {
     setFilteredDoctors(filtered)
   }, [doctors, searchZip, selectedSpecialty, minRating])
 
+  const handleAddDoctor = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!newDoctor.name.trim() || !newDoctor.specialty.trim() || !newDoctor.location.trim()) return
+
+    const doctor: Doctor = {
+      id: Date.now(),
+      name: newDoctor.name,
+      specialty: newDoctor.specialty,
+      location: newDoctor.location,
+      zipCode: newDoctor.zipCode || 'N/A',
+      rating: 0,
+      reviews: [],
+      acceptingPatients: true
+    }
+
+    setDoctors([doctor, ...doctors])
+    setNewDoctor({
+      name: '',
+      specialty: '',
+      location: '',
+      zipCode: ''
+    })
+    setShowAddDoctorForm(false)
+  }
+
+  const handleInputChange = (field: keyof NewDoctor, value: string) => {
+    setNewDoctor(prev => ({ ...prev, [field]: value }))
+  }
+
   const renderStars = (rating: number) => {
     const stars = []
     for (let i = 1; i <= 5; i++) {
@@ -73,6 +117,17 @@ export default function DoctorsPage() {
       <Illustration type="dot-pattern" className="pointer-events-none" />
       <DecorativeIllustrations />
       
+      {/* Cool Kids Standing illustration */}
+      <div className="fixed bottom-8 left-8 w-32 h-32 opacity-60 pointer-events-none z-0">
+        <Image
+          src="/assets/images/openpeeps/coolkids/cool-kids-standing.png"
+          alt="Cool kids standing"
+          width={128}
+          height={128}
+          className="w-full h-full object-contain"
+        />
+      </div>
+      
       <div className="content-container relative z-10">
         <div className="mb-12">
           <Illustration type="doctor-wheels" size="large" className="mb-6" />
@@ -83,10 +138,85 @@ export default function DoctorsPage() {
           Discover supportive healthcare professionals who listen and care
         </p>
         
+        {/* Add Doctor Button */}
+        <div className="mb-8">
+          <button
+            onClick={() => setShowAddDoctorForm(!showAddDoctorForm)}
+            className="w-full mobile-button"
+          >
+            {showAddDoctorForm ? 'Cancel' : '+ Add Doctor to Review'}
+          </button>
+        </div>
+
+        {/* Add Doctor Form */}
+        {showAddDoctorForm && (
+          <div className="mobile-card mb-8 relative overflow-hidden">
+            {/* Card background pattern */}
+            <div className="absolute top-0 left-0 w-16 h-16 bg-gradient-to-br from-dusty-pink to-transparent opacity-10 rounded-full -ml-8 -mt-8"></div>
+            
+            <h2 className="text-2xl font-playfair font-medium text-charcoal mb-6 relative z-10">Add New Doctor</h2>
+            <form onSubmit={handleAddDoctor} className="space-y-6 relative z-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-lg font-medium text-charcoal mb-3">Doctor Name</label>
+                  <input
+                    type="text"
+                    value={newDoctor.name}
+                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    className="w-full p-4 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-dusty-pink focus:border-transparent text-base"
+                    placeholder="Enter doctor's name"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-lg font-medium text-charcoal mb-3">Specialty</label>
+                  <input
+                    type="text"
+                    value={newDoctor.specialty}
+                    onChange={(e) => handleInputChange('specialty', e.target.value)}
+                    className="w-full p-4 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-dusty-pink focus:border-transparent text-base"
+                    placeholder="Enter specialty"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-lg font-medium text-charcoal mb-3">Location</label>
+                  <input
+                    type="text"
+                    value={newDoctor.location}
+                    onChange={(e) => handleInputChange('location', e.target.value)}
+                    className="w-full p-4 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-dusty-pink focus:border-transparent text-base"
+                    placeholder="Enter location"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-lg font-medium text-charcoal mb-3">ZIP Code (Optional)</label>
+                  <input
+                    type="text"
+                    value={newDoctor.zipCode}
+                    onChange={(e) => handleInputChange('zipCode', e.target.value)}
+                    className="w-full p-4 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-dusty-pink focus:border-transparent text-base"
+                    placeholder="Enter ZIP code"
+                  />
+                </div>
+              </div>
+              
+              <button type="submit" className="w-full mobile-button">
+                Add Doctor
+              </button>
+            </form>
+          </div>
+        )}
+        
         <div className="mobile-card mb-8 relative overflow-hidden">
           {/* Card background pattern */}
           <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-sage to-transparent opacity-10 rounded-full -mr-8 -mt-8"></div>
           
+          <h2 className="text-2xl font-playfair font-medium text-charcoal mb-6 relative z-10">Filter & Search</h2>
           <div className="space-y-6 relative z-10">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
@@ -122,6 +252,9 @@ export default function DoctorsPage() {
                   className="w-full p-4 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-dusty-pink focus:border-transparent text-base"
                 >
                   <option value={0}>Any Rating</option>
+                  <option value={1}>1+ Stars</option>
+                  <option value={2}>2+ Stars</option>
+                  <option value={3}>3+ Stars</option>
                   <option value={4}>4+ Stars</option>
                   <option value={4.5}>4.5+ Stars</option>
                   <option value={5}>5 Stars</option>
@@ -168,11 +301,11 @@ export default function DoctorsPage() {
                     )}
                   </div>
                   
-                                     <div className="ml-6 flex-shrink-0">
-                     <div className="w-16 h-16 bg-gradient-to-br from-cream to-dusty-pink rounded-full flex items-center justify-center text-charcoal text-2xl shadow-lg p-2">
-                       👩‍⚕️
-                     </div>
-                   </div>
+                  <div className="ml-6 flex-shrink-0">
+                    <div className="w-16 h-16 bg-gradient-to-br from-cream to-dusty-pink rounded-full flex items-center justify-center text-charcoal text-2xl shadow-lg p-2">
+                      👩‍⚕️
+                    </div>
+                  </div>
                 </div>
                 
                 <div className="flex items-center justify-between">
@@ -200,7 +333,7 @@ export default function DoctorsPage() {
             </div>
             <h3 className="text-2xl font-playfair font-medium text-charcoal mb-4">No doctors found</h3>
             <p className="text-base text-gray-600 leading-relaxed">
-              Try adjusting your search criteria to find more healthcare professionals in your area.
+              Try adjusting your search criteria or add a new doctor to review.
             </p>
           </div>
         )}

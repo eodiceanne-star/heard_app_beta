@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Navigation from '@/components/Navigation'
 import Illustration from '@/components/Illustration'
+import Image from 'next/image'
 
 interface MusicTrack {
   id: string
@@ -79,6 +80,17 @@ export default function MusicPage() {
       {/* Background decorative elements */}
       <Illustration type="wave-pattern" className="pointer-events-none" />
       <Illustration type="dot-pattern" className="pointer-events-none" />
+      
+      {/* Cool Kids Performing illustration */}
+      <div className="fixed bottom-8 right-8 w-32 h-32 opacity-60 pointer-events-none z-0">
+        <Image
+          src="/assets/images/openpeeps/coolkids/cool-kids-performing.png"
+          alt="Cool kids performing"
+          width={128}
+          height={128}
+          className="w-full h-full object-contain"
+        />
+      </div>
       
       <div className="content-container relative z-10">
         <div className="mb-12">

@@ -49,13 +49,13 @@ export default function DecorativeIllustrations({ className = '' }: DecorativeIl
               animation: 'fadeInFloat 2s ease-out forwards'
             }}
           >
-            <div className="w-full h-full bg-gradient-to-br from-cream to-dusty-pink rounded-full flex items-center justify-center shadow-lg overflow-hidden p-1">
+            <div className="w-full h-full bg-gradient-to-br from-cream to-dusty-pink rounded-full flex items-center justify-center shadow-lg overflow-hidden">
               <Image
                 src={imagePath}
                 alt="Decorative illustration"
                 width={64}
                 height={64}
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain object-center"
               />
             </div>
           </div>
