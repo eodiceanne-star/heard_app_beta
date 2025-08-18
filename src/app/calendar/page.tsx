@@ -65,6 +65,26 @@ export default function CalendarPage() {
     setAppointments(appointments.filter(appointment => appointment.id !== id))
   }
 
+  // Handle escape key to close modal
+  React.useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && showAddForm) {
+        setShowAddForm(false)
+      }
+    }
+
+    if (showAddForm) {
+      document.addEventListener('keydown', handleEscape)
+      // Prevent body scroll when modal is open
+      document.body.style.overflow = 'hidden'
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape)
+      document.body.style.overflow = 'unset'
+    }
+  }, [showAddForm])
+
   const sortedAppointments = [...appointments].sort((a, b) => 
     new Date(a.date + ' ' + a.time).getTime() - new Date(b.date + ' ' + b.time).getTime()
   )
@@ -192,11 +212,23 @@ export default function CalendarPage() {
 
         {/* Add Appointment Modal */}
         {showAddForm && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-6 z-50">
-            <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl">
-              <h3 className="text-2xl font-playfair font-medium text-charcoal mb-6">
-                Add New Appointment
-              </h3>
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto"
+            onClick={(e) => e.target === e.currentTarget && setShowAddForm(false)}
+          >
+            <div className="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl my-8 max-h-[90vh] overflow-y-auto">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-2xl font-playfair font-medium text-charcoal">
+                  Add New Appointment
+                </h3>
+                <button
+                  onClick={() => setShowAddForm(false)}
+                  className="text-gray-500 hover:text-gray-700 text-2xl font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+                  aria-label="Close modal"
+                >
+                  ×
+                </button>
+              </div>
               
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
