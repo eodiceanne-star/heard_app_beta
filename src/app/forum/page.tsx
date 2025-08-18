@@ -5,6 +5,7 @@ import Illustration from '@/components/Illustration'
 import DecorativeIllustrations from '@/components/DecorativeIllustrations'
 import Image from 'next/image'
 import forumData from '@/data/forumData.json'
+import { getRandomCoolKidsImage, getRandomAvatar } from '@/assets/images/openpeeps'
 
 interface Thread {
   id: string
@@ -47,6 +48,14 @@ export default function ForumPage() {
   const [newComment, setNewComment] = useState('')
   const [showReportDialog, setShowReportDialog] = useState(false)
   const [reportingThread, setReportingThread] = useState<Thread | null>(null)
+  
+  // Randomized images for this page load
+  const [randomBackgroundImage, setRandomBackgroundImage] = useState('')
+
+  // Initialize random images on mount
+  useEffect(() => {
+    setRandomBackgroundImage(getRandomCoolKidsImage())
+  }, [])
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
@@ -60,7 +69,10 @@ export default function ForumPage() {
 
   const handleCreateThread = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!newThread.title.trim() || !newThread.content.trim()) return
+    if (!newThread.title.trim() || !newThread.content.trim()) {
+      console.log('Please fill in all required fields')
+      return
+    }
 
     const thread: Thread = {
       id: Date.now().toString(),
@@ -82,10 +94,14 @@ export default function ForumPage() {
     setNewThread({ title: '', content: '', selectedTags: [] })
     setShowNewThreadForm(false)
     setIsAnonymous(false)
+    console.log('Thread created successfully!')
   }
 
   const handleAddComment = (threadId: string) => {
-    if (!newComment.trim()) return
+    if (!newComment.trim()) {
+      console.log('Please enter a comment')
+      return
+    }
 
     const comment: Comment = {
       id: Date.now().toString(),
@@ -99,15 +115,23 @@ export default function ForumPage() {
       timestamp: new Date().toISOString()
     }
 
-    setThreads(threads.map(thread => 
-      thread.id === threadId 
-        ? { ...thread, comments: [...thread.comments, comment], commentCount: thread.commentCount + 1 }
-        : thread
-    ))
+    const updatedThreads = threads.map(thread => {
+      if (thread.id === threadId) {
+        return {
+          ...thread,
+          comments: [...thread.comments, comment],
+          commentCount: thread.comments.length + 1
+        }
+      }
+      return thread
+    })
+
+    setThreads(updatedThreads)
     setNewComment('')
+    console.log('Comment added successfully!')
   }
 
-  const toggleTag = (tag: string) => {
+  const handleTagToggle = (tag: string) => {
     setNewThread(prev => ({
       ...prev,
       selectedTags: prev.selectedTags.includes(tag)
@@ -116,16 +140,38 @@ export default function ForumPage() {
     }))
   }
 
-  const handleReport = (thread: Thread) => {
+  const handleReportThread = (thread: Thread) => {
     setReportingThread(thread)
     setShowReportDialog(true)
+    console.log(`Report dialog opened for thread: ${thread.title}`)
   }
 
-  const confirmReport = () => {
-    // Mock report functionality - in real app, this would send to backend
-    alert(`Thank you for your report. We've received your concern about "${reportingThread?.title}". Our team will review it shortly.`)
+  const handleSubmitReport = () => {
+    if (reportingThread) {
+      console.log(`Report submitted for thread: ${reportingThread.title}`)
+      setShowReportDialog(false)
+      setReportingThread(null)
+    }
+  }
+
+  const handleCancelReport = () => {
     setShowReportDialog(false)
     setReportingThread(null)
+  }
+
+  const handleToggleAnonymous = () => {
+    setIsAnonymous(!isAnonymous)
+    console.log(`Anonymous mode ${!isAnonymous ? 'enabled' : 'disabled'}`)
+  }
+
+  const handleShareThread = (thread: Thread) => {
+    console.log(`Sharing thread: ${thread.title}`)
+    // Placeholder for share functionality
+  }
+
+  const handleBookmarkThread = (thread: Thread) => {
+    console.log(`Bookmarking thread: ${thread.title}`)
+    // Placeholder for bookmark functionality
   }
 
   return (
@@ -135,16 +181,16 @@ export default function ForumPage() {
       <Illustration type="dot-pattern" className="pointer-events-none" />
       <DecorativeIllustrations />
       
-      {/* Cool Kids Online Concert illustration */}
-      <div className="fixed top-1/4 right-8 w-28 h-28 opacity-50 pointer-events-none z-0">
-        <Image
-          src="/assets/images/openpeeps/coolkids/cool-kids-online-concert.png"
-          alt="Cool kids online concert"
-          width={112}
-          height={112}
-          className="w-full h-full object-contain"
-        />
-      </div>
+              {/* Random Cool Kids illustration */}
+        <div className="fixed top-1/4 right-8 w-28 h-28 opacity-50 pointer-events-none z-0">
+          <Image
+            src={randomBackgroundImage}
+            alt="Cool kids illustration"
+            width={112}
+            height={112}
+            className="w-full h-full object-contain"
+          />
+        </div>
       
       <div className="content-container relative z-10">
         <div className="mb-12">
@@ -204,7 +250,7 @@ export default function ForumPage() {
                     <button
                       key={tag}
                       type="button"
-                      onClick={() => toggleTag(tag)}
+                      onClick={() => handleTagToggle(tag)}
                       className={`px-4 py-2 rounded-full text-base font-medium transition-colors ${
                         newThread.selectedTags.includes(tag)
                           ? 'bg-dusty-pink text-white shadow-md'
@@ -222,7 +268,7 @@ export default function ForumPage() {
                   type="checkbox"
                   id="anonymous"
                   checked={isAnonymous}
-                  onChange={(e) => setIsAnonymous(e.target.checked)}
+                  onChange={handleToggleAnonymous}
                   className="rounded w-5 h-5"
                 />
                 <label htmlFor="anonymous" className="text-base text-charcoal">
@@ -271,7 +317,7 @@ export default function ForumPage() {
                       {thread.commentCount} comment{thread.commentCount !== 1 ? 's' : ''}
                     </button>
                     <button 
-                      onClick={() => handleReport(thread)}
+                      onClick={() => handleReportThread(thread)}
                       className="text-gray-500 text-base hover:text-charcoal"
                     >
                       Report
@@ -329,13 +375,13 @@ export default function ForumPage() {
               </p>
               <div className="flex space-x-4">
                 <button
-                  onClick={() => setShowReportDialog(false)}
+                  onClick={handleCancelReport}
                   className="flex-1 px-6 py-3 border border-gray-300 text-charcoal rounded-2xl font-medium hover:bg-gray-50 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
-                  onClick={confirmReport}
+                  onClick={handleSubmitReport}
                   className="flex-1 px-6 py-3 bg-dusty-pink text-white rounded-2xl font-medium hover:bg-opacity-90 transition-colors"
                 >
                   Report

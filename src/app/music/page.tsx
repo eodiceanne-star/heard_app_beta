@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Navigation from '@/components/Navigation'
 import Illustration from '@/components/Illustration'
 import Image from 'next/image'
+import { getRandomCoolKidsImage } from '@/assets/images/openpeeps'
 
 interface MusicTrack {
   id: string
@@ -15,6 +16,14 @@ interface MusicTrack {
 export default function MusicPage() {
   const [customTracks, setCustomTracks] = useState<MusicTrack[]>([])
   const [newTrack, setNewTrack] = useState({ title: '', artist: '', url: '' })
+  
+  // Randomized images for this page load
+  const [randomBackgroundImage, setRandomBackgroundImage] = useState('')
+
+  // Initialize random images on mount
+  useEffect(() => {
+    setRandomBackgroundImage(getRandomCoolKidsImage())
+  }, [])
 
   const samplePlaylist: MusicTrack[] = [
     {
@@ -56,7 +65,10 @@ export default function MusicPage() {
 
   const handleAddTrack = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!newTrack.title.trim() || !newTrack.artist.trim() || !newTrack.url.trim()) return
+    if (!newTrack.title.trim() || !newTrack.artist.trim() || !newTrack.url.trim()) {
+      console.log('Please fill in all required fields')
+      return
+    }
 
     const track: MusicTrack = {
       id: Date.now().toString(),
@@ -67,10 +79,27 @@ export default function MusicPage() {
 
     setCustomTracks([track, ...customTracks])
     setNewTrack({ title: '', artist: '', url: '' })
+    console.log('Track added successfully!')
   }
 
   const handleRemoveTrack = (id: string) => {
     setCustomTracks(customTracks.filter(track => track.id !== id))
+    console.log('Track removed successfully!')
+  }
+
+  const handlePlayTrack = (track: MusicTrack) => {
+    console.log(`Playing track: ${track.title} by ${track.artist}`)
+    // Placeholder for play functionality
+  }
+
+  const handleShareTrack = (track: MusicTrack) => {
+    console.log(`Sharing track: ${track.title} by ${track.artist}`)
+    // Placeholder for share functionality
+  }
+
+  const handleClearAllTracks = () => {
+    setCustomTracks([])
+    console.log('All custom tracks cleared')
   }
 
   const allTracks = [...samplePlaylist, ...customTracks]
@@ -81,11 +110,11 @@ export default function MusicPage() {
       <Illustration type="wave-pattern" className="pointer-events-none" />
       <Illustration type="dot-pattern" className="pointer-events-none" />
       
-      {/* Cool Kids Performing illustration */}
+      {/* Random Cool Kids illustration */}
       <div className="fixed bottom-8 right-8 w-32 h-32 opacity-60 pointer-events-none z-0">
         <Image
-          src="/assets/images/openpeeps/coolkids/cool-kids-performing.png"
-          alt="Cool kids performing"
+          src={randomBackgroundImage}
+          alt="Cool kids illustration"
           width={128}
           height={128}
           className="w-full h-full object-contain"
@@ -101,6 +130,18 @@ export default function MusicPage() {
         <p className="text-xl text-lato text-charcoal text-center mb-12 leading-relaxed">
           Relaxing playlists to help you find peace and reduce stress
         </p>
+        
+        {/* Clear All Button */}
+        {customTracks.length > 0 && (
+          <div className="mb-8 text-center">
+            <button
+              onClick={handleClearAllTracks}
+              className="px-6 py-3 bg-gray-200 text-gray-700 rounded-2xl font-medium hover:bg-gray-300 transition-colors"
+            >
+              Clear All Custom Tracks
+            </button>
+          </div>
+        )}
         
         <div className="mobile-card mb-8 relative overflow-hidden">
           {/* Card background pattern */}
@@ -169,14 +210,18 @@ export default function MusicPage() {
                 </div>
                 
                 <div className="flex items-center space-x-3">
-                  <a
-                    href={track.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-6 py-3 bg-dusty-pink text-white rounded-2xl font-medium hover:bg-opacity-90 transition-colors shadow-md"
+                  <button
+                    onClick={() => handlePlayTrack(track)}
+                    className="px-4 py-3 bg-dusty-pink text-white rounded-2xl font-medium hover:bg-opacity-90 transition-colors shadow-md"
                   >
-                    Listen
-                  </a>
+                    Play
+                  </button>
+                  <button
+                    onClick={() => handleShareTrack(track)}
+                    className="px-4 py-3 bg-gray-200 text-gray-700 rounded-2xl font-medium hover:bg-gray-300 transition-colors"
+                  >
+                    Share
+                  </button>
                   {index >= samplePlaylist.length && (
                     <button
                       onClick={() => handleRemoveTrack(track.id)}

@@ -5,6 +5,7 @@ import Navigation from '@/components/Navigation'
 import Illustration from '@/components/Illustration'
 import Image from 'next/image'
 import doctorsData from '@/data/doctors.json'
+import { getRandomCoolKidsImage, getRandomAvatar } from '@/assets/images/openpeeps'
 
 interface Doctor {
   id: string
@@ -103,10 +104,16 @@ export default function DoctorsPage() {
   })
   const [userProfile, setUserProfile] = useState<any>(null)
   const [isClient, setIsClient] = useState(false)
+  
+  // Randomized images for this page load
+  const [randomDoctorAvatar, setRandomDoctorAvatar] = useState('')
+  const [randomBackgroundImage, setRandomBackgroundImage] = useState('')
 
-  // Set client flag on mount
+  // Set client flag on mount and initialize random images
   useEffect(() => {
     setIsClient(true)
+    setRandomDoctorAvatar(getRandomCoolKidsImage())
+    setRandomBackgroundImage(getRandomCoolKidsImage())
   }, [])
 
   // Load initial data and user profile
@@ -188,7 +195,10 @@ export default function DoctorsPage() {
 
   const handleAddDoctor = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!newDoctor.name.trim() || !newDoctor.specialty.trim() || !newDoctor.city.trim() || !newDoctor.state.trim()) return
+    if (!newDoctor.name.trim() || !newDoctor.specialty.trim() || !newDoctor.city.trim() || !newDoctor.state.trim()) {
+      console.log('Please fill in all required fields')
+      return
+    }
 
     const doctor: Doctor = {
       id: Date.now().toString(),
@@ -222,11 +232,15 @@ export default function DoctorsPage() {
       contact: ''
     })
     setShowAddDoctorForm(false)
+    console.log('Doctor added successfully!')
   }
 
   const handleAddReview = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!selectedDoctor || !userProfile || !newReview.text.trim()) return
+    if (!selectedDoctor || !userProfile || !newReview.text.trim()) {
+      console.log('Please fill in all required fields')
+      return
+    }
 
     const review: Review = {
       id: Date.now().toString(),
@@ -267,6 +281,7 @@ export default function DoctorsPage() {
       tags: []
     })
     setShowReviewForm(false)
+    console.log('Review submitted successfully!')
   }
 
   const handleTagToggle = (tag: string) => {
@@ -276,6 +291,18 @@ export default function DoctorsPage() {
         ? prev.tags.filter(t => t !== tag)
         : [...prev.tags, tag]
     }))
+  }
+
+  const handleClearFilters = () => {
+    setSearchZip('')
+    setSelectedSpecialty('')
+    setMinRating(0)
+    console.log('Filters cleared')
+  }
+
+  const handleReportDoctor = (doctorId: string) => {
+    console.log(`Report submitted for doctor ${doctorId}`)
+    // Placeholder for report functionality
   }
 
   const renderStars = (rating: number, interactive = false, onRatingChange?: (rating: number) => void) => {
@@ -322,11 +349,11 @@ export default function DoctorsPage() {
         <Illustration type="wave-pattern" className="pointer-events-none" />
         <Illustration type="dot-pattern" className="pointer-events-none" />
         
-        {/* Cool Kids Standing illustration */}
+        {/* Random Cool Kids illustration */}
         <div className="fixed bottom-8 left-8 w-32 h-32 opacity-60 pointer-events-none z-0">
           <Image
-            src="/assets/images/openpeeps/coolkids/cool-kids-standing.png"
-            alt="Cool kids standing"
+            src={randomBackgroundImage}
+            alt="Cool kids illustration"
             width={128}
             height={128}
             className="w-full h-full object-contain"
@@ -347,38 +374,38 @@ export default function DoctorsPage() {
             <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-sage to-transparent opacity-10 rounded-full -mr-8 -mt-8"></div>
             
             <div className="relative z-10">
-                             <div className="flex items-start justify-between mb-6">
-                 <div className="mr-6 flex-shrink-0">
-                   <div className="w-24 h-24 bg-gradient-to-br from-cream to-sage rounded-full flex items-center justify-center shadow-lg overflow-hidden p-3">
-                     <Image
-                       src="/assets/images/openpeeps/coolkids/cool-kids-standing.png"
-                       alt="Doctor avatar"
-                       width={96}
-                       height={96}
-                       className="w-full h-full object-contain object-center"
-                     />
-                   </div>
-                 </div>
-                 
-                 <div className="flex-1">
-                   <h1 className="text-4xl font-playfair font-semibold text-charcoal mb-2">{selectedDoctor.name}</h1>
-                   <p className="text-xl text-sage font-medium mb-2">{selectedDoctor.specialty}</p>
-                   <p className="text-lg text-gray-600 mb-4">{selectedDoctor.location}</p>
-                   
-                   <div className="flex items-center space-x-2 mb-4">
-                     <div className="flex space-x-1">
-                       {renderStars(selectedDoctor.rating)}
-                     </div>
-                     <span className="text-lg text-charcoal font-medium">{selectedDoctor.rating}</span>
-                     <span className="text-base text-gray-500">({selectedDoctor.reviewCount} reviews)</span>
-                   </div>
-                   
-                   {selectedDoctor.contact && (
-                     <p className="text-base text-gray-600">Contact: {selectedDoctor.contact}</p>
-                   )}
-                 </div>
-               </div>
-              
+              <div className="flex items-start space-x-4 mb-6">
+                <div className="flex-shrink-0">
+                  <div className="w-20 h-20 bg-gradient-to-br from-cream to-sage rounded-full flex items-center justify-center shadow-lg overflow-hidden p-3">
+                    <Image
+                      src={randomDoctorAvatar}
+                      alt="Doctor avatar"
+                      width={80}
+                      height={80}
+                      className="w-full h-full object-contain object-center"
+                    />
+                  </div>
+                </div>
+                
+                <div className="flex-1 min-w-0">
+                  <h1 className="text-3xl font-playfair font-semibold text-charcoal mb-2 truncate">{selectedDoctor.name}</h1>
+                  <p className="text-lg text-sage font-medium mb-2 truncate">{selectedDoctor.specialty}</p>
+                  <p className="text-base text-gray-600 mb-3 truncate">{selectedDoctor.location}</p>
+                  
+                  <div className="flex items-center space-x-2 mb-3">
+                    <div className="flex space-x-1">
+                      {renderStars(selectedDoctor.rating)}
+                    </div>
+                    <span className="text-base text-charcoal font-medium">{selectedDoctor.rating}</span>
+                    <span className="text-sm text-gray-500">({selectedDoctor.reviewCount})</span>
+                  </div>
+                  
+                  {selectedDoctor.contact && (
+                    <p className="text-sm text-gray-600 truncate">Contact: {selectedDoctor.contact}</p>
+                  )}
+                </div>
+              </div>
+             
               <div className="flex items-center justify-between">
                 <span className={`px-4 py-2 rounded-full text-sm font-medium ${
                   selectedDoctor.acceptingPatients 
@@ -388,14 +415,22 @@ export default function DoctorsPage() {
                   {selectedDoctor.acceptingPatients ? 'Accepting Patients' : 'Not Accepting Patients'}
                 </span>
                 
-                {userProfile && (
+                <div className="flex space-x-2">
+                  {userProfile && (
+                    <button
+                      onClick={() => setShowReviewForm(!showReviewForm)}
+                      className="px-6 py-3 bg-dusty-pink text-white rounded-2xl font-medium hover:bg-opacity-90 transition-colors shadow-md"
+                    >
+                      {showReviewForm ? 'Cancel Review' : 'Write a Review'}
+                    </button>
+                  )}
                   <button
-                    onClick={() => setShowReviewForm(!showReviewForm)}
-                    className="px-6 py-3 bg-dusty-pink text-white rounded-2xl font-medium hover:bg-opacity-90 transition-colors shadow-md"
+                    onClick={() => handleReportDoctor(selectedDoctor.id)}
+                    className="px-4 py-3 bg-gray-200 text-gray-700 rounded-2xl font-medium hover:bg-gray-300 transition-colors shadow-md"
                   >
-                    {showReviewForm ? 'Cancel Review' : 'Write a Review'}
+                    Report
                   </button>
-                )}
+                </div>
               </div>
             </div>
           </div>
@@ -465,15 +500,15 @@ export default function DoctorsPage() {
                   <div key={review.id} className="bg-gradient-to-br from-cream to-dusty-pink bg-opacity-20 rounded-2xl p-6">
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex items-center space-x-3">
-                                                 <div className="w-16 h-16 bg-gradient-to-br from-cream to-sage rounded-full flex items-center justify-center shadow-md overflow-hidden p-1">
-                           <Image
-                             src={review.userAvatar || "/assets/images/openpeeps/coolkids/cool-kids-standing.png"}
-                             alt="User avatar"
-                             width={64}
-                             height={64}
-                             className="w-full h-full object-contain object-center"
-                           />
-                         </div>
+                        <div className="w-16 h-16 bg-gradient-to-br from-cream to-sage rounded-full flex items-center justify-center shadow-md overflow-hidden p-1">
+                          <Image
+                            src={review.userAvatar || getRandomAvatar()}
+                            alt="User avatar"
+                            width={64}
+                            height={64}
+                            className="w-full h-full object-contain object-center"
+                          />
+                        </div>
                         <div>
                           <p className="font-medium text-charcoal">{review.userDisplayName}</p>
                           <p className="text-sm text-gray-500">
@@ -518,11 +553,11 @@ export default function DoctorsPage() {
       <Illustration type="wave-pattern" className="pointer-events-none" />
       <Illustration type="dot-pattern" className="pointer-events-none" />
       
-      {/* Cool Kids Standing illustration */}
+      {/* Random Cool Kids illustration */}
       <div className="fixed bottom-8 left-8 w-32 h-32 opacity-60 pointer-events-none z-0">
         <Image
-          src="/assets/images/openpeeps/coolkids/cool-kids-standing.png"
-          alt="Cool kids standing"
+          src={randomBackgroundImage}
+          alt="Cool kids illustration"
           width={128}
           height={128}
           className="w-full h-full object-contain"
@@ -643,7 +678,15 @@ export default function DoctorsPage() {
         <div className="mobile-card mb-8 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-sage to-transparent opacity-10 rounded-full -mr-8 -mt-8"></div>
           
-          <h2 className="text-2xl font-playfair font-medium text-charcoal mb-6 relative z-10">Filter & Search</h2>
+          <div className="flex items-center justify-between mb-6 relative z-10">
+            <h2 className="text-2xl font-playfair font-medium text-charcoal">Filter & Search</h2>
+            <button
+              onClick={handleClearFilters}
+              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-xl font-medium hover:bg-gray-300 transition-colors"
+            >
+              Clear All
+            </button>
+          </div>
           <div className="space-y-6 relative z-10">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
@@ -698,49 +741,49 @@ export default function DoctorsPage() {
               <div className="absolute top-0 left-0 w-12 h-12 bg-gradient-to-br from-dusty-pink to-transparent opacity-10 rounded-full -ml-6 -mt-6"></div>
               
               <div className="relative z-10">
-                                 <div className="flex items-start justify-between mb-4">
-                   <div className="mr-6 flex-shrink-0">
-                     <div className="w-20 h-20 bg-gradient-to-br from-cream to-sage rounded-full flex items-center justify-center shadow-lg overflow-hidden p-2">
-                       <Image
-                         src="/assets/images/openpeeps/coolkids/cool-kids-standing.png"
-                         alt="Doctor avatar"
-                         width={80}
-                         height={80}
-                         className="w-full h-full object-contain object-center"
-                       />
-                     </div>
-                   </div>
-                   
-                   <div className="flex-1">
-                     <h3 className="text-2xl font-playfair font-medium text-charcoal mb-2">{doctor.name}</h3>
-                     <p className="text-lg text-sage font-medium mb-2">{doctor.specialty}</p>
-                     <p className="text-base text-gray-600 mb-3">{doctor.location}</p>
-                     
-                     <div className="flex items-center space-x-2 mb-4">
-                       <div className="flex space-x-1">
-                         {renderStars(doctor.rating)}
-                       </div>
-                       <span className="text-base text-charcoal font-medium">{doctor.rating}</span>
-                       <span className="text-sm text-gray-500">({doctor.reviewCount} reviews)</span>
-                     </div>
-                     
-                     {doctor.reviews.length > 0 && (
-                       <div className="mb-4">
-                         <p className="text-base text-charcoal leading-relaxed mb-3">
-                           "{doctor.reviews[0].text}"
-                         </p>
-                         <div className="flex flex-wrap gap-2">
-                           {doctor.reviews[0].tags.slice(0, 3).map((tag, index) => (
-                             <span key={index} className="px-3 py-1 bg-dusty-pink bg-opacity-20 text-dusty-pink text-sm rounded-full font-medium">
-                               {tag}
-                             </span>
-                           ))}
-                         </div>
-                       </div>
-                     )}
-                   </div>
-                 </div>
-                
+                <div className="flex items-start space-x-4 mb-4">
+                  <div className="flex-shrink-0">
+                    <div className="w-16 h-16 bg-gradient-to-br from-cream to-sage rounded-full flex items-center justify-center shadow-lg overflow-hidden p-2">
+                      <Image
+                        src={randomDoctorAvatar}
+                        alt="Doctor avatar"
+                        width={64}
+                        height={64}
+                        className="w-full h-full object-contain object-center"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-xl font-playfair font-medium text-charcoal mb-1 truncate">{doctor.name}</h3>
+                    <p className="text-base text-sage font-medium mb-1 truncate">{doctor.specialty}</p>
+                    <p className="text-sm text-gray-600 mb-2 truncate">{doctor.location}</p>
+                    
+                    <div className="flex items-center space-x-2 mb-3">
+                      <div className="flex space-x-1">
+                        {renderStars(doctor.rating)}
+                      </div>
+                      <span className="text-sm text-charcoal font-medium">{doctor.rating}</span>
+                      <span className="text-xs text-gray-500">({doctor.reviewCount})</span>
+                    </div>
+                    
+                    {doctor.reviews.length > 0 && (
+                      <div className="mb-3">
+                        <p className="text-sm text-charcoal leading-relaxed mb-2 line-clamp-2">
+                          "{doctor.reviews[0].text}"
+                        </p>
+                        <div className="flex flex-wrap gap-1">
+                          {doctor.reviews[0].tags.slice(0, 2).map((tag, index) => (
+                            <span key={index} className="px-2 py-1 bg-dusty-pink bg-opacity-20 text-dusty-pink text-xs rounded-full font-medium">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+               
                 <div className="flex items-center justify-between">
                   <span className={`px-4 py-2 rounded-full text-sm font-medium ${
                     doctor.acceptingPatients 
@@ -750,12 +793,20 @@ export default function DoctorsPage() {
                     {doctor.acceptingPatients ? 'Accepting Patients' : 'Not Accepting Patients'}
                   </span>
                   
-                  <button
-                    onClick={() => setSelectedDoctor(doctor)}
-                    className="px-6 py-3 bg-dusty-pink text-white rounded-2xl font-medium hover:bg-opacity-90 transition-colors shadow-md"
-                  >
-                    View Profile
-                  </button>
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={() => setSelectedDoctor(doctor)}
+                      className="px-6 py-3 bg-dusty-pink text-white rounded-2xl font-medium hover:bg-opacity-90 transition-colors shadow-md"
+                    >
+                      View Profile
+                    </button>
+                    <button
+                      onClick={() => handleReportDoctor(doctor.id)}
+                      className="px-4 py-3 bg-gray-200 text-gray-700 rounded-2xl font-medium hover:bg-gray-300 transition-colors shadow-md"
+                    >
+                      Report
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

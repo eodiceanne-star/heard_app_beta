@@ -1,14 +1,30 @@
 {
   "name": "heardapp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "mobile:build": "npm run build && npx cap sync",
+    "mobile:ios": "npx cap open ios",
+    "mobile:android": "npx cap open android",
+    "mobile:sync": "npx cap sync",
+    "mobile:run:ios": "npx cap run ios",
+    "mobile:run:android": "npx cap run android",
+    "mobile:build:ios": "npm run mobile:build && npx cap build ios",
+    "mobile:build:android": "npm run mobile:build && npx cap build android",
+    "mobile:setup": "node scripts/build-mobile.js",
+    "fix:avatars": "node scripts/fix-avatars.js",
+    "test:mobile": "npm run build && npm run mobile:sync"
   },
   "dependencies": {
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/core": "^6.0.0",
+    "@capacitor/ios": "^6.0.0",
+    "@capacitor/status-bar": "^6.0.0",
+    "@capacitor/splash-screen": "^6.0.0",
     "@tailwindcss/postcss": "^4.1.12",
     "@types/node": "^22.10.2",
     "@types/react": "^18.3.12",
@@ -22,13 +38,19 @@
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.2"
   },
+  "devDependencies": {
+    "@capacitor/cli": "^6.0.0"
+  },
   "keywords": [
     "healthcare",
     "women",
     "support",
-    "community"
+    "community",
+    "medical",
+    "wellness",
+    "patient-advocacy"
   ],
-  "author": "",
+  "author": "Heard App Team",
   "license": "ISC",
-  "description": "A women's healthcare support platform for those navigating chronic illness and medical gaslighting"
+  "description": "A women's healthcare support platform for those navigating chronic illness and medical gaslighting. Connect with supportive healthcare professionals, track symptoms, and find community support."
 }
