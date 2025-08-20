@@ -25,6 +25,7 @@ export default function ProfilePage() {
   })
   const [isEditing, setIsEditing] = useState(false)
   const [tempProfile, setTempProfile] = useState<Profile>(profile)
+  const [isSaving, setIsSaving] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -40,9 +41,42 @@ export default function ProfilePage() {
     localStorage.setItem('heardProfile', JSON.stringify(profile))
   }, [profile])
 
-  const handleSave = () => {
-    setProfile(tempProfile)
-    setIsEditing(false)
+  const handleSave = async () => {
+    // Validate required fields
+    if (!tempProfile.displayName.trim()) {
+      alert('Please enter a display name')
+      return
+    }
+    
+    setIsSaving(true)
+    
+    try {
+      // Simulate save delay for better UX
+      await new Promise(resolve => setTimeout(resolve, 500))
+      
+      // Save the profile
+      setProfile(tempProfile)
+      setIsEditing(false)
+      
+      // Show success feedback
+      const saveButton = document.querySelector('[data-save-button]') as HTMLButtonElement
+      if (saveButton) {
+        const originalText = saveButton.textContent
+        saveButton.textContent = 'Saved! ✓'
+        saveButton.disabled = true
+        saveButton.className = 'flex-1 px-8 py-4 bg-green-500 text-white rounded-2xl font-medium transition-colors'
+        
+        setTimeout(() => {
+          saveButton.textContent = originalText
+          saveButton.disabled = false
+          saveButton.className = 'flex-1 mobile-button text-lg py-4'
+        }, 2000)
+      }
+    } catch (error) {
+      alert('Failed to save profile. Please try again.')
+    } finally {
+      setIsSaving(false)
+    }
   }
 
   const handleCancel = () => {
@@ -199,7 +233,9 @@ export default function ProfilePage() {
 
           <div className="space-y-6 relative z-10">
             <div>
-              <label className="block text-lg font-medium text-charcoal mb-3">Display Name</label>
+              <label className="block text-lg font-medium text-charcoal mb-3">
+                Display Name <span className="text-red-500">*</span>
+              </label>
               {isEditing ? (
                 <input
                   type="text"
@@ -283,9 +319,17 @@ export default function ProfilePage() {
               <>
                 <button 
                   onClick={handleSave}
-                  className="flex-1 mobile-button text-lg py-4"
+                  data-save-button
+                  className={`flex-1 text-lg py-4 rounded-2xl font-medium transition-colors ${
+                    isSaving 
+                      ? 'bg-gray-400 text-white cursor-not-allowed' 
+                      : !tempProfile.displayName.trim()
+                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      : 'mobile-button'
+                  }`}
+                  disabled={isSaving || !tempProfile.displayName.trim()}
                 >
-                  Save Changes
+                  {isSaving ? 'Saving...' : 'Save Changes'}
                 </button>
                 <button 
                   onClick={handleCancel}
