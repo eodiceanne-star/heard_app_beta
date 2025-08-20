@@ -1,30 +1,72 @@
 import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
 import './globals.css'
+import Navigation from '@/components/Navigation'
 import { AuthProvider } from '@/components/AuthContext'
+import OfflineStatus from '@/components/OfflineStatus'
+
+// Initialize offline sync (this will be imported but not used directly in the component)
+import '../lib/offlineSync'
+
+const inter = Inter({ subsets: ['latin'] })
+
+export const metadata: Metadata = {
+  title: 'Heard - Your Health Companion',
+  description: 'A supportive app for tracking symptoms, finding doctors, and managing your health journey.',
+  keywords: 'health, symptoms, doctor finder, medical, wellness, patient advocacy',
+  authors: [{ name: 'Heard Team' }],
+  creator: 'Heard',
+  publisher: 'Heard',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL('https://heard-app-beta.onrender.com'),
+  openGraph: {
+    title: 'Heard - Your Health Companion',
+    description: 'A supportive app for tracking symptoms, finding doctors, and managing your health journey.',
+    url: 'https://heard-app-beta.onrender.com',
+    siteName: 'Heard',
+    images: [
+      {
+        url: '/icons/heard-app-icon.svg',
+        width: 512,
+        height: 512,
+        alt: 'Heard App Icon',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Heard - Your Health Companion',
+    description: 'A supportive app for tracking symptoms, finding doctors, and managing your health journey.',
+    images: ['/icons/heard-app-icon.svg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: 'your-google-verification-code',
+  },
+}
 
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-}
-
-export const metadata: Metadata = {
-  title: 'Heard - Women\'s Healthcare Support Platform',
-  description: 'A safe space for women and marginalized patients navigating chronic illness, misdiagnosis, and medical gaslighting.',
-  manifest: '/manifest.json',
-  
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: 'default',
-    title: 'Heard'
-  },
-  openGraph: {
-    title: 'Heard - Healthcare Support Platform',
-    description: 'A women\'s healthcare support platform',
-    type: 'website',
-    url: 'https://heard-app.com'
-  }
+  themeColor: '#F5F5DC',
 }
 
 export default function RootLayout({
@@ -34,20 +76,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Heard" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        <link rel="apple-touch-icon" href="/icon-192.png" />
-        <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
-        <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
-      </head>
-      <body className="font-lato">
+      <body className={inter.className}>
         <AuthProvider>
-          {children}
+          <div className="min-h-screen bg-cream">
+            {/* Offline Status Bar */}
+            <div className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 px-4 py-2">
+              <OfflineStatus className="justify-center" />
+            </div>
+            
+            {/* Main Content */}
+            <div className="pt-16 pb-20">
+              {children}
+            </div>
+            
+            {/* Navigation */}
+            <Navigation />
+          </div>
         </AuthProvider>
       </body>
     </html>

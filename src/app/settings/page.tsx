@@ -1,191 +1,243 @@
-'use client'
-import React, { useState } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { useAuth } from '@/components/AuthContext'
-import Navigation from '@/components/Navigation'
-import Illustration from '@/components/Illustration'
+'use client';
+
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/components/AuthContext';
+import { dataService } from '@/lib/dataService';
+import { offlineSync } from '@/lib/offlineSync';
+import OfflineStatus from '@/components/OfflineStatus';
+import Illustration from '@/components/Illustration';
 
 export default function SettingsPage() {
-  const { user, logout } = useAuth()
-  const router = useRouter()
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const router = useRouter();
+  const { user, logout } = useAuth();
+  const [isExporting, setIsExporting] = useState(false);
+  const [isClearing, setIsClearing] = useState(false);
 
   const handleLogout = () => {
-    logout()
-    router.push('/login')
-  }
+    logout();
+    router.push('/');
+  };
 
-  const handleDeleteAccount = () => {
-    // Mock account deletion - in real app, this would call Firebase
-    alert('Account deletion feature will be available in the full version.')
-    setShowDeleteConfirm(false)
-  }
-
-  const settingsItems = [
-    {
-      title: 'My Profile',
-      description: 'Edit your profile information and preferences',
-      icon: '👤',
-      href: '/profile',
-      color: 'bg-sage'
-    },
-    {
-      title: 'Privacy Policy',
-      description: 'Learn about how we protect your data',
-      icon: '🔒',
-      href: '/privacy',
-      color: 'bg-dusty-pink'
-    },
-    {
-      title: 'About Us',
-      description: 'Learn more about Heard and our mission',
-      icon: '👥',
-      href: '/about',
-      color: 'bg-sage'
-    },
-    {
-      title: 'Community Guidelines',
-      description: 'Our community rules and expectations',
-      icon: '📋',
-      href: '/guidelines',
-      color: 'bg-dusty-pink'
+  const handleExportData = async () => {
+    setIsExporting(true);
+    try {
+      const data = dataService.exportData();
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `heard-app-backup-${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+      alert('Data exported successfully!');
+    } catch (error) {
+      console.error('Error exporting data:', error);
+      alert('Error exporting data. Please try again.');
+    } finally {
+      setIsExporting(false);
     }
-  ]
+  };
+
+  const handleClearData = async () => {
+    if (!confirm('Are you sure you want to clear all local data? This action cannot be undone.')) {
+      return;
+    }
+
+    setIsClearing(true);
+    try {
+      dataService.clearAllData();
+      offlineSync.clearQueue();
+      alert('All local data has been cleared.');
+      router.push('/');
+    } catch (error) {
+      console.error('Error clearing data:', error);
+      alert('Error clearing data. Please try again.');
+    } finally {
+      setIsClearing(false);
+    }
+  };
+
+  const handleManualSync = async () => {
+    try {
+      await offlineSync.forceSync();
+      alert('Manual sync completed!');
+    } catch (error) {
+      console.error('Error during manual sync:', error);
+      alert('Error during sync. Please try again.');
+    }
+  };
+
+  const syncStatus = dataService.getSyncStatus();
 
   return (
-    <div className="page-container relative">
-      {/* Background decorative elements */}
-      <Illustration type="wave-pattern" className="pointer-events-none" />
-      <Illustration type="dot-pattern" className="pointer-events-none" />
-
-      <div className="content-container relative z-10">
-        <div className="mb-12">
-          <Illustration type="profile-portrait" size="large" className="mb-6" />
-        </div>
-        
-        <h1 className="text-5xl font-playfair font-semibold text-charcoal text-center mb-3">Settings</h1>
-        <p className="text-xl text-lato text-charcoal text-center mb-12 leading-relaxed">
-          Manage your account and preferences
-        </p>
-        
-        {user && (
-          <div className="mobile-card mb-8 relative overflow-hidden">
-            {/* Card background pattern */}
-            <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-sage to-transparent opacity-10 rounded-full -mr-8 -mt-8"></div>
-
-            <div className="flex items-center space-x-4 relative z-10">
-              <div className="w-20 h-20 bg-gradient-to-br from-sage to-dusty-pink rounded-full flex items-center justify-center text-white text-3xl shadow-lg">
-                {user.avatar}
-              </div>
-              <div className="flex-1">
-                <h2 className="text-2xl font-playfair font-medium text-charcoal">{user.displayName}</h2>
-                <p className="text-base text-gray-600">{user.email}</p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        <div className="space-y-6 mb-8">
-          {settingsItems.map((item, index) => (
-            <Link key={index} href={item.href}>
-              <div className="mobile-card hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105 relative overflow-hidden">
-                {/* Card background pattern */}
-                <div className="absolute top-0 left-0 w-12 h-12 bg-gradient-to-br from-dusty-pink to-transparent opacity-10 rounded-full -ml-6 -mt-6"></div>
-
-                <div className="flex items-center space-x-4 relative z-10">
-                  <div className={`w-16 h-16 ${item.color} rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg`}>
-                    {item.icon}
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-playfair font-medium text-charcoal">{item.title}</h3>
-                    <p className="text-base text-gray-600 leading-relaxed">{item.description}</p>
-                  </div>
-                  <div className="text-gray-400 text-2xl">›</div>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-
-        <div className="space-y-6">
-          <button
-            onClick={handleLogout}
-            className="w-full mobile-card hover:shadow-xl transition-all duration-300 cursor-pointer text-left transform hover:scale-105 relative overflow-hidden"
-          >
-            {/* Card background pattern */}
-            <div className="absolute top-0 right-0 w-12 h-12 bg-gradient-to-br from-gray-200 to-transparent opacity-10 rounded-full -mr-6 -mt-6"></div>
-
-            <div className="flex items-center space-x-4 relative z-10">
-              <div className="w-16 h-16 bg-gradient-to-br from-gray-200 to-gray-300 rounded-2xl flex items-center justify-center text-gray-600 text-2xl shadow-lg">
-                🚪
-              </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-playfair font-medium text-charcoal">Sign Out</h3>
-                <p className="text-base text-gray-600 leading-relaxed">Sign out of your account</p>
-              </div>
-              <div className="text-gray-400 text-2xl">›</div>
-            </div>
-          </button>
-
-          <button
-            onClick={() => setShowDeleteConfirm(true)}
-            className="w-full mobile-card hover:shadow-xl transition-all duration-300 cursor-pointer text-left transform hover:scale-105 relative overflow-hidden"
-          >
-            {/* Card background pattern */}
-            <div className="absolute top-0 left-0 w-12 h-12 bg-gradient-to-br from-red-100 to-transparent opacity-10 rounded-full -ml-6 -mt-6"></div>
-
-            <div className="flex items-center space-x-4 relative z-10">
-              <div className="w-16 h-16 bg-gradient-to-br from-red-100 to-red-200 rounded-2xl flex items-center justify-center text-red-600 text-2xl shadow-lg">
-                🗑️
-              </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-playfair font-medium text-red-600">Delete Account</h3>
-                <p className="text-base text-gray-600 leading-relaxed">Permanently delete your account and data</p>
-              </div>
-              <div className="text-gray-400 text-2xl">›</div>
-            </div>
-          </button>
-        </div>
-
-        {showDeleteConfirm && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-6 z-50">
-            <div className="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl">
-              <h3 className="text-2xl font-playfair font-medium text-charcoal mb-4">Delete Account?</h3>
-              <p className="text-base text-charcoal mb-6 leading-relaxed">
-                This action cannot be undone. All your data will be permanently deleted.
-              </p>
-              <div className="flex space-x-4">
-                <button
-                  onClick={() => setShowDeleteConfirm(false)}
-                  className="flex-1 px-6 py-3 border-2 border-gray-300 text-charcoal rounded-2xl font-medium hover:bg-gray-50 transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleDeleteAccount}
-                  className="flex-1 px-6 py-3 bg-red-600 text-white rounded-2xl font-medium hover:bg-red-700 transition-colors"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        <div className="mt-12 p-8 bg-gradient-to-br from-sage to-dusty-pink bg-opacity-10 rounded-3xl relative overflow-hidden">
-          {/* Background decorative elements */}
-          <div className="absolute top-4 right-4">
-            <Illustration type="plant-decorative" size="small" />
-          </div>
-
-          <h3 className="text-2xl font-playfair font-medium text-charcoal mb-4 relative z-10">About Your Data</h3>
-          <p className="text-base text-charcoal leading-relaxed relative z-10">
-            Your data is stored locally on your device for privacy and security. When you sign out, your data remains on your device but is no longer accessible through the app.
+    <div className="page-container">
+      <div className="content-container">
+        <div className="text-center mb-8">
+          <Illustration 
+            type="profile-portrait" 
+            size="large" 
+            className="mx-auto mb-4"
+          />
+          <h1 className="text-3xl font-playfair font-bold text-gray-800 mb-2">
+            Settings
+          </h1>
+          <p className="text-gray-600">
+            Manage your account and app preferences
           </p>
         </div>
+
+        {/* Offline Status */}
+        <div className="bg-white rounded-2xl shadow-sm border p-6 mb-6">
+          <h2 className="text-xl font-playfair font-semibold text-gray-800 mb-4">
+            Connection Status
+          </h2>
+          <OfflineStatus showDetails={true} />
+        </div>
+
+        {/* Sync Status */}
+        <div className="bg-white rounded-2xl shadow-sm border p-6 mb-6">
+          <h2 className="text-xl font-playfair font-semibold text-gray-800 mb-4">
+            Data Sync Status
+          </h2>
+          <div className="space-y-3">
+            {Object.entries(syncStatus).map(([type, status]) => (
+              <div key={type} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                <div>
+                  <span className="font-medium text-gray-800 capitalize">
+                    {type.replace(/([A-Z])/g, ' $1').trim()}
+                  </span>
+                  <span className="text-sm text-gray-500 ml-2">
+                    ({status.total} total)
+                  </span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm text-green-600">
+                    {status.synced} synced
+                  </span>
+                  {status.pending > 0 && (
+                    <span className="text-sm text-orange-600">
+                      {status.pending} pending
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+          <button
+            onClick={handleManualSync}
+            className="mt-4 w-full bg-sage text-white py-3 rounded-xl font-medium hover:bg-sage-dark transition-colors"
+          >
+            Sync Now
+          </button>
+        </div>
+
+        {/* Data Management */}
+        <div className="bg-white rounded-2xl shadow-sm border p-6 mb-6">
+          <h2 className="text-xl font-playfair font-semibold text-gray-800 mb-4">
+            Data Management
+          </h2>
+          <div className="space-y-4">
+            <button
+              onClick={handleExportData}
+              disabled={isExporting}
+              className="w-full bg-dusty-pink text-white py-3 rounded-xl font-medium hover:bg-dusty-pink-dark transition-colors disabled:opacity-50"
+            >
+              {isExporting ? 'Exporting...' : 'Export All Data'}
+            </button>
+            <button
+              onClick={handleClearData}
+              disabled={isClearing}
+              className="w-full bg-red-500 text-white py-3 rounded-xl font-medium hover:bg-red-600 transition-colors disabled:opacity-50"
+            >
+              {isClearing ? 'Clearing...' : 'Clear All Data'}
+            </button>
+          </div>
+        </div>
+
+        {/* Account Settings */}
+        <div className="bg-white rounded-2xl shadow-sm border p-6 mb-6">
+          <h2 className="text-xl font-playfair font-semibold text-gray-800 mb-4">
+            Account
+          </h2>
+          <div className="space-y-4">
+            <div className="p-4 bg-gray-50 rounded-lg">
+              <div className="text-sm text-gray-600">Display Name</div>
+              <div className="font-medium text-gray-800">{user?.displayName || 'Not set'}</div>
+            </div>
+            <div className="p-4 bg-gray-50 rounded-lg">
+              <div className="text-sm text-gray-600">Email</div>
+              <div className="font-medium text-gray-800">{user?.email || 'Not set'}</div>
+            </div>
+            <button
+              onClick={() => router.push('/profile')}
+              className="w-full bg-gray-100 text-gray-800 py-3 rounded-xl font-medium hover:bg-gray-200 transition-colors"
+            >
+              Edit Profile
+            </button>
+          </div>
+        </div>
+
+        {/* App Information */}
+        <div className="bg-white rounded-2xl shadow-sm border p-6 mb-6">
+          <h2 className="text-xl font-playfair font-semibold text-gray-800 mb-4">
+            App Information
+          </h2>
+          <div className="space-y-3 text-sm">
+            <div className="flex justify-between">
+              <span className="text-gray-600">Version</span>
+              <span className="text-gray-800">1.0.1</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-600">Build</span>
+              <span className="text-gray-800">2024.1</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Legal & Support */}
+        <div className="bg-white rounded-2xl shadow-sm border p-6 mb-6">
+          <h2 className="text-xl font-playfair font-semibold text-gray-800 mb-4">
+            Legal & Support
+          </h2>
+          <div className="space-y-3">
+            <button
+              onClick={() => router.push('/privacy')}
+              className="w-full text-left p-3 hover:bg-gray-50 rounded-lg transition-colors"
+            >
+              Privacy Policy
+            </button>
+            <button
+              onClick={() => router.push('/terms')}
+              className="w-full text-left p-3 hover:bg-gray-50 rounded-lg transition-colors"
+            >
+              Terms of Service
+            </button>
+            <button
+              onClick={() => router.push('/guidelines')}
+              className="w-full text-left p-3 hover:bg-gray-50 rounded-lg transition-colors"
+            >
+              Community Guidelines
+            </button>
+            <button
+              onClick={() => router.push('/about')}
+              className="w-full text-left p-3 hover:bg-gray-50 rounded-lg transition-colors"
+            >
+              About Heard
+            </button>
+          </div>
+        </div>
+
+        {/* Logout */}
+        <div className="bg-white rounded-2xl shadow-sm border p-6">
+          <button
+            onClick={handleLogout}
+            className="w-full bg-red-500 text-white py-3 rounded-xl font-medium hover:bg-red-600 transition-colors"
+          >
+            Sign Out
+          </button>
+        </div>
       </div>
-      <Navigation />
     </div>
-  )
+  );
 }
