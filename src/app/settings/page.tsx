@@ -1,12 +1,27 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthContext';
-import { dataService } from '@/lib/dataService';
-import { offlineSync } from '@/lib/offlineSync';
-import OfflineStatus from '@/components/OfflineStatus';
 import Illustration from '@/components/Illustration';
+
+// Safe imports with error handling
+let dataService: any = null;
+let offlineSync: any = null;
+
+try {
+  const dataServiceModule = require('@/lib/dataService');
+  dataService = dataServiceModule.dataService;
+} catch (error) {
+  console.warn('DataService not available:', error);
+}
+
+try {
+  const offlineSyncModule = require('@/lib/offlineSync');
+  offlineSync = offlineSyncModule.offlineSync;
+} catch (error) {
+  console.warn('OfflineSync not available:', error);
+}
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -76,7 +91,7 @@ export default function SettingsPage() {
     }
   };
 
-  const syncStatus = dataService.getSyncStatus() || {};
+  const syncStatus = (dataService?.getSyncStatus && dataService.getSyncStatus()) || {};
 
   return (
     <div className="page-container">
@@ -117,28 +132,37 @@ export default function SettingsPage() {
             Data Sync Status
           </h2>
           <div className="space-y-3">
-            {Object.entries(syncStatus).map(([type, status]) => (
-              <div key={type} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                <div>
-                  <span className="font-medium text-gray-800 capitalize">
-                    {type.replace(/([A-Z])/g, ' $1').trim()}
-                  </span>
-                  <span className="text-sm text-gray-500 ml-2">
-                    ({status.total} total)
-                  </span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <span className="text-sm text-green-600">
-                    {status.synced} synced
-                  </span>
-                  {status.pending > 0 && (
-                    <span className="text-sm text-orange-600">
-                      {status.pending} pending
-                    </span>
-                  )}
-                </div>
+            {Object.entries(syncStatus).length > 0 ? (
+              Object.entries(syncStatus).map(([type, status]) => {
+                const statusObj = status as { total: number; synced: number; pending: number };
+                return (
+                  <div key={type} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                    <div>
+                      <span className="font-medium text-gray-800 capitalize">
+                        {type.replace(/([A-Z])/g, ' $1').trim()}
+                      </span>
+                      <span className="text-sm text-gray-500 ml-2">
+                        ({statusObj.total} total)
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-sm text-green-600">
+                        {statusObj.synced} synced
+                      </span>
+                      {statusObj.pending > 0 && (
+                        <span className="text-sm text-orange-600">
+                          {statusObj.pending} pending
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <div className="p-4 bg-gray-50 rounded-lg text-center">
+                <p className="text-gray-500">No sync data available</p>
               </div>
-            ))}
+            )}
           </div>
           <button
             onClick={handleManualSync}
