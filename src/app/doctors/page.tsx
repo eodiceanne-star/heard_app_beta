@@ -458,9 +458,10 @@ export default function DoctorsPage() {
               <form onSubmit={handleAddReview} className="space-y-6 relative z-10">
                 <div>
                   <label className="block text-lg font-medium text-charcoal mb-3">Rating</label>
-                  <div className="flex space-x-1">
+                  <div className="flex space-x-1 mb-2">
                     {renderStars(newReview.rating, true, (rating) => setNewReview(prev => ({ ...prev, rating })))}
                   </div>
+                  <p className="text-sm text-gray-500">Click stars to rate</p>
                 </div>
                 
                 <div>
@@ -475,27 +476,27 @@ export default function DoctorsPage() {
                   />
                 </div>
                 
-                <div>
-                  <label className="block text-lg font-medium text-charcoal mb-3">Tags (select all that apply)</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {REVIEW_TAGS.map(tag => (
-                      <button
-                        key={tag}
-                        type="button"
-                        onClick={() => handleTagToggle(tag)}
-                        className={`p-3 rounded-xl text-sm font-medium transition-colors ${
-                          newReview.tags.includes(tag)
-                            ? 'bg-dusty-pink text-white'
-                            : 'bg-gray-100 text-charcoal hover:bg-gray-200'
-                        }`}
-                      >
-                        {tag}
-                      </button>
-                    ))}
+                                  <div>
+                    <label className="block text-lg font-medium text-charcoal mb-3">Tags (select all that apply)</label>
+                    <div className="grid grid-cols-2 gap-2">
+                      {REVIEW_TAGS.map(tag => (
+                        <button
+                          key={tag}
+                          type="button"
+                          onClick={() => handleTagToggle(tag)}
+                          className={`p-3 rounded-xl text-sm font-medium transition-colors ${
+                            newReview.tags.includes(tag)
+                              ? 'bg-dusty-pink text-white'
+                              : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                          }`}
+                        >
+                          {tag}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
                 
-                <button type="submit" className="w-full mobile-button">
+                <button type="submit" className="w-full bg-dusty-pink text-white py-3 rounded-2xl font-medium hover:bg-dusty-pink-dark transition-colors shadow-md">
                   Submit Review
                 </button>
               </form>

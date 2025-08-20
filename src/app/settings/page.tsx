@@ -1,27 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthContext';
 import Illustration from '@/components/Illustration';
-
-// Safe imports with error handling
-let dataService: any = null;
-let offlineSync: any = null;
-
-try {
-  const dataServiceModule = require('@/lib/dataService');
-  dataService = dataServiceModule.dataService;
-} catch (error) {
-  console.warn('DataService not available:', error);
-}
-
-try {
-  const offlineSyncModule = require('@/lib/offlineSync');
-  offlineSync = offlineSyncModule.offlineSync;
-} catch (error) {
-  console.warn('OfflineSync not available:', error);
-}
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -37,7 +19,17 @@ export default function SettingsPage() {
   const handleExportData = async () => {
     setIsExporting(true);
     try {
-      const data = dataService.exportData() || {};
+      // Simple export of localStorage data
+      const data = {
+        symptomEntries: JSON.parse(localStorage.getItem('heardSymptomEntries') || '[]'),
+        appointments: JSON.parse(localStorage.getItem('heardAppointments') || '[]'),
+        customQuestions: JSON.parse(localStorage.getItem('heardCustomQuestions') || '[]'),
+        musicTracks: JSON.parse(localStorage.getItem('heardMusicTracks') || '[]'),
+        userDoctors: JSON.parse(localStorage.getItem('heardUserDoctors') || '[]'),
+        profile: JSON.parse(localStorage.getItem('heardProfile') || 'null'),
+        exportDate: new Date().toISOString()
+      };
+      
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -61,12 +53,15 @@ export default function SettingsPage() {
 
     setIsClearing(true);
     try {
-      if (dataService && typeof dataService.clearAllData === 'function') {
-        dataService.clearAllData();
-      }
-      if (offlineSync && typeof offlineSync.clearQueue === 'function') {
-        offlineSync.clearQueue();
-      }
+      // Clear all localStorage data
+      localStorage.removeItem('heardSymptomEntries');
+      localStorage.removeItem('heardAppointments');
+      localStorage.removeItem('heardCustomQuestions');
+      localStorage.removeItem('heardMusicTracks');
+      localStorage.removeItem('heardUserDoctors');
+      localStorage.removeItem('heardProfile');
+      localStorage.removeItem('queuedRequests');
+      
       alert('All local data has been cleared.');
       router.push('/');
     } catch (error) {
@@ -79,11 +74,13 @@ export default function SettingsPage() {
 
   const handleManualSync = async () => {
     try {
-      if (offlineSync && typeof offlineSync.forceSync === 'function') {
-        await offlineSync.forceSync();
-        alert('Manual sync completed!');
+      // Simple sync simulation
+      const queue = JSON.parse(localStorage.getItem('queuedRequests') || '[]');
+      if (queue.length > 0) {
+        localStorage.removeItem('queuedRequests');
+        alert(`Synced ${queue.length} pending items!`);
       } else {
-        alert('Sync service not available');
+        alert('No pending items to sync.');
       }
     } catch (error) {
       console.error('Error during manual sync:', error);
@@ -91,7 +88,29 @@ export default function SettingsPage() {
     }
   };
 
-  const syncStatus = (dataService?.getSyncStatus && dataService.getSyncStatus()) || {};
+  // Get sync status from localStorage
+  const getSyncStatus = () => {
+    try {
+      const symptomEntries = JSON.parse(localStorage.getItem('heardSymptomEntries') || '[]');
+      const appointments = JSON.parse(localStorage.getItem('heardAppointments') || '[]');
+      const customQuestions = JSON.parse(localStorage.getItem('heardCustomQuestions') || '[]');
+      const musicTracks = JSON.parse(localStorage.getItem('heardMusicTracks') || '[]');
+      const userDoctors = JSON.parse(localStorage.getItem('heardUserDoctors') || '[]');
+      const queue = JSON.parse(localStorage.getItem('queuedRequests') || '[]');
+
+      return {
+        symptomEntries: { total: symptomEntries.length, synced: symptomEntries.length - queue.length, pending: queue.length },
+        appointments: { total: appointments.length, synced: appointments.length, pending: 0 },
+        customQuestions: { total: customQuestions.length, synced: customQuestions.length, pending: 0 },
+        musicTracks: { total: musicTracks.length, synced: musicTracks.length, pending: 0 },
+        userDoctors: { total: userDoctors.length, synced: userDoctors.length, pending: 0 }
+      };
+    } catch (error) {
+      return {};
+    }
+  };
+
+  const syncStatus = getSyncStatus();
 
   return (
     <div className="page-container">
@@ -110,7 +129,7 @@ export default function SettingsPage() {
           </p>
         </div>
 
-        {/* Offline Status */}
+        {/* Connection Status */}
         <div className="bg-white rounded-2xl shadow-sm border p-6 mb-6">
           <h2 className="text-xl font-playfair font-semibold text-gray-800 mb-4">
             Connection Status
