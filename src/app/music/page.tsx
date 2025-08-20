@@ -15,6 +15,7 @@ interface MusicTrack {
 
 export default function MusicPage() {
   const [customTracks, setCustomTracks] = useState<MusicTrack[]>([])
+  const [hiddenRecommendedTracks, setHiddenRecommendedTracks] = useState<string[]>([])
   const [newTrack, setNewTrack] = useState({ title: '', artist: '', url: '' })
   
   // Randomized images for this page load
@@ -63,11 +64,20 @@ export default function MusicPage() {
     if (saved) {
       setCustomTracks(JSON.parse(saved))
     }
+    
+    const savedHidden = localStorage.getItem('heardHiddenRecommendedTracks')
+    if (savedHidden) {
+      setHiddenRecommendedTracks(JSON.parse(savedHidden))
+    }
   }, [])
 
   useEffect(() => {
     localStorage.setItem('heardCustomMusic', JSON.stringify(customTracks))
   }, [customTracks])
+
+  useEffect(() => {
+    localStorage.setItem('heardHiddenRecommendedTracks', JSON.stringify(hiddenRecommendedTracks))
+  }, [hiddenRecommendedTracks])
 
   const handleAddTrack = (e: React.FormEvent) => {
     e.preventDefault()
@@ -89,8 +99,19 @@ export default function MusicPage() {
   }
 
   const handleRemoveTrack = (id: string) => {
-    setCustomTracks(customTracks.filter(track => track.id !== id))
-    console.log('Track removed successfully!')
+    // Check if it's a recommended track
+    const isRecommendedTrack = samplePlaylist.some(track => track.id === id)
+    
+    if (isRecommendedTrack) {
+      // For recommended tracks, add to hidden list
+      setHiddenRecommendedTracks(prev => [...prev, id])
+      console.log('Recommended track hidden')
+    } else {
+      // For custom tracks, remove from localStorage
+      const updatedCustomTracks = customTracks.filter(track => track.id !== id)
+      setCustomTracks(updatedCustomTracks)
+      console.log('Custom track removed successfully!')
+    }
   }
 
   const handlePlayTrack = (track: MusicTrack) => {
@@ -108,7 +129,8 @@ export default function MusicPage() {
     console.log('All custom tracks cleared')
   }
 
-  const allTracks = [...samplePlaylist, ...customTracks]
+  const visibleRecommendedTracks = samplePlaylist.filter(track => !hiddenRecommendedTracks.includes(track.id))
+  const allTracks = [...visibleRecommendedTracks, ...customTracks]
 
   return (
     <div className="page-container relative">
@@ -143,17 +165,25 @@ export default function MusicPage() {
           Relaxing playlists to help you find peace and reduce stress
         </p>
         
-        {/* Clear All Button */}
-        {customTracks.length > 0 && (
-          <div className="mb-8 text-center">
+        {/* Action Buttons */}
+        <div className="mb-8 text-center space-y-4">
+          {customTracks.length > 0 && (
             <button
               onClick={handleClearAllTracks}
               className="px-6 py-3 bg-gray-200 text-gray-700 rounded-2xl font-medium hover:bg-gray-300 transition-colors"
             >
               Clear All Custom Tracks
             </button>
-          </div>
-        )}
+          )}
+          {hiddenRecommendedTracks.length > 0 && (
+            <button
+              onClick={() => setHiddenRecommendedTracks([])}
+              className="px-6 py-3 bg-sage text-white rounded-2xl font-medium hover:bg-sage-dark transition-colors"
+            >
+              Restore Recommended Tracks
+            </button>
+          )}
+        </div>
         
         <div className="mobile-card mb-8 relative overflow-hidden">
           {/* Card background pattern */}
@@ -213,7 +243,7 @@ export default function MusicPage() {
                   <div className="flex-1">
                     <h3 className="text-xl font-playfair font-medium text-charcoal mb-1">{track.title}</h3>
                     <p className="text-lg text-sage font-medium">{track.artist}</p>
-                    {index < samplePlaylist.length && (
+                    {visibleRecommendedTracks.some(recTrack => recTrack.id === track.id) && (
                       <span className="inline-block mt-2 px-3 py-1 bg-sage bg-opacity-20 text-sage text-sm rounded-full font-medium">
                         Recommended
                       </span>
@@ -234,14 +264,13 @@ export default function MusicPage() {
                   >
                     Share
                   </button>
-                  {index >= samplePlaylist.length && (
-                    <button
-                      onClick={() => handleRemoveTrack(track.id)}
-                      className="px-4 py-3 text-gray-500 hover:text-red-500 transition-colors"
-                    >
-                      ✕
-                    </button>
-                  )}
+                  <button
+                    onClick={() => handleRemoveTrack(track.id)}
+                    className="w-8 h-8 bg-red-100 text-red-600 rounded-full flex items-center justify-center hover:bg-red-200 transition-colors shadow-sm"
+                    title="Delete track"
+                  >
+                    ✕
+                  </button>
                 </div>
               </div>
             </div>
