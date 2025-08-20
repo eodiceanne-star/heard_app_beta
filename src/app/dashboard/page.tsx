@@ -138,7 +138,7 @@ export default function DashboardPage() {
           </div>
           <button
             onClick={handleLogout}
-            className="text-gray-500 hover:text-gray-700 text-sm"
+            className="bg-dusty-pink text-white px-4 py-2 rounded-lg font-medium hover:bg-dusty-pink-dark transition-colors shadow-sm"
           >
             Logout
           </button>
@@ -157,11 +157,6 @@ export default function DashboardPage() {
               </p>
             </div>
           </div>
-        </div>
-
-        {/* Offline Status */}
-        <div className="mb-6">
-          <OfflineStatus showDetails={true} />
         </div>
 
         {/* Quick Actions */}

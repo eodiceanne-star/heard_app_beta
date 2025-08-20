@@ -43,19 +43,9 @@ export default function OfflineStatus({ className = '', showDetails = false }: O
     return 'Offline';
   };
 
+  // Return null for invisible sync (when showDetails is false)
   if (!showDetails) {
-    return (
-      <div className={`flex items-center space-x-2 text-sm ${className}`}>
-        <span className={getStatusColor()}>
-          {getStatusIcon()} {getStatusText()}
-        </span>
-        {status.queueCount > 0 && (
-          <span className="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded-full">
-            {status.queueCount} pending
-          </span>
-        )}
-      </div>
-    );
+    return null;
   }
 
   return (
