@@ -406,13 +406,13 @@ export default function DoctorsPage() {
                   <p className="text-lg text-sage font-medium mb-2 truncate">{selectedDoctor.specialty}</p>
                   <p className="text-base text-gray-600 mb-3 truncate">{selectedDoctor.location}</p>
                   
-                  <div className="flex items-center space-x-2 mb-3">
-                    <div className="flex space-x-1">
-                      {renderStars(selectedDoctor.rating)}
-                    </div>
-                    <span className="text-base text-charcoal font-medium">{selectedDoctor.rating}</span>
-                    <span className="text-sm text-gray-500">({selectedDoctor.reviewCount})</span>
-                  </div>
+                                       <div className="flex items-center space-x-2 mb-3 p-2">
+                       <div className="flex space-x-1">
+                         {renderStars(selectedDoctor.rating)}
+                       </div>
+                       <span className="text-base text-charcoal font-medium">{selectedDoctor.rating}</span>
+                       <span className="text-sm text-gray-500">({selectedDoctor.reviewCount})</span>
+                     </div>
                   
                   {selectedDoctor.contact && (
                     <p className="text-sm text-gray-600 truncate">Contact: {selectedDoctor.contact}</p>
@@ -456,13 +456,13 @@ export default function DoctorsPage() {
               
               <h2 className="text-2xl font-playfair font-medium text-charcoal mb-6 relative z-10">Write a Review</h2>
               <form onSubmit={handleAddReview} className="space-y-6 relative z-10">
-                <div>
-                  <label className="block text-lg font-medium text-charcoal mb-3">Rating</label>
-                  <div className="flex space-x-1 mb-2">
-                    {renderStars(newReview.rating, true, (rating) => setNewReview(prev => ({ ...prev, rating })))}
-                  </div>
-                  <p className="text-sm text-gray-500">Click stars to rate</p>
-                </div>
+                                 <div>
+                   <label className="block text-lg font-medium text-charcoal mb-3">Rating</label>
+                   <div className="flex space-x-1 mb-2 p-2 bg-gray-50 rounded-lg">
+                     {renderStars(newReview.rating, true, (rating) => setNewReview(prev => ({ ...prev, rating })))}
+                   </div>
+                   <p className="text-sm text-gray-500">Click stars to rate</p>
+                 </div>
                 
                 <div>
                   <label className="block text-lg font-medium text-charcoal mb-3">Review</label>
@@ -531,9 +531,9 @@ export default function DoctorsPage() {
                           </p>
                         </div>
                       </div>
-                      <div className="flex space-x-1">
-                        {renderStars(review.rating)}
-                      </div>
+                                             <div className="flex space-x-1 p-1">
+                         {renderStars(review.rating)}
+                       </div>
                     </div>
                     
                     <p className="text-base text-charcoal leading-relaxed mb-4">{review.text}</p>
@@ -780,13 +780,13 @@ export default function DoctorsPage() {
                     <p className="text-base text-sage font-medium mb-1 truncate">{doctor.specialty}</p>
                     <p className="text-sm text-gray-600 mb-2 truncate">{doctor.location}</p>
                     
-                    <div className="flex items-center space-x-2 mb-3">
-                      <div className="flex space-x-1">
-                        {renderStars(doctor.rating)}
-                      </div>
-                      <span className="text-sm text-charcoal font-medium">{doctor.rating}</span>
-                      <span className="text-xs text-gray-500">({doctor.reviewCount})</span>
-                    </div>
+                                         <div className="flex items-center space-x-2 mb-3 p-1">
+                       <div className="flex space-x-1">
+                         {renderStars(doctor.rating)}
+                       </div>
+                       <span className="text-sm text-charcoal font-medium">{doctor.rating}</span>
+                       <span className="text-xs text-gray-500">({doctor.reviewCount})</span>
+                     </div>
                     
                     {doctor.reviews.length > 0 && (
                       <div className="mb-3">

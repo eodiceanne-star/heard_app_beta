@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthContext';
 import Illustration from '@/components/Illustration';
@@ -8,109 +8,11 @@ import Illustration from '@/components/Illustration';
 export default function SettingsPage() {
   const router = useRouter();
   const { user, logout } = useAuth();
-  const [isExporting, setIsExporting] = useState(false);
-  const [isClearing, setIsClearing] = useState(false);
 
   const handleLogout = () => {
     logout();
     router.push('/');
   };
-
-  const handleExportData = async () => {
-    setIsExporting(true);
-    try {
-      // Simple export of localStorage data
-      const data = {
-        symptomEntries: JSON.parse(localStorage.getItem('heardSymptomEntries') || '[]'),
-        appointments: JSON.parse(localStorage.getItem('heardAppointments') || '[]'),
-        customQuestions: JSON.parse(localStorage.getItem('heardCustomQuestions') || '[]'),
-        musicTracks: JSON.parse(localStorage.getItem('heardMusicTracks') || '[]'),
-        userDoctors: JSON.parse(localStorage.getItem('heardUserDoctors') || '[]'),
-        profile: JSON.parse(localStorage.getItem('heardProfile') || 'null'),
-        exportDate: new Date().toISOString()
-      };
-      
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `heard-app-backup-${new Date().toISOString().split('T')[0]}.json`;
-      a.click();
-      window.URL.revokeObjectURL(url);
-      alert('Data exported successfully!');
-    } catch (error) {
-      console.error('Error exporting data:', error);
-      alert('Error exporting data. Please try again.');
-    } finally {
-      setIsExporting(false);
-    }
-  };
-
-  const handleClearData = async () => {
-    if (!confirm('Are you sure you want to clear all local data? This action cannot be undone.')) {
-      return;
-    }
-
-    setIsClearing(true);
-    try {
-      // Clear all localStorage data
-      localStorage.removeItem('heardSymptomEntries');
-      localStorage.removeItem('heardAppointments');
-      localStorage.removeItem('heardCustomQuestions');
-      localStorage.removeItem('heardMusicTracks');
-      localStorage.removeItem('heardUserDoctors');
-      localStorage.removeItem('heardProfile');
-      localStorage.removeItem('queuedRequests');
-      
-      alert('All local data has been cleared.');
-      router.push('/');
-    } catch (error) {
-      console.error('Error clearing data:', error);
-      alert('Error clearing data. Please try again.');
-    } finally {
-      setIsClearing(false);
-    }
-  };
-
-  const handleManualSync = async () => {
-    try {
-      // Simple sync simulation
-      const queue = JSON.parse(localStorage.getItem('queuedRequests') || '[]');
-      if (queue.length > 0) {
-        localStorage.removeItem('queuedRequests');
-        alert(`Synced ${queue.length} pending items!`);
-      } else {
-        alert('No pending items to sync.');
-      }
-    } catch (error) {
-      console.error('Error during manual sync:', error);
-      alert('Error during sync. Please try again.');
-    }
-  };
-
-  // Get sync status from localStorage
-  const getSyncStatus = () => {
-    try {
-      const symptomEntries = JSON.parse(localStorage.getItem('heardSymptomEntries') || '[]');
-      const appointments = JSON.parse(localStorage.getItem('heardAppointments') || '[]');
-      const customQuestions = JSON.parse(localStorage.getItem('heardCustomQuestions') || '[]');
-      const musicTracks = JSON.parse(localStorage.getItem('heardMusicTracks') || '[]');
-      const userDoctors = JSON.parse(localStorage.getItem('heardUserDoctors') || '[]');
-      const queue = JSON.parse(localStorage.getItem('queuedRequests') || '[]');
-
-      return {
-        symptomEntries: { total: symptomEntries.length, synced: symptomEntries.length - queue.length, pending: queue.length },
-        appointments: { total: appointments.length, synced: appointments.length, pending: 0 },
-        customQuestions: { total: customQuestions.length, synced: customQuestions.length, pending: 0 },
-        musicTracks: { total: musicTracks.length, synced: musicTracks.length, pending: 0 },
-        userDoctors: { total: userDoctors.length, synced: userDoctors.length, pending: 0 }
-      };
-    } catch (error) {
-      return {};
-    }
-  };
-
-  const syncStatus = getSyncStatus();
 
   return (
     <div className="page-container">
@@ -142,75 +44,6 @@ export default function SettingsPage() {
             <p className="text-sm text-gray-500 mt-1">
               Connected to server
             </p>
-          </div>
-        </div>
-
-        {/* Sync Status */}
-        <div className="bg-white rounded-2xl shadow-sm border p-6 mb-6">
-          <h2 className="text-xl font-playfair font-semibold text-gray-800 mb-4">
-            Data Sync Status
-          </h2>
-          <div className="space-y-3">
-            {Object.entries(syncStatus).length > 0 ? (
-              Object.entries(syncStatus).map(([type, status]) => {
-                const statusObj = status as { total: number; synced: number; pending: number };
-                return (
-                  <div key={type} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                    <div>
-                      <span className="font-medium text-gray-800 capitalize">
-                        {type.replace(/([A-Z])/g, ' $1').trim()}
-                      </span>
-                      <span className="text-sm text-gray-500 ml-2">
-                        ({statusObj.total} total)
-                      </span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-sm text-green-600">
-                        {statusObj.synced} synced
-                      </span>
-                      {statusObj.pending > 0 && (
-                        <span className="text-sm text-orange-600">
-                          {statusObj.pending} pending
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                );
-              })
-            ) : (
-              <div className="p-4 bg-gray-50 rounded-lg text-center">
-                <p className="text-gray-500">No sync data available</p>
-              </div>
-            )}
-          </div>
-          <button
-            onClick={handleManualSync}
-            className="mt-4 w-full bg-sage text-white py-3 rounded-xl font-medium hover:bg-sage-dark transition-colors"
-          >
-            Sync Now
-          </button>
-        </div>
-
-        {/* Data Management */}
-        <div className="bg-white rounded-2xl shadow-sm border p-6 mb-6">
-          <h2 className="text-xl font-playfair font-semibold text-gray-800 mb-4">
-            Data Management
-          </h2>
-          <div className="space-y-4">
-            <button
-              onClick={handleExportData}
-              disabled={isExporting}
-              className="w-full bg-dusty-pink text-white py-3 rounded-xl font-medium hover:bg-dusty-pink-dark transition-colors disabled:opacity-50"
-            >
-              {isExporting ? 'Exporting...' : 'Export All Data'}
-            </button>
-            <button
-              onClick={handleClearData}
-              disabled={isClearing}
-              className="w-full bg-red-500 text-white py-3 rounded-xl font-medium hover:bg-red-600 transition-colors disabled:opacity-50"
-            >
-              {isClearing ? 'Clearing...' : 'Clear All Data'}
-            </button>
           </div>
         </div>
 
