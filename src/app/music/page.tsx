@@ -251,22 +251,22 @@ export default function MusicPage() {
                   </div>
                 </div>
                 
-                                 <div className="flex items-center space-x-2">
+                                 <div className="flex items-center space-x-1">
                                      <button
                      onClick={() => handlePlayTrack(track)}
-                     className="px-3 py-2 bg-dusty-pink text-white rounded-xl font-medium hover:bg-opacity-90 transition-colors shadow-md text-sm"
+                     className="px-2 py-2 bg-dusty-pink text-white rounded-xl font-medium hover:bg-opacity-90 transition-colors shadow-md text-sm"
                    >
                      Play
                    </button>
                    <button
                      onClick={() => handleShareTrack(track)}
-                     className="px-3 py-2 bg-gray-200 text-gray-700 rounded-xl font-medium hover:bg-gray-300 transition-colors text-sm"
+                     className="px-2 py-2 bg-gray-200 text-gray-700 rounded-xl font-medium hover:bg-gray-300 transition-colors text-sm"
                    >
                      Share
                    </button>
                                      <button
                      onClick={() => handleRemoveTrack(track.id)}
-                     className="w-6 h-6 bg-red-100 text-red-600 rounded-full flex items-center justify-center hover:bg-red-200 transition-colors shadow-sm text-xs"
+                     className="w-5 h-5 bg-red-100 text-red-600 rounded-full flex items-center justify-center hover:bg-red-200 transition-colors shadow-sm text-xs"
                      title="Delete track"
                    >
                      ✕
