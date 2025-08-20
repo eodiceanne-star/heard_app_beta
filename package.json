@@ -21,7 +21,8 @@
     "generate-icons": "node scripts/generate-icons.js",
     "generate-icons-from-photo": "node scripts/generate-icons-from-photo.js",
     "convert-svg-to-png": "node scripts/convert-svg-to-png.js",
-    "deploy:check": "node scripts/deploy-to-render.js"
+    "deploy:check": "node scripts/deploy-to-render.js",
+    "fix:icons": "node scripts/fix-missing-icons.js"
   },
   "dependencies": {
     "@capacitor/android": "^6.0.0",

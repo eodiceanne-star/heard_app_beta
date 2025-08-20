@@ -22,7 +22,13 @@ export default function MusicPage() {
 
   // Initialize random images on mount
   useEffect(() => {
-    setRandomBackgroundImage(getRandomCoolKidsImage())
+    try {
+      const image = getRandomCoolKidsImage()
+      setRandomBackgroundImage(image || '/assets/images/openpeeps/coolkids/cool-kids-1.png')
+    } catch (error) {
+      console.log('Error loading random image:', error)
+      setRandomBackgroundImage('/assets/images/openpeeps/coolkids/cool-kids-1.png')
+    }
   }, [])
 
   const samplePlaylist: MusicTrack[] = [
@@ -111,15 +117,21 @@ export default function MusicPage() {
       <Illustration type="dot-pattern" className="pointer-events-none" />
       
       {/* Random Cool Kids illustration */}
-      <div className="fixed bottom-8 right-8 w-32 h-32 opacity-60 pointer-events-none z-0">
-        <Image
-          src={randomBackgroundImage}
-          alt="Cool kids illustration"
-          width={128}
-          height={128}
-          className="w-full h-full object-contain"
-        />
-      </div>
+      {randomBackgroundImage && (
+        <div className="fixed bottom-8 right-8 w-32 h-32 opacity-60 pointer-events-none z-0">
+          <Image
+            src={randomBackgroundImage}
+            alt="Cool kids illustration"
+            width={128}
+            height={128}
+            className="w-full h-full object-contain"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement
+              target.style.display = 'none'
+            }}
+          />
+        </div>
+      )}
       
       <div className="content-container relative z-10">
         <div className="mb-12">

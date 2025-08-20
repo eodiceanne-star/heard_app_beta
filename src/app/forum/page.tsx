@@ -54,7 +54,13 @@ export default function ForumPage() {
 
   // Initialize random images on mount
   useEffect(() => {
-    setRandomBackgroundImage(getRandomCoolKidsImage())
+    try {
+      const image = getRandomCoolKidsImage()
+      setRandomBackgroundImage(image || '/assets/images/openpeeps/coolkids/cool-kids-1.png')
+    } catch (error) {
+      console.log('Error loading random image:', error)
+      setRandomBackgroundImage('/assets/images/openpeeps/coolkids/cool-kids-1.png')
+    }
   }, [])
 
   const formatDate = (dateString: string) => {
@@ -181,7 +187,8 @@ export default function ForumPage() {
       <Illustration type="dot-pattern" className="pointer-events-none" />
       <DecorativeIllustrations />
       
-              {/* Random Cool Kids illustration */}
+                    {/* Random Cool Kids illustration */}
+      {randomBackgroundImage && (
         <div className="fixed top-1/4 right-8 w-28 h-28 opacity-50 pointer-events-none z-0">
           <Image
             src={randomBackgroundImage}
@@ -189,8 +196,13 @@ export default function ForumPage() {
             width={112}
             height={112}
             className="w-full h-full object-contain"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement
+              target.style.display = 'none'
+            }}
           />
         </div>
+      )}
       
       <div className="content-container relative z-10">
         <div className="mb-12">

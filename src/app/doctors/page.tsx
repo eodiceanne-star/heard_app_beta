@@ -112,8 +112,16 @@ export default function DoctorsPage() {
   // Set client flag on mount and initialize random images
   useEffect(() => {
     setIsClient(true)
-    setRandomDoctorAvatar(getRandomCoolKidsImage())
-    setRandomBackgroundImage(getRandomCoolKidsImage())
+    try {
+      const avatar = getRandomCoolKidsImage()
+      const background = getRandomCoolKidsImage()
+      setRandomDoctorAvatar(avatar || '/assets/images/openpeeps/coolkids/cool-kids-1.png')
+      setRandomBackgroundImage(background || '/assets/images/openpeeps/coolkids/cool-kids-1.png')
+    } catch (error) {
+      console.log('Error loading random images:', error)
+      setRandomDoctorAvatar('/assets/images/openpeeps/coolkids/cool-kids-1.png')
+      setRandomBackgroundImage('/assets/images/openpeeps/coolkids/cool-kids-1.png')
+    }
   }, [])
 
   // Load initial data and user profile
@@ -350,15 +358,21 @@ export default function DoctorsPage() {
         <Illustration type="dot-pattern" className="pointer-events-none" />
         
         {/* Random Cool Kids illustration */}
-        <div className="fixed bottom-8 left-8 w-32 h-32 opacity-60 pointer-events-none z-0">
-          <Image
-            src={randomBackgroundImage}
-            alt="Cool kids illustration"
-            width={128}
-            height={128}
-            className="w-full h-full object-contain"
-          />
-        </div>
+        {randomBackgroundImage && (
+          <div className="fixed bottom-8 left-8 w-32 h-32 opacity-60 pointer-events-none z-0">
+            <Image
+              src={randomBackgroundImage}
+              alt="Cool kids illustration"
+              width={128}
+              height={128}
+              className="w-full h-full object-contain"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement
+                target.style.display = 'none'
+              }}
+            />
+          </div>
+        )}
         
         <div className="content-container relative z-10">
           {/* Back button */}
@@ -554,15 +568,21 @@ export default function DoctorsPage() {
       <Illustration type="dot-pattern" className="pointer-events-none" />
       
       {/* Random Cool Kids illustration */}
-      <div className="fixed bottom-8 left-8 w-32 h-32 opacity-60 pointer-events-none z-0">
-        <Image
-          src={randomBackgroundImage}
-          alt="Cool kids illustration"
-          width={128}
-          height={128}
-          className="w-full h-full object-contain"
-        />
-      </div>
+      {randomBackgroundImage && (
+        <div className="fixed bottom-8 left-8 w-32 h-32 opacity-60 pointer-events-none z-0">
+          <Image
+            src={randomBackgroundImage}
+            alt="Cool kids illustration"
+            width={128}
+            height={128}
+            className="w-full h-full object-contain"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement
+              target.style.display = 'none'
+            }}
+          />
+        </div>
+      )}
       
       <div className="content-container relative z-10">
         <div className="mb-12">

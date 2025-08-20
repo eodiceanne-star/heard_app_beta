@@ -2,12 +2,18 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { AuthProvider } from '@/components/AuthContext'
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+}
+
 export const metadata: Metadata = {
   title: 'Heard - Women\'s Healthcare Support Platform',
   description: 'A safe space for women and marginalized patients navigating chronic illness, misdiagnosis, and medical gaslighting.',
   manifest: '/manifest.json',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
-  themeColor: '#E6B7B0',
+  
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
