@@ -1,0 +1,36 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F5F5DC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#D4A5A5;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#D4A5A5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9CAF88;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1024" height="1024" rx="200" fill="url(#bgGradient)"/>
+  
+  <!-- Main heart shape -->
+  <path d="M512 300 C512 300, 400 200, 300 200 C200 200, 200 350, 200 450 C200 550, 512 800, 512 800 C512 800, 824 550, 824 450 C824 350, 824 200, 724 200 C624 200, 512 300, 512 300 Z" 
+        fill="url(#heartGradient)" stroke="#9CAF88" stroke-width="20"/>
+  
+  <!-- Inner heart highlight -->
+  <path d="M512 350 C512 350, 450 280, 380 280 C310 280, 310 380, 310 450 C310 520, 512 700, 512 700 C512 700, 714 520, 714 450 C714 380, 714 280, 644 280 C574 280, 512 350, 512 350 Z" 
+        fill="#F5F5DC" opacity="0.3"/>
+  
+  <!-- Ear symbol -->
+  <circle cx="400" cy="500" r="80" fill="#9CAF88" opacity="0.8"/>
+  <circle cx="400" cy="500" r="60" fill="#F5F5DC"/>
+  <circle cx="400" cy="500" r="40" fill="#D4A5A5"/>
+  
+  <!-- Support symbol -->
+  <circle cx="624" cy="500" r="80" fill="#9CAF88" opacity="0.8"/>
+  <circle cx="624" cy="500" r="60" fill="#F5F5DC"/>
+  <path d="M600 480 L648 480 L648 520 L600 520 Z M610 490 L638 490 L638 510 L610 510 Z" fill="#D4A5A5"/>
+  
+  <!-- Text "H" -->
+  <text x="512" y="650" font-family="Arial, sans-serif" font-size="120" font-weight="bold" text-anchor="middle" fill="#9CAF88">H</text>
+</svg>

@@ -1,0 +1,38 @@
+# Icon placeholder for public/icons/android/mipmap-mdpi/ic_launcher.png
+# Size: 48x48px
+# 
+# 📸 PHOTO-BASED ICON GENERATION
+# 
+# To generate icons from your photo:
+# 
+# 1. Place your photo in: public/icons/source/your-photo.jpg
+# 2. Run: npm run generate-icons-from-photo
+# 3. The script will automatically:
+#    - Crop your photo to a square
+#    - Apply your app's color scheme
+#    - Generate all required sizes
+#    - Create a professional app icon
+# 
+# 📋 Requirements for your photo:
+# - High resolution (at least 1024x1024px)
+# - Good lighting and contrast
+# - Clear subject (person, object, or symbol)
+# - Formats: JPG, PNG, or SVG
+# 
+# 🎨 Your app's color scheme:
+# - Primary: #F5F5DC (Cream)
+# - Secondary: #D4A5A5 (Dusty Pink)
+# - Accent: #9CAF88 (Sage)
+# 
+# 💡 Tips for best results:
+# - Use a photo that represents "being heard" or support
+# - Consider using a portrait, ear symbol, or heart
+# - Ensure the subject is centered and well-lit
+# - Test how it looks at small sizes (20x20px)
+# 
+# 🔧 Alternative: Use online tools
+# - https://appicon.co/ (upload your photo)
+# - https://makeappicon.com/ (photo to icon)
+# - https://www.favicon-generator.org/ (basic conversion)
+# 
+# 📁 Current photo path: public\icons\source\new-app-flower-icon.png

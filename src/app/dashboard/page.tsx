@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/components/AuthContext'
@@ -7,9 +7,51 @@ import Navigation from '@/components/Navigation'
 import Illustration from '@/components/Illustration'
 import DecorativeIllustrations from '@/components/DecorativeIllustrations'
 
+// Daily affirmations array
+const dailyAffirmations = [
+  "Remember: You know your body best. Trust your instincts and don't hesitate to advocate for yourself during medical appointments.",
+  "Your health journey is valid, and your experiences matter. You deserve to be heard and taken seriously.",
+  "It's okay to ask questions, seek second opinions, and take time to make informed decisions about your health.",
+  "You are strong, resilient, and capable of navigating your healthcare journey with confidence and grace.",
+  "Your symptoms are real, and your concerns are important. Don't let anyone dismiss what you're experiencing.",
+  "Taking care of yourself is not selfish—it's essential. Prioritize your health and well-being.",
+  "You have the right to respectful, compassionate healthcare. Never settle for less than you deserve.",
+  "Every step you take toward better health is a victory. Celebrate your progress, no matter how small.",
+  "Your voice matters in your healthcare decisions. Speak up, ask questions, and trust your intuition.",
+  "You are not alone in this journey. There are others who understand and support you.",
+  "Your body is wise and communicates with you. Listen to what it's telling you.",
+  "Advocating for yourself is a skill that grows stronger with practice. You're doing great.",
+  "It's perfectly normal to feel overwhelmed sometimes. Be gentle with yourself and reach out for support.",
+  "Your health goals are achievable. Take it one day at a time and celebrate each milestone.",
+  "You deserve healthcare providers who listen, respect, and work with you as a partner in your health.",
+  "Your experiences and insights are valuable. Share them with others who might benefit from your wisdom.",
+  "Self-care is not a luxury—it's a necessity. Make time for what nourishes your mind, body, and spirit.",
+  "You have the power to make informed decisions about your health. Trust yourself and your research.",
+  "Every woman's health journey is unique, and yours is just as important as anyone else's.",
+  "You are worthy of compassionate, comprehensive healthcare. Never doubt your worth.",
+  "Your health concerns are valid, regardless of what anyone else says. Trust your instincts.",
+  "Taking breaks and asking for help are signs of strength, not weakness. You're doing amazing.",
+  "Your body has incredible wisdom. Honor it, listen to it, and work with it, not against it.",
+  "You are building resilience with every challenge you face. Your strength inspires others.",
+  "Your health journey is your own story. Write it with courage, compassion, and self-advocacy.",
+  "You have the right to feel safe, respected, and heard in all healthcare settings.",
+  "Your well-being is worth fighting for. Keep advocating for yourself and your health.",
+  "You are not defined by your health challenges. You are so much more than any diagnosis.",
+  "Every day you show up for your health is a day you're investing in your future self."
+]
+
 export default function DashboardPage() {
   const { user, logout } = useAuth()
   const router = useRouter()
+  const [todayAffirmation, setTodayAffirmation] = useState('')
+
+  // Get today's affirmation based on the day of the year
+  useEffect(() => {
+    const today = new Date()
+    const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24))
+    const affirmationIndex = dayOfYear % dailyAffirmations.length
+    setTodayAffirmation(dailyAffirmations[affirmationIndex])
+  }, [])
 
   const handleLogout = () => {
     logout()
@@ -162,7 +204,7 @@ export default function DashboardPage() {
             
             <h2 className="text-2xl font-playfair font-medium text-charcoal mb-4 relative z-10">Today's Reminder</h2>
             <p className="text-base text-charcoal leading-relaxed relative z-10">
-              Remember: You know your body best. Trust your instincts and don't hesitate to advocate for yourself during medical appointments.
+              {todayAffirmation || "Remember: You know your body best. Trust your instincts and don't hesitate to advocate for yourself during medical appointments."}
             </p>
           </div>
 

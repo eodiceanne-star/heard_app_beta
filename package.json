@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p $PORT",
     "lint": "next lint",
     "mobile:build": "npm run build && npx cap sync",
     "mobile:ios": "npx cap open ios",
@@ -17,7 +17,11 @@
     "mobile:build:android": "npm run mobile:build && npx cap build android",
     "mobile:setup": "node scripts/build-mobile.js",
     "fix:avatars": "node scripts/fix-avatars.js",
-    "test:mobile": "npm run build && npm run mobile:sync"
+    "test:mobile": "npm run build && npm run mobile:sync",
+    "generate-icons": "node scripts/generate-icons.js",
+    "generate-icons-from-photo": "node scripts/generate-icons-from-photo.js",
+    "convert-svg-to-png": "node scripts/convert-svg-to-png.js",
+    "deploy:check": "node scripts/deploy-to-render.js"
   },
   "dependencies": {
     "@capacitor/android": "^6.0.0",

@@ -89,7 +89,7 @@ export default function PrivacyPolicyPage() {
               <div className="space-y-4 text-base text-charcoal leading-relaxed">
                 <p>If you have questions about this Privacy Policy or our data practices, please contact us:</p>
                 <div className="bg-gray-50 rounded-2xl p-6">
-                  <p><strong>Email:</strong> privacy@heardapp.com</p>
+                  <p><strong>Email:</strong> youareheardapp@gmail.com</p>
                   <p><strong>Address:</strong> [Your Business Address]</p>
                   <p><strong>Last Updated:</strong> {new Date().toLocaleDateString()}</p>
                 </div>
