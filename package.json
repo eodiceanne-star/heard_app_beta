@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p ${PORT:-3000}",
+    "start": "next start",
     "lint": "next lint",
     "mobile:build": "npm run build && npx cap sync",
     "mobile:ios": "npx cap open ios",
