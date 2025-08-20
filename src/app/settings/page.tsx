@@ -63,7 +63,7 @@ export default function SettingsPage() {
             </div>
             <button
               onClick={() => router.push('/profile')}
-              className="w-full bg-gray-100 text-gray-800 py-3 rounded-xl font-medium hover:bg-gray-200 transition-colors"
+              className="w-full bg-dusty-pink text-gray-900 py-3 rounded-xl font-medium hover:bg-dusty-pink-dark transition-colors"
             >
               Edit Profile
             </button>

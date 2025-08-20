@@ -431,19 +431,19 @@ export default function DoctorsPage() {
                 
                 <div className="flex space-x-2">
                   {userProfile && (
-                    <button
-                      onClick={() => setShowReviewForm(!showReviewForm)}
-                      className="px-6 py-3 bg-dusty-pink text-white rounded-2xl font-medium hover:bg-dusty-pink-dark transition-colors shadow-md"
-                    >
-                      {showReviewForm ? 'Cancel Review' : 'Write a Review'}
-                    </button>
+                                         <button
+                       onClick={() => setShowReviewForm(!showReviewForm)}
+                       className="px-6 py-3 bg-dusty-pink text-gray-900 rounded-2xl font-medium hover:bg-dusty-pink-dark transition-colors shadow-md"
+                     >
+                       {showReviewForm ? 'Cancel Review' : 'Write a Review'}
+                     </button>
                   )}
-                  <button
-                    onClick={() => handleReportDoctor(selectedDoctor.id)}
-                    className="px-4 py-3 bg-gray-200 text-gray-800 rounded-2xl font-medium hover:bg-gray-300 transition-colors shadow-md"
-                  >
-                    Report
-                  </button>
+                                       <button
+                       onClick={() => handleReportDoctor(selectedDoctor.id)}
+                       className="px-4 py-3 bg-gray-200 text-gray-900 rounded-2xl font-medium hover:bg-gray-300 transition-colors shadow-md"
+                     >
+                       Report
+                     </button>
                 </div>
               </div>
             </div>
@@ -496,9 +496,9 @@ export default function DoctorsPage() {
                     </div>
                   </div>
                 
-                <button type="submit" className="w-full bg-dusty-pink text-white py-3 rounded-2xl font-medium hover:bg-dusty-pink-dark transition-colors shadow-md">
-                  Submit Review
-                </button>
+                                 <button type="submit" className="w-full bg-dusty-pink text-gray-900 py-3 rounded-2xl font-medium hover:bg-dusty-pink-dark transition-colors shadow-md">
+                   Submit Review
+                 </button>
               </form>
             </div>
           )}
@@ -531,7 +531,7 @@ export default function DoctorsPage() {
                           </p>
                         </div>
                       </div>
-                                             <div className="flex space-x-1 p-1">
+                                             <div className="flex space-x-1 p-2 bg-gray-50 rounded-lg">
                          {renderStars(review.rating)}
                        </div>
                     </div>
@@ -815,18 +815,18 @@ export default function DoctorsPage() {
                   </span>
                   
                   <div className="flex space-x-2">
-                    <button
-                      onClick={() => setSelectedDoctor(doctor)}
-                      className="px-6 py-3 bg-dusty-pink text-white rounded-2xl font-medium hover:bg-dusty-pink-dark transition-colors shadow-md"
-                    >
-                      View Profile
-                    </button>
-                    <button
-                      onClick={() => handleReportDoctor(doctor.id)}
-                      className="px-4 py-3 bg-gray-200 text-gray-800 rounded-2xl font-medium hover:bg-gray-300 transition-colors shadow-md"
-                    >
-                      Report
-                    </button>
+                                         <button
+                       onClick={() => setSelectedDoctor(doctor)}
+                       className="px-6 py-3 bg-dusty-pink text-gray-900 rounded-2xl font-medium hover:bg-dusty-pink-dark transition-colors shadow-md"
+                     >
+                       View Profile
+                     </button>
+                                         <button
+                       onClick={() => handleReportDoctor(doctor.id)}
+                       className="px-4 py-3 bg-gray-200 text-gray-900 rounded-2xl font-medium hover:bg-gray-300 transition-colors shadow-md"
+                     >
+                       Report
+                     </button>
                   </div>
                 </div>
               </div>
