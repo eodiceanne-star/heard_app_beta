@@ -1,68 +1,113 @@
 const fs = require('fs');
 const path = require('path');
 
-console.log('🚀 Preparing Heard App for Render Deployment...\n');
+console.log('🚀 Render Deployment Check for Heard App\n');
 
-// Check if required files exist
+// Check required files
 const requiredFiles = [
   'package.json',
   'next.config.js',
   'render.yaml',
-  'public/manifest.json'
+  'src/app/layout.tsx',
+  'src/app/page.tsx'
 ];
 
-console.log('📋 Checking required files...');
+console.log('📁 Checking required files...');
+let allFilesExist = true;
+
 requiredFiles.forEach(file => {
   if (fs.existsSync(file)) {
-    console.log(`  ✅ ${file}`);
+    console.log(`✅ ${file}`);
   } else {
-    console.log(`  ❌ ${file} - Missing!`);
+    console.log(`❌ ${file} - MISSING`);
+    allFilesExist = false;
   }
 });
 
 // Check package.json scripts
 console.log('\n📦 Checking package.json scripts...');
-try {
-  const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-  const requiredScripts = ['build', 'start'];
+const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+const requiredScripts = ['build', 'start'];
+
+requiredScripts.forEach(script => {
+  if (packageJson.scripts[script]) {
+    console.log(`✅ ${script}: ${packageJson.scripts[script]}`);
+  } else {
+    console.log(`❌ ${script} script - MISSING`);
+    allFilesExist = false;
+  }
+});
+
+// Check dependencies
+console.log('\n🔧 Checking dependencies...');
+const requiredDeps = ['next', 'react', 'react-dom'];
+const deps = { ...packageJson.dependencies, ...packageJson.devDependencies };
+
+requiredDeps.forEach(dep => {
+  if (deps[dep]) {
+    console.log(`✅ ${dep}: ${deps[dep]}`);
+  } else {
+    console.log(`❌ ${dep} - MISSING`);
+    allFilesExist = false;
+  }
+});
+
+// Check render.yaml
+console.log('\n⚙️ Checking render.yaml configuration...');
+if (fs.existsSync('render.yaml')) {
+  const renderConfig = fs.readFileSync('render.yaml', 'utf8');
+  const checks = [
+    { name: 'Service type', pattern: /type: web/ },
+    { name: 'Build command', pattern: /buildCommand:/ },
+    { name: 'Start command', pattern: /startCommand:/ },
+    { name: 'Environment variables', pattern: /envVars:/ }
+  ];
   
-  requiredScripts.forEach(script => {
-    if (packageJson.scripts && packageJson.scripts[script]) {
-      console.log(`  ✅ ${script}: ${packageJson.scripts[script]}`);
+  checks.forEach(check => {
+    if (check.pattern.test(renderConfig)) {
+      console.log(`✅ ${check.name}`);
     } else {
-      console.log(`  ❌ ${script} script missing!`);
+      console.log(`❌ ${check.name} - MISSING`);
+      allFilesExist = false;
     }
   });
-} catch (error) {
-  console.log('  ❌ Error reading package.json');
 }
 
-// Check for environment variables
-console.log('\n🔧 Environment Variables to set in Render:');
-console.log('  NODE_ENV=production');
-console.log('  PORT=3000');
+// Check public assets
+console.log('\n🖼️ Checking public assets...');
+const publicDir = 'public';
+if (fs.existsSync(publicDir)) {
+  console.log('✅ public directory exists');
+  
+  // Check for essential public files
+  const publicFiles = ['manifest.json'];
+  publicFiles.forEach(file => {
+    const filePath = path.join(publicDir, file);
+    if (fs.existsSync(filePath)) {
+      console.log(`✅ ${file}`);
+    } else {
+      console.log(`⚠️ ${file} - Optional but recommended`);
+    }
+  });
+} else {
+  console.log('❌ public directory - MISSING');
+  allFilesExist = false;
+}
 
-// Check for potential issues
-console.log('\n⚠️  Potential Issues to Check:');
-console.log('  1. Ensure all dependencies are in package.json (not devDependencies)');
-console.log('  2. Check that next.config.js is compatible with static export');
-console.log('  3. Verify that all image assets are in public/ folder');
-console.log('  4. Ensure no hardcoded localhost URLs in the code');
+// Summary
+console.log('\n📋 Deployment Summary:');
+if (allFilesExist) {
+  console.log('✅ Your app is ready for Render deployment!');
+  console.log('\n🎯 Next steps:');
+  console.log('1. Go to https://render.com');
+  console.log('2. Sign up with your GitHub account');
+  console.log('3. Create a new Web Service');
+  console.log('4. Connect your repository: eodiceanne-star/heard_app_beta');
+  console.log('5. Use the settings from render.yaml');
+  console.log('6. Deploy!');
+} else {
+  console.log('❌ Some issues found. Please fix them before deploying.');
+}
 
-// Generate deployment checklist
-console.log('\n📋 Deployment Checklist:');
-console.log('  □ Push latest code to GitHub');
-console.log('  □ Create Render account at https://render.com');
-console.log('  □ Connect GitHub repository to Render');
-console.log('  □ Configure environment variables');
-console.log('  □ Deploy and test the application');
-console.log('  □ Update mobile app Capacitor config with new URL');
-
-console.log('\n🎉 Deployment preparation complete!');
-console.log('\n📖 Next steps:');
-console.log('  1. Follow the RENDER_DEPLOYMENT_GUIDE.md');
-console.log('  2. Deploy to Render dashboard');
-console.log('  3. Test your deployed app');
-console.log('  4. Update mobile app configuration');
-
-console.log('\n💡 Your Heard app will help users feel heard and supported! 💚');
+console.log('\n📚 For detailed instructions, see: RENDER_DEPLOYMENT_GUIDE.md');
+console.log('🌐 Your app will be live at: https://heard-app-beta.onrender.com');

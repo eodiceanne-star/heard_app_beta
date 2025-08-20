@@ -1,144 +1,119 @@
-# 🚀 Render Deployment Guide for Heard App
+# 🚀 Deploy Heard App to Render
 
-## 📋 Prerequisites
+This guide will help you deploy your Heard app to Render, a cloud platform that makes it easy to deploy web applications.
 
-1. **GitHub Repository**: Your Heard app should be pushed to GitHub
-2. **Render Account**: Sign up at https://render.com
-3. **Node.js**: Ensure your app works with Node.js 18+ (Render's default)
+## Prerequisites
 
-## 🔧 Configuration Files
+- Your code is pushed to GitHub (✅ Already done!)
+- A Render account (free tier available)
 
-### **render.yaml** (Already Created)
-This file configures your deployment:
-```yaml
-services:
-  - type: web
-    name: heard-app
-    env: node
-    buildCommand: npm install && npm run build
-    startCommand: npm start
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: PORT
-        value: 3000
-    healthCheckPath: /
-    autoDeploy: true
-    branch: main
-    plan: starter
+## Step 1: Create Render Account
+
+1. Go to [render.com](https://render.com)
+2. Sign up with your GitHub account
+3. Verify your email address
+
+## Step 2: Connect Your Repository
+
+1. In your Render dashboard, click **"New +"**
+2. Select **"Web Service"**
+3. Connect your GitHub account if not already connected
+4. Select your repository: `eodiceanne-star/heard_app_beta`
+
+## Step 3: Configure the Web Service
+
+Use these settings:
+
+- **Name**: `heard-app-beta` (or any name you prefer)
+- **Environment**: `Node`
+- **Region**: Choose closest to your users
+- **Branch**: `main`
+- **Build Command**: `npm install && npm run build`
+- **Start Command**: `npm start`
+- **Plan**: `Free` (for testing)
+
+## Step 4: Environment Variables
+
+Add these environment variables in the Render dashboard:
+
+```
+NODE_ENV=production
+PORT=10000
 ```
 
-### **package.json** (Updated)
-The start script has been updated to use the PORT environment variable:
-```json
-"start": "next start -p $PORT"
-```
+## Step 5: Deploy
 
-## 🌐 Deployment Steps
+1. Click **"Create Web Service"**
+2. Render will automatically:
+   - Clone your repository
+   - Install dependencies
+   - Build your Next.js app
+   - Start the service
 
-### **Step 1: Connect to Render**
+## Step 6: Access Your App
 
-1. **Go to Render Dashboard**: https://dashboard.render.com
-2. **Click "New +"** → **"Web Service"**
-3. **Connect your GitHub repository**
-4. **Select the Heard app repository**
+Once deployment is complete, you'll get a URL like:
+`https://heard-app-beta.onrender.com`
 
-### **Step 2: Configure the Service**
+## Troubleshooting
 
-1. **Name**: `heard-app` (or your preferred name)
-2. **Environment**: `Node`
-3. **Build Command**: `npm install && npm run build`
-4. **Start Command**: `npm start`
-5. **Plan**: `Starter` (free tier)
+### Common Issues:
 
-### **Step 3: Environment Variables**
-
-Add these environment variables in Render dashboard:
-
-| Key | Value | Description |
-|-----|-------|-------------|
-| `NODE_ENV` | `production` | Production environment |
-| `PORT` | `3000` | Port for the application |
-
-### **Step 4: Deploy**
-
-1. **Click "Create Web Service"**
-2. **Wait for build to complete** (usually 2-5 minutes)
-3. **Your app will be available at**: `https://your-app-name.onrender.com`
-
-## 🔄 Auto-Deployment
-
-- **Automatic**: Every push to `main` branch triggers deployment
-- **Manual**: You can manually deploy from the Render dashboard
-- **Rollback**: Previous deployments can be rolled back if needed
-
-## 📱 Mobile App Integration
-
-### **For Mobile App Testing**
-Your deployed web app can be used as the web version for Capacitor:
-
-1. **Update Capacitor Config**:
-```json
-{
-  "server": {
-    "url": "https://your-app-name.onrender.com",
-    "cleartext": true
-  }
-}
-```
-
-2. **Sync Mobile App**:
-```bash
-npx cap sync
-```
-
-## 🔍 Troubleshooting
-
-### **Common Issues**
-
-1. **Build Fails**:
-   - Check Node.js version compatibility
+1. **Build Fails**
+   - Check the build logs in Render dashboard
    - Ensure all dependencies are in `package.json`
-   - Check build logs in Render dashboard
+   - Verify the build command works locally
 
-2. **App Not Loading**:
-   - Verify `healthCheckPath` is correct
-   - Check if PORT environment variable is set
-   - Review application logs
+2. **App Won't Start**
+   - Check the start command: `npm start`
+   - Verify the PORT environment variable is set
+   - Check the logs for any errors
 
-3. **Environment Variables**:
-   - Ensure all required env vars are set in Render
-   - Check for typos in variable names
+3. **Static Assets Not Loading**
+   - Ensure all images are in the `public` folder
+   - Check that the build completed successfully
 
-### **Logs and Monitoring**
+### Local Testing
 
-- **Build Logs**: Available in Render dashboard during deployment
-- **Runtime Logs**: View real-time logs in the dashboard
-- **Health Checks**: Monitor app health status
+Before deploying, test your production build locally:
 
-## 🎯 Next Steps After Deployment
+```bash
+npm run build
+npm start
+```
 
-1. **Test Your App**: Visit your deployed URL
-2. **Update Mobile App**: Point Capacitor to your deployed URL
-3. **Set Up Custom Domain** (Optional): Add your own domain
-4. **Monitor Performance**: Use Render's built-in monitoring
+## Next Steps
 
-## 💰 Cost Considerations
+After successful deployment:
 
-- **Starter Plan**: Free tier available
-- **Usage Limits**: Check Render's current free tier limits
-- **Scaling**: Easy to upgrade to paid plans as needed
+1. **Custom Domain** (Optional)
+   - Add your own domain in Render settings
+   - Configure DNS records
 
-## 🔐 Security Notes
+2. **Environment Variables**
+   - Add any API keys or configuration
+   - Set up different environments (staging/production)
 
-- **HTTPS**: Automatically enabled on Render
-- **Environment Variables**: Securely stored in Render dashboard
-- **No Sensitive Data**: Don't commit API keys to your repository
+3. **Monitoring**
+   - Set up health checks
+   - Monitor performance and logs
+
+## Mobile App Integration
+
+Since your app is configured for mobile deployment with Capacitor:
+
+1. **Web Version**: Deployed on Render
+2. **Mobile Version**: Build separately for app stores
+3. **Shared Codebase**: Both use the same React/Next.js code
+
+## Support
+
+- [Render Documentation](https://render.com/docs)
+- [Next.js Deployment Guide](https://nextjs.org/docs/deployment)
+- [Render Community](https://community.render.com)
 
 ---
 
-## 🎉 Your Heard App is Ready for the World!
+**Your app will be live at**: `https://heard-app-beta.onrender.com` (or your custom domain)
 
-Once deployed, your supportive healthcare app will be accessible to users worldwide, helping them feel heard and supported in their healthcare journey! 💚
-
-**Deployment URL**: `https://your-app-name.onrender.com`
+🎉 **Congratulations! Your Heard app is now deployed and accessible worldwide!**

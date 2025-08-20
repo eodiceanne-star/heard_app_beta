@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p $PORT",
+    "start": "next start -p ${PORT:-3000}",
     "lint": "next lint",
     "mobile:build": "npm run build && npx cap sync",
     "mobile:ios": "npx cap open ios",
@@ -22,7 +22,8 @@
     "generate-icons-from-photo": "node scripts/generate-icons-from-photo.js",
     "convert-svg-to-png": "node scripts/convert-svg-to-png.js",
     "deploy:check": "node scripts/deploy-to-render.js",
-    "fix:icons": "node scripts/fix-missing-icons.js"
+    "fix:icons": "node scripts/fix-missing-icons.js",
+    "deploy:render": "npm run deploy:check"
   },
   "dependencies": {
     "@capacitor/android": "^6.0.0",
