@@ -10,36 +10,38 @@ export default function SettingsPage() {
 
   useEffect(() => {
     // Load user data from localStorage
-    try {
-      const savedUser = localStorage.getItem('heardUser');
-      const savedProfile = localStorage.getItem('heardProfile');
-      
-      if (savedUser) {
-        setUser(JSON.parse(savedUser));
-      } else if (savedProfile) {
-        const profile = JSON.parse(savedProfile);
-        setUser({
-          displayName: profile.displayName || 'Not set',
-          email: 'Not set'
-        });
+    if (typeof window !== 'undefined') {
+      try {
+        const savedUser = localStorage.getItem('heardUser');
+        const savedProfile = localStorage.getItem('heardProfile');
+        
+        if (savedUser) {
+          setUser(JSON.parse(savedUser));
+        } else if (savedProfile) {
+          const profile = JSON.parse(savedProfile);
+          setUser({
+            displayName: profile.displayName || 'Not set',
+            email: 'Not set'
+          });
+        }
+      } catch (error) {
+        console.error('Error loading user data:', error);
       }
-    } catch (error) {
-      console.error('Error loading user data:', error);
-    } finally {
-      setIsLoading(false);
     }
+    setIsLoading(false);
   }, []);
 
   const handleLogout = () => {
-    try {
-      localStorage.removeItem('heardUser');
-      localStorage.removeItem('heardProfile');
-      setUser(null);
-      router.push('/');
-    } catch (error) {
-      console.error('Error during logout:', error);
-      router.push('/');
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.removeItem('heardUser');
+        localStorage.removeItem('heardProfile');
+      } catch (error) {
+        console.error('Error during logout:', error);
+      }
     }
+    setUser(null);
+    router.push('/');
   };
 
   if (isLoading) {
