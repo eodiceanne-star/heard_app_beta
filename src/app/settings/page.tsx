@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Illustration from '@/components/Illustration';
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -60,11 +59,6 @@ export default function SettingsPage() {
     <div className="page-container">
       <div className="content-container">
         <div className="text-center mb-8">
-          <Illustration 
-            type="profile-portrait" 
-            size="large" 
-            className="mx-auto mb-4"
-          />
           <h1 className="text-3xl font-playfair font-bold text-gray-800 mb-2">
             Settings
           </h1>
