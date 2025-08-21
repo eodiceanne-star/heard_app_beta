@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthContext';
 import Illustration from '@/components/Illustration';
 import DecorativeIllustrations from '@/components/DecorativeIllustrations';
-import OfflineStatus from '@/components/OfflineStatus';
 
 // Affirmations for daily reminders
 const affirmations = [
