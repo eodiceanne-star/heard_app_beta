@@ -3,10 +3,6 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Navigation from '@/components/Navigation'
 import { AuthProvider } from '@/components/AuthContext'
-import OfflineStatus from '@/components/OfflineStatus'
-
-// Initialize offline sync (this will be imported but not used directly in the component)
-import '../lib/offlineSync'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -79,13 +75,8 @@ export default function RootLayout({
       <body className={inter.className}>
         <AuthProvider>
           <div className="min-h-screen bg-cream">
-            {/* Offline Status Bar */}
-            <div className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 px-4 py-2">
-              <OfflineStatus className="justify-center" />
-            </div>
-            
             {/* Main Content */}
-            <div className="pt-16 pb-20">
+            <div className="pt-4 pb-20">
               {children}
             </div>
             

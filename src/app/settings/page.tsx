@@ -1,18 +1,60 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/components/AuthContext';
 import Illustration from '@/components/Illustration';
 
 export default function SettingsPage() {
   const router = useRouter();
-  const { user, logout } = useAuth();
+  const [user, setUser] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Load user data from localStorage
+    try {
+      const savedUser = localStorage.getItem('heardUser');
+      const savedProfile = localStorage.getItem('heardProfile');
+      
+      if (savedUser) {
+        setUser(JSON.parse(savedUser));
+      } else if (savedProfile) {
+        const profile = JSON.parse(savedProfile);
+        setUser({
+          displayName: profile.displayName || 'Not set',
+          email: 'Not set'
+        });
+      }
+    } catch (error) {
+      console.error('Error loading user data:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   const handleLogout = () => {
-    logout();
-    router.push('/');
+    try {
+      localStorage.removeItem('heardUser');
+      localStorage.removeItem('heardProfile');
+      setUser(null);
+      router.push('/');
+    } catch (error) {
+      console.error('Error during logout:', error);
+      router.push('/');
+    }
   };
+
+  if (isLoading) {
+    return (
+      <div className="page-container">
+        <div className="content-container">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-dusty-pink mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading settings...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="page-container">
