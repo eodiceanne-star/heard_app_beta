@@ -22,8 +22,10 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
+    setIsClient(true)
     // Check for saved user data on app start
     if (typeof window !== 'undefined') {
       try {
@@ -95,6 +97,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('heardUser')
     }
+  }
+
+  // Don't render children until client-side hydration is complete
+  if (!isClient) {
+    return (
+      <div className="min-h-screen bg-cream flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-dusty-pink"></div>
+      </div>
+    )
   }
 
   return (
