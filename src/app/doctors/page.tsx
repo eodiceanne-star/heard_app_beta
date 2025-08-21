@@ -229,7 +229,9 @@ export default function DoctorsPage() {
     
     // Save to localStorage (simulating Firestore)
     const userDoctors = updatedDoctors.filter(d => !doctorsData.find(seed => seed.id.toString() === d.id))
-    localStorage.setItem('heardUserDoctors', JSON.stringify(userDoctors))
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('heardUserDoctors', JSON.stringify(userDoctors))
+    }
     
     setNewDoctor({
       name: '',
@@ -281,7 +283,9 @@ export default function DoctorsPage() {
     
     // Save to localStorage
     const userDoctors = updatedDoctors.filter(d => !doctorsData.find(seed => seed.id.toString() === d.id))
-    localStorage.setItem('heardUserDoctors', JSON.stringify(userDoctors))
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('heardUserDoctors', JSON.stringify(userDoctors))
+    }
     
     setNewReview({
       rating: 5,

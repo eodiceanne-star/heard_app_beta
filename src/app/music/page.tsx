@@ -14,12 +14,17 @@ interface MusicTrack {
 }
 
 export default function MusicPage() {
+  const [isClient, setIsClient] = useState(false)
   const [customTracks, setCustomTracks] = useState<MusicTrack[]>([])
   const [hiddenRecommendedTracks, setHiddenRecommendedTracks] = useState<string[]>([])
   const [newTrack, setNewTrack] = useState({ title: '', artist: '', url: '' })
   
   // Randomized images for this page load
   const [randomBackgroundImage, setRandomBackgroundImage] = useState('')
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   // Initialize random images on mount
   useEffect(() => {
@@ -60,23 +65,29 @@ export default function MusicPage() {
   ]
 
   useEffect(() => {
-    const saved = localStorage.getItem('heardCustomMusic')
-    if (saved) {
-      setCustomTracks(JSON.parse(saved))
-    }
-    
-    const savedHidden = localStorage.getItem('heardHiddenRecommendedTracks')
-    if (savedHidden) {
-      setHiddenRecommendedTracks(JSON.parse(savedHidden))
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('heardCustomMusic')
+      if (saved) {
+        setCustomTracks(JSON.parse(saved))
+      }
+      
+      const savedHidden = localStorage.getItem('heardHiddenRecommendedTracks')
+      if (savedHidden) {
+        setHiddenRecommendedTracks(JSON.parse(savedHidden))
+      }
     }
   }, [])
 
   useEffect(() => {
-    localStorage.setItem('heardCustomMusic', JSON.stringify(customTracks))
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('heardCustomMusic', JSON.stringify(customTracks))
+    }
   }, [customTracks])
 
   useEffect(() => {
-    localStorage.setItem('heardHiddenRecommendedTracks', JSON.stringify(hiddenRecommendedTracks))
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('heardHiddenRecommendedTracks', JSON.stringify(hiddenRecommendedTracks))
+    }
   }, [hiddenRecommendedTracks])
 
   const handleAddTrack = (e: React.FormEvent) => {
@@ -131,6 +142,19 @@ export default function MusicPage() {
 
   const visibleRecommendedTracks = samplePlaylist.filter(track => !hiddenRecommendedTracks.includes(track.id))
   const allTracks = [...visibleRecommendedTracks, ...customTracks]
+
+  if (!isClient) {
+    return (
+      <div className="page-container">
+        <div className="content-container">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-dusty-pink mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading music...</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="page-container relative">

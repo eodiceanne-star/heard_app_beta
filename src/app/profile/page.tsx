@@ -15,6 +15,7 @@ interface Profile {
 }
 
 export default function ProfilePage() {
+  const [isClient, setIsClient] = useState(false)
   const [profile, setProfile] = useState<Profile>({
     displayName: '',
     age: '',
@@ -29,16 +30,24 @@ export default function ProfilePage() {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    const savedProfile = localStorage.getItem('heardProfile')
-    if (savedProfile) {
-      const parsed = JSON.parse(savedProfile)
-      setProfile(parsed)
-      setTempProfile(parsed)
+    setIsClient(true)
+  }, [])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedProfile = localStorage.getItem('heardProfile')
+      if (savedProfile) {
+        const parsed = JSON.parse(savedProfile)
+        setProfile(parsed)
+        setTempProfile(parsed)
+      }
     }
   }, [])
 
   useEffect(() => {
-    localStorage.setItem('heardProfile', JSON.stringify(profile))
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('heardProfile', JSON.stringify(profile))
+    }
   }, [profile])
 
   const handleSave = async () => {
@@ -112,6 +121,19 @@ export default function ProfilePage() {
 
 
   // Avatar selection is now handled by Open Peeps images
+
+  if (!isClient) {
+    return (
+      <div className="page-container">
+        <div className="content-container">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-dusty-pink mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading profile...</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="page-container relative">
