@@ -162,7 +162,7 @@ export default function SettingsPage() {
         <div className="bg-white rounded-2xl shadow-sm border p-6">
           <button
             onClick={handleLogout}
-            className="w-full bg-red-500 text-white py-3 rounded-xl font-medium hover:bg-red-600 transition-colors"
+            className="w-full bg-red-100 text-red-600 py-3 rounded-xl font-medium hover:bg-red-200 transition-colors border border-red-200"
           >
             Sign Out
           </button>

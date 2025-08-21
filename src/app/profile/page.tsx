@@ -109,22 +109,7 @@ export default function ProfilePage() {
     setTempProfile(prev => ({ ...prev, profileImage: null }))
   }
 
-  const handleResetProfile = () => {
-    if (confirm('Are you sure you want to reset your profile? This will clear all your profile data.')) {
-      localStorage.removeItem('heardProfile')
-      const defaultProfile = {
-        displayName: '',
-        age: '',
-        bio: '',
-        avatar: '👩',
-        profileImage: null,
-        isAnonymous: false
-      }
-      setProfile(defaultProfile)
-      setTempProfile(defaultProfile)
-      setIsEditing(false)
-    }
-  }
+
 
   // Avatar selection is now handled by Open Peeps images
 
@@ -365,16 +350,7 @@ export default function ProfilePage() {
              )}
            </div>
            
-           {!isEditing && (
-             <div className="mt-4 relative z-10">
-               <button 
-                 onClick={handleResetProfile}
-                 className="w-full px-6 py-3 bg-red-100 text-red-600 rounded-xl font-medium hover:bg-red-200 transition-colors border border-red-200"
-               >
-                 Reset Profile Data
-               </button>
-             </div>
-           )}
+
         </div>
 
         <div className="mt-8 mobile-card relative overflow-hidden">

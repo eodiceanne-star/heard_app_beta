@@ -420,8 +420,8 @@ export default function DoctorsPage() {
                 </div>
               </div>
              
-              <div className="flex items-center justify-between">
-                <span className={`px-4 py-2 rounded-full text-sm font-medium ${
+              <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
+                <span className={`px-4 py-2 rounded-full text-sm font-medium self-start ${
                   selectedDoctor.acceptingPatients 
                     ? 'bg-green-100 text-green-700' 
                     : 'bg-red-100 text-red-700'
@@ -431,19 +431,19 @@ export default function DoctorsPage() {
                 
                 <div className="flex space-x-2">
                   {userProfile && (
-                                         <button
-                       onClick={() => setShowReviewForm(!showReviewForm)}
-                       className="px-6 py-3 bg-dusty-pink text-gray-900 rounded-2xl font-medium hover:bg-dusty-pink-dark transition-colors shadow-md"
-                     >
-                       {showReviewForm ? 'Cancel Review' : 'Write a Review'}
-                     </button>
+                    <button
+                      onClick={() => setShowReviewForm(!showReviewForm)}
+                      className="px-4 py-2 bg-dusty-pink text-gray-900 rounded-xl font-medium hover:bg-dusty-pink-dark transition-colors shadow-sm text-sm"
+                    >
+                      {showReviewForm ? 'Cancel Review' : 'Write a Review'}
+                    </button>
                   )}
-                                       <button
-                       onClick={() => handleReportDoctor(selectedDoctor.id)}
-                       className="px-4 py-3 bg-gray-200 text-gray-900 rounded-2xl font-medium hover:bg-gray-300 transition-colors shadow-md"
-                     >
-                       Report
-                     </button>
+                  <button
+                    onClick={() => handleReportDoctor(selectedDoctor.id)}
+                    className="px-4 py-2 bg-gray-200 text-gray-900 rounded-xl font-medium hover:bg-gray-300 transition-colors shadow-sm text-sm"
+                  >
+                    Report
+                  </button>
                 </div>
               </div>
             </div>
@@ -805,8 +805,8 @@ export default function DoctorsPage() {
                   </div>
                 </div>
                
-                <div className="flex items-center justify-between">
-                  <span className={`px-4 py-2 rounded-full text-sm font-medium ${
+                <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
+                  <span className={`px-4 py-2 rounded-full text-sm font-medium self-start ${
                     doctor.acceptingPatients 
                       ? 'bg-green-100 text-green-700' 
                       : 'bg-red-100 text-red-700'
@@ -815,18 +815,18 @@ export default function DoctorsPage() {
                   </span>
                   
                   <div className="flex space-x-2">
-                                         <button
-                       onClick={() => setSelectedDoctor(doctor)}
-                       className="px-6 py-3 bg-dusty-pink text-gray-900 rounded-2xl font-medium hover:bg-dusty-pink-dark transition-colors shadow-md"
-                     >
-                       View Profile
-                     </button>
-                                         <button
-                       onClick={() => handleReportDoctor(doctor.id)}
-                       className="px-4 py-3 bg-gray-200 text-gray-900 rounded-2xl font-medium hover:bg-gray-300 transition-colors shadow-md"
-                     >
-                       Report
-                     </button>
+                    <button
+                      onClick={() => setSelectedDoctor(doctor)}
+                      className="px-4 py-2 bg-dusty-pink text-gray-900 rounded-xl font-medium hover:bg-dusty-pink-dark transition-colors shadow-sm text-sm"
+                    >
+                      View Profile
+                    </button>
+                    <button
+                      onClick={() => handleReportDoctor(doctor.id)}
+                      className="px-4 py-2 bg-gray-200 text-gray-900 rounded-xl font-medium hover:bg-gray-300 transition-colors shadow-sm text-sm"
+                    >
+                      Report
+                    </button>
                   </div>
                 </div>
               </div>
