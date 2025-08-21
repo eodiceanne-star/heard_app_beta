@@ -25,9 +25,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Check for saved user data on app start
-    const savedUser = localStorage.getItem('heardUser')
-    if (savedUser) {
-      setUser(JSON.parse(savedUser))
+    if (typeof window !== 'undefined') {
+      try {
+        const savedUser = localStorage.getItem('heardUser')
+        if (savedUser) {
+          setUser(JSON.parse(savedUser))
+        }
+      } catch (error) {
+        console.error('Error loading user data:', error)
+      }
     }
     setIsLoading(false)
   }, [])
@@ -44,7 +50,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           isAnonymous: false
         }
         setUser(mockUser)
-        localStorage.setItem('heardUser', JSON.stringify(mockUser))
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('heardUser', JSON.stringify(mockUser))
+        }
         return { success: true }
       } else {
         return { success: false, error: 'Please enter both email and password' }
@@ -70,7 +78,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           isAnonymous: false
         }
         setUser(mockUser)
-        localStorage.setItem('heardUser', JSON.stringify(mockUser))
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('heardUser', JSON.stringify(mockUser))
+        }
         return { success: true }
       } else {
         return { success: false, error: 'Please fill in all fields' }
@@ -82,7 +92,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = () => {
     setUser(null)
-    localStorage.removeItem('heardUser')
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('heardUser')
+    }
   }
 
   return (
