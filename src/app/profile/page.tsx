@@ -109,6 +109,23 @@ export default function ProfilePage() {
     setTempProfile(prev => ({ ...prev, profileImage: null }))
   }
 
+  const handleResetProfile = () => {
+    if (confirm('Are you sure you want to reset your profile? This will clear all your profile data.')) {
+      localStorage.removeItem('heardProfile')
+      const defaultProfile = {
+        displayName: '',
+        age: '',
+        bio: '',
+        avatar: '👩',
+        profileImage: null,
+        isAnonymous: false
+      }
+      setProfile(defaultProfile)
+      setTempProfile(defaultProfile)
+      setIsEditing(false)
+    }
+  }
+
   // Avatar selection is now handled by Open Peeps images
 
   return (
@@ -314,39 +331,50 @@ export default function ProfilePage() {
             )}
           </div>
 
-          <div className="mt-8 flex space-x-4 relative z-10">
-            {isEditing ? (
-              <>
-                <button 
-                  onClick={handleSave}
-                  data-save-button
-                  className={`flex-1 text-lg py-4 rounded-2xl font-medium transition-colors ${
-                    isSaving 
-                      ? 'bg-gray-400 text-white cursor-not-allowed' 
-                      : !tempProfile.displayName.trim()
-                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                      : 'mobile-button'
-                  }`}
-                  disabled={isSaving || !tempProfile.displayName.trim()}
-                >
-                  {isSaving ? 'Saving...' : 'Save Changes'}
-                </button>
-                <button 
-                  onClick={handleCancel}
-                  className="flex-1 px-8 py-4 border-2 border-gray-300 text-charcoal rounded-2xl font-medium hover:bg-gray-50 transition-colors"
-                >
-                  Cancel
-                </button>
-              </>
-            ) : (
-              <button 
-                onClick={() => setIsEditing(true)}
-                className="w-full mobile-button text-lg py-4"
-              >
-                Edit Profile
-              </button>
-            )}
-          </div>
+                     <div className="mt-8 flex space-x-4 relative z-10">
+             {isEditing ? (
+               <>
+                 <button 
+                   onClick={handleSave}
+                   data-save-button
+                   className={`flex-1 text-lg py-4 rounded-2xl font-medium transition-colors ${
+                     isSaving 
+                       ? 'bg-gray-400 text-white cursor-not-allowed' 
+                       : !tempProfile.displayName.trim()
+                       ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                       : 'mobile-button'
+                   }`}
+                   disabled={isSaving || !tempProfile.displayName.trim()}
+                 >
+                   {isSaving ? 'Saving...' : 'Save Changes'}
+                 </button>
+                 <button 
+                   onClick={handleCancel}
+                   className="flex-1 px-8 py-4 border-2 border-gray-300 text-charcoal rounded-2xl font-medium hover:bg-gray-50 transition-colors"
+                 >
+                   Cancel
+                 </button>
+               </>
+             ) : (
+               <button 
+                 onClick={() => setIsEditing(true)}
+                 className="w-full mobile-button text-lg py-4"
+               >
+                 Edit Profile
+               </button>
+             )}
+           </div>
+           
+           {!isEditing && (
+             <div className="mt-4 relative z-10">
+               <button 
+                 onClick={handleResetProfile}
+                 className="w-full px-6 py-3 bg-red-100 text-red-600 rounded-xl font-medium hover:bg-red-200 transition-colors border border-red-200"
+               >
+                 Reset Profile Data
+               </button>
+             </div>
+           )}
         </div>
 
         <div className="mt-8 mobile-card relative overflow-hidden">
