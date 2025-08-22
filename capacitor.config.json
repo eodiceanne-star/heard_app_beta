@@ -1,6 +1,6 @@
 {
   "appId": "com.heardapp.mobile",
-  "appName": "Heard",
+  "appName": "HeardApp",
   "webDir": "out",
   "server": {
     "androidScheme": "https"
