@@ -1,0 +1,64 @@
+{
+  "appName": "Heard",
+  "bundleId": "com.heardapp.mobile",
+  "version": "1.0.0",
+  "platform": "ios",
+  "url": "YOUR_RENDER_URL_HERE",
+  "icon": {
+    "ios": {
+      "1024": "/icons/ios/icon-512x512.png"
+    }
+  },
+  "splash": {
+    "backgroundColor": "#F5F5DC",
+    "image": "/icons/ios/icon-512x512.png"
+  },
+  "screenshots": {
+    "ios": [
+      {
+        "src": "/screenshots/ios/iPhone-6.7-inch-1.png",
+        "description": "Dashboard - Main features and quick access"
+      },
+      {
+        "src": "/screenshots/ios/iPhone-6.7-inch-2.png",
+        "description": "Doctor Finder - Find supportive healthcare professionals"
+      },
+      {
+        "src": "/screenshots/ios/iPhone-6.7-inch-3.png",
+        "description": "Community Forum - Connect with others who understand"
+      },
+      {
+        "src": "/screenshots/ios/iPhone-6.7-inch-4.png",
+        "description": "Symptom Tracker - Monitor your health journey"
+      }
+    ]
+  },
+  "appStore": {
+    "name": "Heard - Women's Healthcare Support",
+    "subtitle": "Healthcare Support Platform",
+    "description": "A women's healthcare support platform for those navigating chronic illness and medical gaslighting. Connect with supportive healthcare professionals, track symptoms, and find community support.\n\nKey Features:\n• Find supportive healthcare professionals\n• Track symptoms and health journey\n• Connect with community support\n• Access calming music and resources\n• Prepare for doctor appointments\n\nPerfect for women seeking understanding healthcare providers and community support.",
+    "keywords": "healthcare,women,medical,support,community,doctors,symptoms,health,wellness,chronic illness",
+    "category": "Health & Fitness",
+    "contentRating": "4+",
+    "privacyPolicyUrl": "YOUR_PRIVACY_POLICY_URL_HERE"
+  },
+  "features": {
+    "statusBar": {
+      "style": "light",
+      "backgroundColor": "#D4A5A5"
+    },
+    "navigation": {
+      "style": "native"
+    },
+    "orientation": "portrait",
+    "fullscreen": true,
+    "offline": true
+  },
+  "permissions": {
+    "camera": false,
+    "microphone": false,
+    "location": false,
+    "notifications": true,
+    "contacts": false
+  }
+}
