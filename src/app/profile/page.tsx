@@ -121,10 +121,6 @@ export default function ProfilePage() {
     setTempProfile(prev => ({ ...prev, profileImage: null }))
   }
 
-
-
-  // Avatar selection is now handled by Open Peeps images
-
   if (!isClient) {
     return (
       <div className="page-container">
@@ -341,41 +337,39 @@ export default function ProfilePage() {
             )}
           </div>
 
-                     <div className="mt-8 flex space-x-4 relative z-10">
-             {isEditing ? (
-               <>
-                 <button 
-                   onClick={handleSave}
-                   data-save-button
-                   className={`flex-1 text-lg py-4 rounded-2xl font-medium transition-colors ${
-                     isSaving 
-                       ? 'bg-gray-400 text-white cursor-not-allowed' 
-                       : !tempProfile.displayName.trim()
-                       ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                       : 'mobile-button'
-                   }`}
-                   disabled={isSaving || !tempProfile.displayName.trim()}
-                 >
-                   {isSaving ? 'Saving...' : 'Save Changes'}
-                 </button>
-                 <button 
-                   onClick={handleCancel}
-                   className="flex-1 px-8 py-4 border-2 border-gray-300 text-charcoal rounded-2xl font-medium hover:bg-gray-50 transition-colors"
-                 >
-                   Cancel
-                 </button>
-               </>
-             ) : (
-               <button 
-                 onClick={() => setIsEditing(true)}
-                 className="w-full mobile-button text-lg py-4"
-               >
-                 Edit Profile
-               </button>
-             )}
-           </div>
-           
-
+          <div className="mt-8 flex space-x-4 relative z-10">
+            {isEditing ? (
+              <>
+                <button 
+                  onClick={handleSave}
+                  data-save-button
+                  className={`flex-1 text-lg py-4 rounded-2xl font-medium transition-colors ${
+                    isSaving 
+                      ? 'bg-gray-400 text-white cursor-not-allowed' 
+                      : !tempProfile.displayName.trim()
+                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      : 'mobile-button'
+                  }`}
+                  disabled={isSaving || !tempProfile.displayName.trim()}
+                >
+                  {isSaving ? 'Saving...' : 'Save Changes'}
+                </button>
+                <button 
+                  onClick={handleCancel}
+                  className="flex-1 px-8 py-4 border-2 border-gray-300 text-charcoal rounded-2xl font-medium hover:bg-gray-50 transition-colors"
+                >
+                  Cancel
+                </button>
+              </>
+            ) : (
+              <button 
+                onClick={() => setIsEditing(true)}
+                className="w-full mobile-button text-lg py-4"
+              >
+                Edit Profile
+              </button>
+            )}
+          </div>
         </div>
 
         <div className="mt-8 mobile-card relative overflow-hidden">

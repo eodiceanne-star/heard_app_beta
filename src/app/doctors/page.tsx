@@ -410,7 +410,7 @@ export default function DoctorsPage() {
                   <p className="text-lg text-sage font-medium mb-2 truncate">{selectedDoctor.specialty}</p>
                   <p className="text-base text-gray-600 mb-3 truncate">{selectedDoctor.location}</p>
                   
-                                       <div className="flex items-center space-x-2 mb-3 p-2">
+                                       <div className="flex items-center space-x-2 mb-3 p-3 bg-gray-50 rounded-lg">
                        <div className="flex space-x-1">
                          {renderStars(selectedDoctor.rating)}
                        </div>

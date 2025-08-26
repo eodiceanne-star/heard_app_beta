@@ -180,29 +180,26 @@ export default function ForumPage() {
     // Placeholder for bookmark functionality
   }
 
-  return (
+    return (
     <div className="page-container relative">
       {/* Background decorative elements */}
-      <Illustration type="wave-pattern" className="pointer-events-none" />
-      <Illustration type="dot-pattern" className="pointer-events-none" />
-      <DecorativeIllustrations />
+      <Illustration type="wave-pattern" className="pointer-events-none absolute inset-0 z-0" />
+      <Illustration type="dot-pattern" className="pointer-events-none absolute inset-0 z-0" />
       
-                    {/* Random Cool Kids illustration */}
-      {randomBackgroundImage && (
-        <div className="fixed top-1/4 right-8 w-28 h-28 opacity-50 pointer-events-none z-0">
-          <Image
-            src={randomBackgroundImage}
-            alt="Cool kids illustration"
-            width={112}
-            height={112}
-            className="w-full h-full object-contain"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement
-              target.style.display = 'none'
-            }}
-          />
-        </div>
-      )}
+      {/* Large header illustration */}
+      <div className="absolute top-0 right-0 w-48 h-48 opacity-20 pointer-events-none z-0">
+        <Image
+          src="/assets/images/openpeeps/coolkids/cool-kids-1.png"
+          alt="Community illustration"
+          width={192}
+          height={192}
+          className="w-full h-full object-contain"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement
+            target.style.display = 'none'
+          }}
+        />
+      </div>
       
       <div className="content-container relative z-10">
         <div className="mb-12">
@@ -340,17 +337,17 @@ export default function ForumPage() {
                   {selectedThread?.id === thread.id && (
                     <div className="mt-6 pt-6 border-t border-gray-100">
                       <div className="space-y-4 mb-6">
-                        {thread.comments.map(comment => (
-                                                     <div key={comment.id} className="flex space-x-4">
+                                                 {thread.comments.map(comment => (
+                                                      <div key={comment.id} className="flex space-x-4">
                              <div className="w-10 h-10 bg-gradient-to-br from-cream to-dusty-pink rounded-full flex items-center justify-center text-charcoal text-lg flex-shrink-0 shadow-md p-1">
                                {comment.author.avatar}
                              </div>
-                            <div className="flex-1">
+                            <div className="flex-1 min-w-0">
                               <div className="flex items-center space-x-3 mb-2">
                                 <span className="font-semibold text-base text-charcoal">{comment.author.displayName}</span>
                                 <span className="text-sm text-gray-500">{formatDate(comment.timestamp)}</span>
                               </div>
-                              <p className="text-base text-charcoal">{comment.content}</p>
+                              <p className="text-base text-charcoal break-words">{comment.content}</p>
                             </div>
                           </div>
                         ))}
