@@ -103,10 +103,30 @@ export default function ProfilePage() {
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
+      // Check file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('File size must be less than 5MB')
+        return
+      }
+      
+      // Check file type
+      if (!file.type.startsWith('image/')) {
+        alert('Please select an image file')
+        return
+      }
+      
       const reader = new FileReader()
       reader.onload = (e) => {
-        const result = e.target?.result as string
-        setTempProfile(prev => ({ ...prev, profileImage: result }))
+        try {
+          const result = e.target?.result as string
+          setTempProfile(prev => ({ ...prev, profileImage: result }))
+        } catch (error) {
+          console.error('Error processing image:', error)
+          alert('Error processing image. Please try again.')
+        }
+      }
+      reader.onerror = () => {
+        alert('Error reading file. Please try again.')
       }
       reader.readAsDataURL(file)
     }

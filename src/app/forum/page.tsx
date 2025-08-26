@@ -342,12 +342,12 @@ export default function ForumPage() {
                              <div className="w-10 h-10 bg-gradient-to-br from-cream to-dusty-pink rounded-full flex items-center justify-center text-charcoal text-lg flex-shrink-0 shadow-md p-1">
                                {comment.author.avatar}
                              </div>
-                            <div className="flex-1 min-w-0">
+                            <div className="flex-1 min-w-0 overflow-hidden">
                               <div className="flex items-center space-x-3 mb-2">
                                 <span className="font-semibold text-base text-charcoal">{comment.author.displayName}</span>
                                 <span className="text-sm text-gray-500">{formatDate(comment.timestamp)}</span>
                               </div>
-                              <p className="text-base text-charcoal break-words">{comment.content}</p>
+                              <p className="text-base text-charcoal break-words whitespace-pre-wrap overflow-wrap-anywhere">{comment.content}</p>
                             </div>
                           </div>
                         ))}

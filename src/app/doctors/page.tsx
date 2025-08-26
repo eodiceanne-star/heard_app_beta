@@ -324,7 +324,7 @@ export default function DoctorsPage() {
         <button
           key={i}
           onClick={() => interactive && onRatingChange?.(i)}
-          className={`${interactive ? 'cursor-pointer' : ''} ${i <= rating ? 'text-yellow-400' : 'text-gray-300'}`}
+          className={`${interactive ? 'cursor-pointer' : ''} ${i <= rating ? 'text-yellow-400' : 'text-gray-300'} text-sm`}
           disabled={!interactive}
         >
           ⭐
@@ -535,12 +535,12 @@ export default function DoctorsPage() {
                           </p>
                         </div>
                       </div>
-                                             <div className="flex space-x-1 p-2 bg-gray-50 rounded-lg">
-                         {renderStars(review.rating)}
-                       </div>
+                                                                                           <div className="flex space-x-1 p-2 bg-gray-50 rounded-lg w-fit">
+                          {renderStars(review.rating)}
+                        </div>
                     </div>
                     
-                    <p className="text-base text-charcoal leading-relaxed mb-4">{review.text}</p>
+                                         <p className="text-base text-charcoal leading-relaxed mb-4 font-medium">{review.text}</p>
                     
                     {review.tags.length > 0 && (
                       <div className="flex flex-wrap gap-2">
@@ -784,13 +784,13 @@ export default function DoctorsPage() {
                     <p className="text-base text-sage font-medium mb-1 truncate">{doctor.specialty}</p>
                     <p className="text-sm text-gray-600 mb-2 truncate">{doctor.location}</p>
                     
-                                         <div className="flex items-center space-x-2 mb-3 p-1">
-                       <div className="flex space-x-1">
-                         {renderStars(doctor.rating)}
-                       </div>
-                       <span className="text-sm text-charcoal font-medium">{doctor.rating}</span>
-                       <span className="text-xs text-gray-500">({doctor.reviewCount})</span>
-                     </div>
+                                                                                   <div className="flex items-center space-x-2 mb-3 p-2 bg-gray-50 rounded-lg w-fit">
+                        <div className="flex space-x-1">
+                          {renderStars(doctor.rating)}
+                        </div>
+                        <span className="text-sm text-charcoal font-medium">{doctor.rating}</span>
+                        <span className="text-xs text-gray-500">({doctor.reviewCount})</span>
+                      </div>
                     
                     {doctor.reviews.length > 0 && (
                       <div className="mb-3">
