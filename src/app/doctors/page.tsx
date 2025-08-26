@@ -361,22 +361,20 @@ export default function DoctorsPage() {
         <Illustration type="wave-pattern" className="pointer-events-none" />
         <Illustration type="dot-pattern" className="pointer-events-none" />
         
-        {/* Random Cool Kids illustration */}
-        {randomBackgroundImage && (
-          <div className="fixed bottom-8 left-8 w-32 h-32 opacity-60 pointer-events-none z-0">
-            <Image
-              src={randomBackgroundImage}
-              alt="Cool kids illustration"
-              width={128}
-              height={128}
-              className="w-full h-full object-contain"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement
-                target.style.display = 'none'
-              }}
-            />
-          </div>
-        )}
+        {/* Fixed header illustration */}
+        <div className="absolute top-4 right-4 w-24 h-24 opacity-30 pointer-events-none z-0">
+          <Image
+            src="/assets/images/openpeeps/patterns/cool-kids-calendar.png"
+            alt="Doctor directory illustration"
+            width={96}
+            height={96}
+            className="w-full h-full object-contain"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement
+              target.style.display = 'none'
+            }}
+          />
+        </div>
         
         <div className="content-container relative z-10">
           {/* Back button */}
@@ -572,22 +570,20 @@ export default function DoctorsPage() {
       <Illustration type="wave-pattern" className="pointer-events-none" />
       <Illustration type="dot-pattern" className="pointer-events-none" />
       
-      {/* Random Cool Kids illustration */}
-      {randomBackgroundImage && (
-        <div className="fixed bottom-8 left-8 w-32 h-32 opacity-60 pointer-events-none z-0">
-          <Image
-            src={randomBackgroundImage}
-            alt="Cool kids illustration"
-            width={128}
-            height={128}
-            className="w-full h-full object-contain"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement
-              target.style.display = 'none'
-            }}
-          />
-        </div>
-      )}
+      {/* Fixed header illustration */}
+      <div className="absolute top-4 right-4 w-24 h-24 opacity-30 pointer-events-none z-0">
+        <Image
+          src="/assets/images/openpeeps/patterns/cool-kids-calendar.png"
+          alt="Doctor directory illustration"
+          width={96}
+          height={96}
+          className="w-full h-full object-contain"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement
+            target.style.display = 'none'
+          }}
+        />
+      </div>
       
       <div className="content-container relative z-10">
         <div className="mb-12">

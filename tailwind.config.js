@@ -10,8 +10,8 @@ module.exports = {
       colors: {
         cream: '#FAF8F5',
         'dusty-pink': '#E6B7B0',
-        sage: '#B7C8B5',
-        charcoal: '#333333',
+        sage: '#9CAF88', // Updated sage green
+        charcoal: '#333333', // Updated charcoal
       },
       fontFamily: {
         'playfair': ['Playfair Display', 'serif'],

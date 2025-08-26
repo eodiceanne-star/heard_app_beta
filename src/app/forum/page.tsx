@@ -186,20 +186,20 @@ export default function ForumPage() {
       <Illustration type="wave-pattern" className="pointer-events-none absolute inset-0 z-0" />
       <Illustration type="dot-pattern" className="pointer-events-none absolute inset-0 z-0" />
       
-      {/* Large header illustration */}
-      <div className="absolute top-0 right-0 w-48 h-48 opacity-20 pointer-events-none z-0">
-        <Image
-          src="/assets/images/openpeeps/coolkids/cool-kids-1.png"
-          alt="Community illustration"
-          width={192}
-          height={192}
-          className="w-full h-full object-contain"
-          onError={(e) => {
-            const target = e.target as HTMLImageElement
-            target.style.display = 'none'
-          }}
-        />
-      </div>
+             {/* Fixed header illustration */}
+       <div className="absolute top-4 right-4 w-24 h-24 opacity-30 pointer-events-none z-0">
+         <Image
+           src="/assets/images/openpeeps/patterns/cool-kids-messages.png"
+           alt="Community illustration"
+           width={96}
+           height={96}
+           className="w-full h-full object-contain"
+           onError={(e) => {
+             const target = e.target as HTMLImageElement
+             target.style.display = 'none'
+           }}
+         />
+       </div>
       
       <div className="content-container relative z-10">
         <div className="mb-12">
