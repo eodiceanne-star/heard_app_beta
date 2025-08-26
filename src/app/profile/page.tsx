@@ -76,12 +76,15 @@ export default function ProfilePage() {
         saveButton.className = 'flex-1 px-8 py-4 bg-green-500 text-white rounded-2xl font-medium transition-colors'
         
         setTimeout(() => {
-          saveButton.textContent = originalText
-          saveButton.disabled = false
-          saveButton.className = 'flex-1 mobile-button text-lg py-4'
+          if (saveButton) {
+            saveButton.textContent = originalText
+            saveButton.disabled = false
+            saveButton.className = 'flex-1 mobile-button text-lg py-4'
+          }
         }, 2000)
       }
     } catch (error) {
+      console.error('Save error:', error)
       alert('Failed to save profile. Please try again.')
     } finally {
       setIsSaving(false)
@@ -138,8 +141,8 @@ export default function ProfilePage() {
   return (
     <div className="page-container relative">
       {/* Background decorative elements */}
-      <Illustration type="wave-pattern" className="pointer-events-none" />
-      <Illustration type="dot-pattern" className="pointer-events-none" />
+      <Illustration type="wave-pattern" className="pointer-events-none absolute inset-0 z-0" />
+      <Illustration type="dot-pattern" className="pointer-events-none absolute inset-0 z-0" />
       
       <div className="content-container relative z-10">
         <div className="mb-12">
@@ -153,7 +156,7 @@ export default function ProfilePage() {
         
         <div className="mobile-card relative overflow-hidden">
           {/* Card background pattern */}
-          <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-sage to-transparent opacity-10 rounded-full -mr-8 -mt-8"></div>
+          <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-sage to-transparent opacity-10 rounded-full -mr-8 -mt-8 z-0"></div>
           
           <div className="text-center mb-8 relative z-10">
             <div className="relative mx-auto w-32 h-32 mb-6">
@@ -377,7 +380,7 @@ export default function ProfilePage() {
 
         <div className="mt-8 mobile-card relative overflow-hidden">
           {/* Card background pattern */}
-          <div className="absolute bottom-0 left-0 w-12 h-12 bg-gradient-to-tl from-dusty-pink to-transparent opacity-10 rounded-full -ml-6 -mb-6"></div>
+          <div className="absolute bottom-0 left-0 w-12 h-12 bg-gradient-to-tl from-dusty-pink to-transparent opacity-10 rounded-full -ml-6 -mb-6 z-0"></div>
           
           <h2 className="text-2xl font-playfair font-medium text-charcoal mb-6 relative z-10">Privacy & Safety</h2>
           <div className="space-y-4 text-base text-charcoal relative z-10">
@@ -402,7 +405,7 @@ export default function ProfilePage() {
 
         <div className="mt-8 p-8 bg-gradient-to-br from-sage to-dusty-pink bg-opacity-10 rounded-3xl relative overflow-hidden">
           {/* Background decorative elements */}
-          <div className="absolute top-4 right-4">
+          <div className="absolute top-4 right-4 z-0">
             <Illustration type="plant-decorative" size="small" />
           </div>
           

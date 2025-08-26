@@ -247,10 +247,11 @@ export default function ForumPage() {
                 <textarea
                   value={newThread.content}
                   onChange={(e) => setNewThread(prev => ({ ...prev, content: e.target.value }))}
-                  className="w-full p-4 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-dusty-pink focus:border-transparent text-base"
+                  className="w-full p-4 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-dusty-pink focus:border-transparent text-base resize-none overflow-y-auto"
                   rows={4}
                   placeholder="Share your thoughts, questions, or experiences..."
                   maxLength={500}
+                  style={{ minHeight: '120px', maxHeight: '300px' }}
                 />
                 <div className="text-sm text-gray-500 mt-2">{newThread.content.length}/500</div>
               </div>
@@ -299,7 +300,7 @@ export default function ForumPage() {
           {threads.map(thread => (
             <div key={thread.id} className="mobile-card relative overflow-hidden">
               {/* Card background pattern */}
-              <div className="absolute top-0 left-0 w-12 h-12 bg-gradient-to-br from-sage to-transparent opacity-10 rounded-full -ml-6 -mt-6"></div>
+              <div className="absolute top-0 left-0 w-12 h-12 bg-gradient-to-br from-sage to-transparent opacity-10 rounded-full -ml-6 -mt-6 z-0"></div>
               
                              <div className="flex items-start space-x-4 mb-4 relative z-10">
                  <div className="w-12 h-12 bg-gradient-to-br from-cream to-dusty-pink rounded-full flex items-center justify-center text-charcoal text-xl flex-shrink-0 shadow-md p-1">
@@ -356,16 +357,17 @@ export default function ForumPage() {
                       </div>
                       
                       <div className="flex space-x-3">
-                        <input
-                          type="text"
+                        <textarea
                           value={newComment}
                           onChange={(e) => setNewComment(e.target.value)}
                           placeholder="Add a comment..."
-                          className="flex-1 p-3 border border-gray-200 rounded-xl text-base focus:ring-2 focus:ring-dusty-pink focus:border-transparent"
+                          rows={3}
+                          className="flex-1 p-3 border border-gray-200 rounded-xl text-base focus:ring-2 focus:ring-dusty-pink focus:border-transparent resize-none overflow-y-auto"
+                          style={{ minHeight: '60px', maxHeight: '120px' }}
                         />
                         <button 
                           onClick={() => handleAddComment(thread.id)}
-                          className="px-6 py-3 bg-dusty-pink text-white rounded-xl text-base font-medium hover:bg-opacity-90 shadow-md"
+                          className="px-6 py-3 bg-dusty-pink text-white rounded-xl text-base font-medium hover:bg-opacity-90 shadow-md self-end"
                         >
                           Reply
                         </button>
@@ -405,7 +407,7 @@ export default function ForumPage() {
 
         <div className="mt-12 p-8 bg-gradient-to-br from-sage to-dusty-pink bg-opacity-10 rounded-3xl relative overflow-hidden">
           {/* Background decorative elements */}
-          <div className="absolute top-4 right-4">
+          <div className="absolute top-4 right-4 z-0">
             <Illustration type="plant-decorative" size="small" />
           </div>
           
