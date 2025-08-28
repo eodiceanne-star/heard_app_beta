@@ -433,12 +433,12 @@ export default function DoctorsPage() {
                 
                 <div className="flex space-x-2">
                   {userProfile && (
-                    <button
-                      onClick={() => setShowReviewForm(!showReviewForm)}
-                      className="px-4 py-2 bg-dusty-pink text-gray-900 rounded-xl font-medium hover:bg-dusty-pink-dark transition-colors shadow-sm text-sm"
-                    >
-                      {showReviewForm ? 'Cancel Review' : 'Write a Review'}
-                    </button>
+                                         <button
+                       onClick={() => setShowReviewForm(!showReviewForm)}
+                       className="px-4 py-2 bg-dusty-pink text-black rounded-xl font-medium hover:bg-dusty-pink-dark transition-colors shadow-sm text-sm"
+                     >
+                       {showReviewForm ? 'Cancel Review' : 'Write a Review'}
+                     </button>
                   )}
                   <button
                     onClick={() => handleReportDoctor(selectedDoctor.id)}
@@ -795,7 +795,7 @@ export default function DoctorsPage() {
                         </p>
                         <div className="flex flex-wrap gap-1">
                           {doctor.reviews[0].tags.slice(0, 2).map((tag, index) => (
-                            <span key={index} className="px-2 py-1 bg-dusty-pink bg-opacity-20 text-dusty-pink text-xs rounded-full font-medium">
+                            <span key={index} className="px-2 py-1 bg-dusty-pink bg-opacity-20 text-black text-xs rounded-full font-medium">
                               {tag}
                             </span>
                           ))}
@@ -815,12 +815,12 @@ export default function DoctorsPage() {
                   </span>
                   
                   <div className="flex space-x-2">
-                    <button
-                      onClick={() => setSelectedDoctor(doctor)}
-                      className="px-4 py-2 bg-dusty-pink text-gray-900 rounded-xl font-medium hover:bg-dusty-pink-dark transition-colors shadow-sm text-sm"
-                    >
-                      View Profile
-                    </button>
+                                         <button
+                       onClick={() => setSelectedDoctor(doctor)}
+                       className="px-4 py-2 bg-dusty-pink text-black rounded-xl font-medium hover:bg-dusty-pink-dark transition-colors shadow-sm text-sm"
+                     >
+                       View Profile
+                     </button>
                     <button
                       onClick={() => handleReportDoctor(doctor.id)}
                       className="px-4 py-2 bg-gray-200 text-gray-900 rounded-xl font-medium hover:bg-gray-300 transition-colors shadow-sm text-sm"
