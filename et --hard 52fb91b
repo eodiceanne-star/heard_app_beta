@@ -1,0 +1,10 @@
+[33m09af58d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Update UI with custom background image, navigation icons, and enhanced styling - New dark background with cream overlay - Custom navigation icons replacing emojis - Enhanced shadows and contrast for better visibility - Fixed header image behavior (no more scrolling images) - Updated color scheme with new sage green (#9CAF88)
+[33m52fb91b[m Fix UI issues: forum comment overflow, doctor review alignment, star rating sizing, text contrast, and profile photo upload errors
+[33m082769c[m Fix UI issues: profile page simplification, forum image layout, doctor star ratings container, and comment text overflow
+[33m3c1e9c7[m Fix mobile bugs: profile save error, z-index issues, and forum text box scrolling
+[33m92996ce[m Add Apple App Store preparation files and guides
+[33md45de0c[m Add mobile launch guides and privacy policy for app store submission
+[33m5b888c2[m Fix client-side hydration errors by adding SSR safety checks to all pages
+[33m4bd80c4[m Remove reset profile button, fix signout button UI, and improve doctor page button layout
+[33m43756a6[m Add client-side hydration check to AuthProvider to prevent SSR build errors
+[33mdd8698a[m Restore AuthProvider to layout to fix login page useAuth error

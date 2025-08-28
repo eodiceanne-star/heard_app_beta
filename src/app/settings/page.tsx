@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Navigation from '@/components/Navigation';
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -70,7 +71,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Connection Status */}
-        <div className="bg-white rounded-2xl shadow-sm border p-6 mb-6">
+        <div className="bg-white rounded-2xl shadow-sm border border-dusty-pink p-6 mb-6">
           <h2 className="text-xl font-playfair font-semibold text-gray-800 mb-4">
             Connection Status
           </h2>
@@ -86,7 +87,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Account Settings */}
-        <div className="bg-white rounded-2xl shadow-sm border p-6 mb-6">
+        <div className="bg-white rounded-2xl shadow-sm border border-dusty-pink p-6 mb-6">
           <h2 className="text-xl font-playfair font-semibold text-gray-800 mb-4">
             Account
           </h2>
@@ -101,7 +102,7 @@ export default function SettingsPage() {
             </div>
             <button
               onClick={() => router.push('/profile')}
-              className="w-full bg-dusty-pink text-gray-900 py-3 rounded-xl font-medium hover:bg-dusty-pink-dark transition-colors"
+              className="w-full bg-dusty-pink text-black py-3 rounded-xl font-medium hover:bg-dusty-pink-dark transition-colors"
             >
               Edit Profile
             </button>
@@ -109,7 +110,7 @@ export default function SettingsPage() {
         </div>
 
         {/* App Information */}
-        <div className="bg-white rounded-2xl shadow-sm border p-6 mb-6">
+        <div className="bg-white rounded-2xl shadow-sm border border-dusty-pink p-6 mb-6">
           <h2 className="text-xl font-playfair font-semibold text-gray-800 mb-4">
             App Information
           </h2>
@@ -126,7 +127,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Legal & Support */}
-        <div className="bg-white rounded-2xl shadow-sm border p-6 mb-6">
+        <div className="bg-white rounded-2xl shadow-sm border border-dusty-pink p-6 mb-6">
           <h2 className="text-xl font-playfair font-semibold text-gray-800 mb-4">
             Legal & Support
           </h2>
@@ -159,7 +160,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Logout */}
-        <div className="bg-white rounded-2xl shadow-sm border p-6">
+        <div className="bg-white rounded-2xl shadow-sm border border-dusty-pink p-6">
           <button
             onClick={handleLogout}
             className="w-full bg-red-100 text-red-600 py-3 rounded-xl font-medium hover:bg-red-200 transition-colors border border-red-200"
@@ -168,6 +169,7 @@ export default function SettingsPage() {
           </button>
         </div>
       </div>
+      <Navigation />
     </div>
   );
 }

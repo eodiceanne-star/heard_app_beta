@@ -19,12 +19,14 @@ export default function HomePage() {
           <p>Here, you can track your symptoms, connect with others who've been through the same struggles, and find scripts and resources to help you speak confidently at appointments. Heard is your safe space to feel validated, supported, and empowered — no matter where you are in your healthcare journey.</p>
         </div>
         
-        <div className="mt-8 space-y-4">
-          <Link href="/login">
-            <button className="w-full mobile-button">Sign In</button>
+        <div className="mt-8 space-y-4 max-w-sm mx-auto">
+          <Link href="/login" className="block">
+                         <button className="w-full px-8 py-4 bg-gradient-to-r from-dusty-pink to-dusty-pink text-black rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+              Sign In
+            </button>
           </Link>
-          <Link href="/signup">
-            <button className="w-full px-8 py-3 border-2 border-dusty-pink text-dusty-pink rounded-2xl font-medium hover:bg-dusty-pink hover:text-white transition-colors duration-200">
+          <Link href="/signup" className="block">
+            <button className="w-full px-8 py-4 border-2 border-dusty-pink text-dusty-pink rounded-xl font-semibold hover:bg-dusty-pink hover:text-white transition-all duration-300 transform hover:scale-105">
               Create Account
             </button>
           </Link>

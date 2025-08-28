@@ -362,13 +362,13 @@ export default function DoctorsPage() {
         <Illustration type="dot-pattern" className="pointer-events-none" />
         
         {/* Fixed header illustration */}
-        <div className="absolute top-4 right-4 w-24 h-24 opacity-30 pointer-events-none z-0">
+        <div className="absolute top-4 right-4 w-24 h-24 opacity-30 pointer-events-none z-0 illustration-container">
           <Image
             src="/assets/images/openpeeps/patterns/cool-kids-calendar.png"
             alt="Doctor directory illustration"
             width={96}
             height={96}
-            className="w-full h-full object-contain"
+            className="illustration-image"
             onError={(e) => {
               const target = e.target as HTMLImageElement
               target.style.display = 'none'
@@ -392,15 +392,15 @@ export default function DoctorsPage() {
             <div className="relative z-10">
               <div className="flex items-start space-x-4 mb-6">
                 <div className="flex-shrink-0">
-                  <div className="w-20 h-20 bg-gradient-to-br from-cream to-sage rounded-full flex items-center justify-center shadow-lg overflow-hidden p-3">
-                    <Image
-                      src={randomDoctorAvatar}
-                      alt="Doctor avatar"
-                      width={80}
-                      height={80}
-                      className="w-full h-full object-contain object-center"
-                    />
-                  </div>
+                                     <div className="w-20 h-20 bg-gradient-to-br from-cream to-sage rounded-full flex items-center justify-center shadow-lg overflow-hidden p-3 avatar-container">
+                     <Image
+                       src={randomDoctorAvatar}
+                       alt="Doctor avatar"
+                       width={80}
+                       height={80}
+                       className="avatar-image"
+                     />
+                   </div>
                 </div>
                 
                 <div className="flex-1 min-w-0">
@@ -488,7 +488,7 @@ export default function DoctorsPage() {
                           onClick={() => handleTagToggle(tag)}
                           className={`p-3 rounded-xl text-sm font-medium transition-colors ${
                             newReview.tags.includes(tag)
-                              ? 'bg-dusty-pink text-white'
+                              ? 'bg-dusty-pink text-black'
                               : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
                           }`}
                         >
@@ -498,7 +498,7 @@ export default function DoctorsPage() {
                     </div>
                   </div>
                 
-                                 <button type="submit" className="w-full bg-dusty-pink text-gray-900 py-3 rounded-2xl font-medium hover:bg-dusty-pink-dark transition-colors shadow-md">
+                                 <button type="submit" className="w-full bg-dusty-pink text-black py-3 rounded-2xl font-medium hover:bg-dusty-pink-dark transition-colors shadow-md">
                    Submit Review
                  </button>
               </form>
@@ -517,15 +517,15 @@ export default function DoctorsPage() {
                   <div key={review.id} className="bg-gradient-to-br from-cream to-dusty-pink bg-opacity-20 rounded-2xl p-6">
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex items-center space-x-3">
-                        <div className="w-16 h-16 bg-gradient-to-br from-cream to-sage rounded-full flex items-center justify-center shadow-md overflow-hidden p-1">
-                          <Image
-                            src={review.userAvatar || getRandomAvatar()}
-                            alt="User avatar"
-                            width={64}
-                            height={64}
-                            className="w-full h-full object-contain object-center"
-                          />
-                        </div>
+                                                 <div className="w-16 h-16 bg-gradient-to-br from-cream to-sage rounded-full flex items-center justify-center shadow-md overflow-hidden p-1 avatar-container">
+                           <Image
+                             src={review.userAvatar || getRandomAvatar()}
+                             alt="User avatar"
+                             width={64}
+                             height={64}
+                             className="avatar-image"
+                           />
+                         </div>
                         <div>
                           <p className="font-medium text-charcoal">{review.userDisplayName}</p>
                           <p className="text-sm text-gray-500">
@@ -538,12 +538,12 @@ export default function DoctorsPage() {
                         </div>
                     </div>
                     
-                                         <p className="text-base text-charcoal leading-relaxed mb-4 font-medium">{review.text}</p>
+                                         <p className="text-base text-charcoal leading-relaxed mb-4 font-medium review-content">{review.text}</p>
                     
                     {review.tags.length > 0 && (
                       <div className="flex flex-wrap gap-2">
                         {review.tags.map(tag => (
-                          <span key={tag} className="px-3 py-1 bg-dusty-pink bg-opacity-20 text-dusty-pink text-sm rounded-full font-medium">
+                          <span key={tag} className="px-3 py-1 bg-dusty-pink bg-opacity-20 text-black text-sm rounded-full font-medium">
                             {tag}
                           </span>
                         ))}
@@ -571,13 +571,13 @@ export default function DoctorsPage() {
       <Illustration type="dot-pattern" className="pointer-events-none" />
       
       {/* Fixed header illustration */}
-      <div className="absolute top-4 right-4 w-24 h-24 opacity-30 pointer-events-none z-0">
+      <div className="absolute top-4 right-4 w-24 h-24 opacity-30 pointer-events-none z-0 illustration-container">
         <Image
           src="/assets/images/openpeeps/patterns/cool-kids-calendar.png"
           alt="Doctor directory illustration"
           width={96}
           height={96}
-          className="w-full h-full object-contain"
+          className="illustration-image"
           onError={(e) => {
             const target = e.target as HTMLImageElement
             target.style.display = 'none'
@@ -764,15 +764,15 @@ export default function DoctorsPage() {
               <div className="relative z-10">
                 <div className="flex items-start space-x-4 mb-4">
                   <div className="flex-shrink-0">
-                    <div className="w-16 h-16 bg-gradient-to-br from-cream to-sage rounded-full flex items-center justify-center shadow-lg overflow-hidden p-2">
-                      <Image
-                        src={randomDoctorAvatar}
-                        alt="Doctor avatar"
-                        width={64}
-                        height={64}
-                        className="w-full h-full object-contain object-center"
-                      />
-                    </div>
+                                         <div className="w-16 h-16 bg-gradient-to-br from-cream to-sage rounded-full flex items-center justify-center shadow-lg overflow-hidden p-2 avatar-container">
+                       <Image
+                         src={randomDoctorAvatar}
+                         alt="Doctor avatar"
+                         width={64}
+                         height={64}
+                         className="avatar-image"
+                       />
+                     </div>
                   </div>
                   
                   <div className="flex-1 min-w-0">
@@ -852,7 +852,7 @@ export default function DoctorsPage() {
           </div>
           
           <h3 className="text-2xl font-playfair font-medium text-charcoal mb-4 relative z-10">Finding the Right Doctor</h3>
-          <p className="text-base text-charcoal leading-relaxed relative z-10">
+          <p className="text-base text-charcoal leading-relaxed relative z-10 text-content">
             Remember that finding a healthcare provider who listens and takes your concerns seriously is crucial. Don't hesitate to schedule consultations with multiple doctors to find the right fit for your healthcare journey.
           </p>
         </div>

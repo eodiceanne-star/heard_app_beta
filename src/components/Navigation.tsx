@@ -34,7 +34,7 @@ export default function Navigation() {
     { 
       href: '/doctors', 
       label: 'Doctors', 
-      icon: '/assets/images/navigation/amigos-search.png',
+      icon: '/assets/images/navigation/amigos-search .png',
       fallback: '👩‍⚕️'
     },
     { 
@@ -62,7 +62,7 @@ export default function Navigation() {
                   alt={item.label}
                   width={32}
                   height={32}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain p-1"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement
                     target.style.display = 'none'

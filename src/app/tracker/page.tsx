@@ -5,6 +5,7 @@ import { dataService, SymptomEntry } from '@/lib/dataService';
 import { useAuth } from '@/components/AuthContext';
 import Illustration from '@/components/Illustration';
 import DecorativeIllustrations from '@/components/DecorativeIllustrations';
+import Navigation from '@/components/Navigation';
 
 export default function TrackerPage() {
   const { user } = useAuth();
@@ -118,7 +119,7 @@ export default function TrackerPage() {
         </div>
 
         {/* Add Entry Form */}
-        <div className="bg-white rounded-2xl shadow-sm border p-6 mb-8">
+        <div className="bg-white rounded-2xl shadow-sm border border-dusty-pink p-6 mb-8">
           <h2 className="text-xl font-playfair font-semibold text-gray-800 mb-4">
             Add New Entry
           </h2>
@@ -219,7 +220,7 @@ export default function TrackerPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full mobile-button bg-dusty-pink text-white py-4 rounded-2xl font-semibold hover:bg-dusty-pink-dark transition-colors disabled:opacity-50"
+              className="w-full mobile-button bg-dusty-pink text-black py-4 rounded-2xl font-semibold hover:bg-dusty-pink-dark transition-colors disabled:opacity-50"
             >
               {isSubmitting ? 'Saving...' : 'Save Entry'}
             </button>
@@ -227,18 +228,18 @@ export default function TrackerPage() {
         </div>
 
         {/* Entries List */}
-        <div className="bg-white rounded-2xl shadow-sm border p-6">
+        <div className="bg-white rounded-2xl shadow-sm border border-dusty-pink p-6">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-playfair font-semibold text-gray-800">
               Recent Entries ({entries.length})
             </h2>
             {entries.length > 0 && (
-              <button
-                onClick={handleExport}
-                className="bg-sage text-white px-4 py-2 rounded-xl font-medium hover:bg-sage-dark transition-colors"
-              >
-                Export CSV
-              </button>
+                          <button
+              onClick={handleExport}
+              className="bg-dusty-pink text-black px-4 py-2 rounded-xl font-medium hover:bg-dusty-pink-dark transition-colors"
+            >
+              Export CSV
+            </button>
             )}
           </div>
 
@@ -249,7 +250,7 @@ export default function TrackerPage() {
           ) : (
             <div className="space-y-4">
               {entries.map((entry) => (
-                <div key={entry.id} className="border border-gray-200 rounded-xl p-4">
+                <div key={entry.id} className="border border-dusty-pink rounded-xl p-4">
                   <div className="flex justify-between items-start mb-2">
                     <div className="flex items-center space-x-2">
                       <span className="text-sm text-gray-500">{entry.date}</span>
@@ -283,13 +284,13 @@ export default function TrackerPage() {
                   
                   {entry.dietNotes && (
                     <div className="mt-2">
-                      <span className="font-medium text-gray-700">Diet:</span> {entry.dietNotes}
+                      <span className="font-medium text-gray-700">Diet:</span> <span className="tracker-content">{entry.dietNotes}</span>
                     </div>
                   )}
                   
                   {entry.notes && (
                     <div className="mt-2">
-                      <span className="font-medium text-gray-700">Notes:</span> {entry.notes}
+                      <span className="font-medium text-gray-700">Notes:</span> <span className="tracker-content">{entry.notes}</span>
                     </div>
                   )}
                 </div>
@@ -298,6 +299,7 @@ export default function TrackerPage() {
           )}
         </div>
       </div>
+      <Navigation />
     </div>
   );
 }

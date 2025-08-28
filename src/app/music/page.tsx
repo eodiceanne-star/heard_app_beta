@@ -165,17 +165,17 @@ export default function MusicPage() {
       {/* Random Cool Kids illustration */}
       {randomBackgroundImage && (
         <div className="fixed bottom-8 right-8 w-32 h-32 opacity-60 pointer-events-none z-0">
-          <Image
-            src={randomBackgroundImage}
-            alt="Cool kids illustration"
-            width={128}
-            height={128}
-            className="w-full h-full object-contain"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement
-              target.style.display = 'none'
-            }}
-          />
+                     <Image
+             src={randomBackgroundImage}
+             alt="Cool kids illustration"
+             width={128}
+             height={128}
+             className="illustration-image"
+             onError={(e) => {
+               const target = e.target as HTMLImageElement
+               target.style.display = 'none'
+             }}
+           />
         </div>
       )}
       
@@ -308,7 +308,7 @@ export default function MusicPage() {
           </div>
           
           <h3 className="text-2xl font-playfair font-medium text-charcoal mb-4 relative z-10">Relaxation Tips</h3>
-          <div className="space-y-3 text-base text-charcoal leading-relaxed relative z-10">
+                      <div className="space-y-3 text-base text-charcoal leading-relaxed relative z-10 text-content">
             <div className="flex items-start space-x-3">
               <div className="w-2 h-2 bg-sage rounded-full mt-2 flex-shrink-0"></div>
               <p>Find a quiet space and close your eyes while listening</p>

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/components/AuthContext'
 import Illustration from '@/components/Illustration'
+import Navigation from '@/components/Navigation'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -30,13 +31,13 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-cream flex items-center justify-center px-6">
+    <div className="min-h-screen bg-sage flex items-center justify-center px-6">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Illustration type="group-support" />
         </div>
         
-        <div className="bg-white rounded-2xl shadow-sm p-8">
+                 <div className="bg-white rounded-2xl shadow-sm border border-dusty-pink p-8">
           <h1 className="text-3xl font-playfair font-semibold text-charcoal text-center mb-2">
             Welcome Back
           </h1>
@@ -79,11 +80,11 @@ export default function LoginPage() {
               />
             </div>
 
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full mobile-button disabled:opacity-50 disabled:cursor-not-allowed"
-            >
+                         <button
+               type="submit"
+               disabled={isLoading}
+               className="w-full mobile-button text-black disabled:opacity-50 disabled:cursor-not-allowed"
+             >
               {isLoading ? 'Signing In...' : 'Sign In'}
             </button>
           </form>
@@ -104,6 +105,7 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
+      <Navigation />
     </div>
   )
 }

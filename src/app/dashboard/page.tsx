@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthContext';
 import Illustration from '@/components/Illustration';
 import DecorativeIllustrations from '@/components/DecorativeIllustrations';
+import Navigation from '@/components/Navigation';
 
 // Affirmations for daily reminders
 const affirmations = [
@@ -126,8 +127,8 @@ export default function DashboardPage() {
       
       <div className="content-container">
         {/* Header */}
-        <div className="flex justify-between items-start mb-6">
-          <div>
+        <div className="mb-6">
+          <div className="text-center mb-4">
             <h1 className="text-3xl font-playfair font-bold text-gray-800 mb-2">
               Welcome back, {user.displayName}!
             </h1>
@@ -135,26 +136,25 @@ export default function DashboardPage() {
               How can we support your health journey today?
             </p>
           </div>
-          <button
-            onClick={handleLogout}
-            className="bg-dusty-pink text-white px-4 py-2 rounded-lg font-medium hover:bg-dusty-pink-dark transition-colors shadow-sm"
-          >
-            Logout
-          </button>
+          <div className="flex justify-center">
+            <button
+              onClick={handleLogout}
+              className="bg-dusty-pink text-black px-4 py-2 rounded-lg font-medium hover:bg-dusty-pink-dark transition-colors shadow-sm"
+            >
+              Logout
+            </button>
+          </div>
         </div>
 
         {/* Today's Reminder */}
-        <div className="bg-gradient-to-r from-dusty-pink to-sage rounded-2xl p-6 mb-8 text-white">
-          <div className="flex items-start space-x-4">
-            <div className="text-2xl">💝</div>
-            <div>
-              <h2 className="text-xl font-playfair font-semibold mb-2">
-                Today's Reminder
-              </h2>
-              <p className="text-white/90 leading-relaxed">
-                {todayAffirmation}
-              </p>
-            </div>
+        <div className="bg-dusty-pink rounded-2xl p-6 mb-8 text-white">
+          <div className="text-center">
+            <h2 className="text-xl font-playfair font-semibold mb-3">
+              Today's Reminder
+            </h2>
+            <p className="text-white/90 leading-relaxed">
+              {todayAffirmation}
+            </p>
           </div>
         </div>
 
@@ -166,7 +166,7 @@ export default function DashboardPage() {
           <div className="grid grid-cols-2 gap-4">
             <button
               onClick={() => router.push('/tracker')}
-              className="bg-white rounded-xl p-4 shadow-sm border hover:shadow-md transition-shadow text-left"
+              className="bg-white rounded-xl p-4 shadow-sm border border-dusty-pink hover:shadow-md transition-shadow text-left"
             >
               <div className="text-2xl mb-2">📝</div>
               <div className="font-medium text-gray-800">Add Symptom Entry</div>
@@ -174,7 +174,7 @@ export default function DashboardPage() {
             </button>
             <button
               onClick={() => router.push('/calendar')}
-              className="bg-white rounded-xl p-4 shadow-sm border hover:shadow-md transition-shadow text-left"
+              className="bg-white rounded-xl p-4 shadow-sm border border-dusty-pink hover:shadow-md transition-shadow text-left"
             >
               <div className="text-2xl mb-2">📅</div>
               <div className="font-medium text-gray-800">View Calendar</div>
@@ -193,10 +193,10 @@ export default function DashboardPage() {
               <button
                 key={index}
                 onClick={() => router.push(item.path)}
-                className="bg-white rounded-2xl p-6 shadow-sm border hover:shadow-md transition-all duration-200 text-left group"
+                className="bg-white rounded-2xl p-6 shadow-sm border border-dusty-pink hover:shadow-md transition-all duration-200 text-left group"
               >
                 <div className="flex items-start space-x-4">
-                  <div className={`w-12 h-12 ${item.color} rounded-xl flex items-center justify-center text-white text-xl group-hover:scale-110 transition-transform`}>
+                  <div className="w-12 h-12 bg-dusty-pink rounded-xl flex items-center justify-center text-black text-xl group-hover:scale-110 transition-transform">
                     <Illustration type={item.icon as any} size="small" />
                   </div>
                   <div className="flex-1">
@@ -213,6 +213,7 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+      <Navigation />
     </div>
   );
 }

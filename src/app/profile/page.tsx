@@ -184,15 +184,15 @@ export default function ProfilePage() {
                     className="w-32 h-32 rounded-full object-cover border-4 border-sage shadow-lg"
                   />
                 ) : (
-                  <div className="w-32 h-32 bg-gradient-to-br from-cream to-dusty-pink rounded-full flex items-center justify-center shadow-lg overflow-hidden">
-                    <Image
-                      src={getAvatarById(tempProfile.avatar)}
-                      alt="Profile avatar"
-                      width={128}
-                      height={128}
-                      className="w-full h-full object-contain object-center"
-                    />
-                  </div>
+                                     <div className="w-32 h-32 bg-gradient-to-br from-cream to-dusty-pink rounded-full flex items-center justify-center shadow-lg overflow-hidden avatar-container">
+                     <Image
+                       src={getAvatarById(tempProfile.avatar)}
+                       alt="Profile avatar"
+                       width={128}
+                       height={128}
+                       className="avatar-image"
+                     />
+                   </div>
                 )
               ) : (
                 profile.profileImage ? (
@@ -202,15 +202,15 @@ export default function ProfilePage() {
                     className="w-32 h-32 rounded-full object-cover border-4 border-sage shadow-lg"
                   />
                 ) : (
-                  <div className="w-32 h-32 bg-gradient-to-br from-cream to-dusty-pink rounded-full flex items-center justify-center shadow-lg overflow-hidden">
-                    <Image
-                      src={getAvatarById(profile.avatar)}
-                      alt="Profile avatar"
-                      width={128}
-                      height={128}
-                      className="w-full h-full object-contain object-center"
-                    />
-                  </div>
+                                     <div className="w-32 h-32 bg-gradient-to-br from-cream to-dusty-pink rounded-full flex items-center justify-center shadow-lg overflow-hidden avatar-container">
+                     <Image
+                       src={getAvatarById(profile.avatar)}
+                       alt="Profile avatar"
+                       width={128}
+                       height={128}
+                       className="avatar-image"
+                     />
+                   </div>
                 )
               )}
             </div>
@@ -260,13 +260,13 @@ export default function ProfilePage() {
                           : 'ring-2 ring-gray-200 hover:ring-dusty-pink hover:scale-105'
                       }`}
                     >
-                      <Image
-                        src={avatar.src}
-                        alt={avatar.name}
-                        width={64}
-                        height={64}
-                        className="w-full h-full object-contain object-center"
-                      />
+                                             <Image
+                         src={avatar.src}
+                         alt={avatar.name}
+                         width={64}
+                         height={64}
+                         className="avatar-image"
+                       />
                     </button>
                   ))}
                 </div>
@@ -350,7 +350,7 @@ export default function ProfilePage() {
 
             {profile.isAnonymous && (
               <div className="p-4 bg-dusty-pink bg-opacity-10 rounded-2xl">
-                <p className="text-base text-charcoal leading-relaxed">
+                <p className="text-base text-charcoal leading-relaxed text-content">
                   When anonymous mode is enabled, your display name will appear as "Anonymous" in the community forum and other public areas.
                 </p>
               </div>
@@ -397,7 +397,7 @@ export default function ProfilePage() {
           <div className="absolute bottom-0 left-0 w-12 h-12 bg-gradient-to-tl from-dusty-pink to-transparent opacity-10 rounded-full -ml-6 -mb-6 z-0"></div>
           
           <h2 className="text-2xl font-playfair font-medium text-charcoal mb-6 relative z-10">Privacy & Safety</h2>
-          <div className="space-y-4 text-base text-charcoal relative z-10">
+          <div className="space-y-4 text-base text-charcoal relative z-10 text-content">
             <div className="flex items-start space-x-3">
               <div className="w-2 h-2 bg-sage rounded-full mt-2 flex-shrink-0"></div>
               <p>Your profile information is stored locally on your device</p>
@@ -424,7 +424,7 @@ export default function ProfilePage() {
           </div>
           
           <h3 className="text-2xl font-playfair font-medium text-charcoal mb-4 relative z-10">Your Journey</h3>
-          <p className="text-base text-charcoal leading-relaxed relative z-10">
+          <p className="text-base text-charcoal leading-relaxed relative z-10 text-content">
             Your profile is a reflection of your unique healthcare journey. Share as much or as little as you're comfortable with. Remember, you're not alone in this journey.
           </p>
         </div>
